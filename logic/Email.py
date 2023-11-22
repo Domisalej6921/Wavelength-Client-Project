@@ -4,7 +4,8 @@ from email.policy import default
 import os
 
 class Email:
-    def Send(self, subject: str, message: str, toaddrs: str) -> None:
+    @staticmethod
+    def Send(subject: str, message: str, toaddrs: str) -> None:
         # Check if SMTP is configured
         if os.environ['SMTPPort'] != 0 or os.environ['SMTPPort'] is not None:
             # Initialise SMTP session
@@ -15,7 +16,7 @@ class Email:
                 f"To: {toaddrs}\n"
                 f"Subject: {subject}\n"
                 "\n"
-                f"{message}\n")
+                f"This is a no-reply email, replies to this email will not be received!\n\n{message}\n")
 
                 # Login into SMTP server and send the email
                 server.login(os.environ['SMTPUsername'], os.environ['SMTPPassword'])

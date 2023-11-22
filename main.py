@@ -9,7 +9,7 @@ try:
     file.close()
 
     for key in settings:
-        os.environ[key] = settings[key]
+        os.environ[key] = str(settings[key])
 except:
     raise Exception("Unable to read appsettings.json -> does it exist?")
 

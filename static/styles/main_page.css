@@ -7,8 +7,17 @@ body {
     margin-top: 10%;
 }
 
+.SearchBarContainer {
+    margin-top: 50px;
+    text-align: left;
+}
+
+.SearchSubmitButton {
+    border-radius: 8px;
+}
+
 .MentorListContainer {
-    display: inline;
+    display: flex;
 }
 
 .MentorItemContainer {
@@ -41,4 +50,10 @@ body {
     color: white;
     border-style: solid;
     border-color: red;
+}
+
+.ViewMoreButton {
+    padding: 10px;
+    margin: 55px;
+    width: 200px
 }

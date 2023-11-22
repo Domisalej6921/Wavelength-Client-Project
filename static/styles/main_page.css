@@ -3,13 +3,19 @@ body {
     text-align: center;
 }
 
+.InitialInfo {
+    text-align: center;
+    margin: 10%;
+}
+
 .CompanyTitle, .WelcomeMessage {
-    margin-top: 10%;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .SearchBarContainer {
-    margin-top: 50px;
-    text-align: left;
+    margin-top: 15%;
+    text-align: center;
 }
 
 .SearchSubmitButton {

@@ -18,4 +18,10 @@
 - `~/static/uploads/example.js` for files that are uploaded by users.
 - `~/snippets/example.html` for files that are stored for Flask to access. e.g. navbar varients
 - `~/data/..` for stored user data (database, cache, etc).
-- `~/static/uploads/example.png` for all image uploads.
+
+# **App Configuration**
+For the app to work successfully, the following must be done:
+- The appsettings.json file must be created in the root directory.
+- The file should use the template in the appsettings.json.Example.json file which is located in the root directory.
+- For SMTP credentials the related fields can be left blank the server will instead:
+- - Print out the email to the console.

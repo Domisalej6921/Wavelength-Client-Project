@@ -1,0 +1,21 @@
+# Ignore Visual Studio IDE files
+*.user
+*.vs
+
+# Ignore JetBrains Rider IDE files
+.idea
+
+# Ignore compiled output and build directories
+**/obj/
+**/bin/
+
+# Ignore appsettings.json files (assuming they are environment-specific and should not be versioned)
+**/appsettings.json
+**/appsettings.Development.json
+
+# Add other files/directories to ignore here if needed
+**/Dockerfile
+**.DS_Store
+
+*.pyc
+__pycache__/

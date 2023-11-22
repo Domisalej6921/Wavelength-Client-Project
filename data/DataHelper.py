@@ -1,7 +1,7 @@
 from sqlite3 import connect
 
 class DataHelper:
-    def __init__(self, path: str = "data/general.db"):
+    def __init__(self, path: str = "data/databases/general.db"):
         self.conn = connect(path)
         self.cur = self.conn.cursor()
 

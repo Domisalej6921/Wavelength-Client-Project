@@ -1,92 +1,24 @@
-h1, h2, h3, h4, h5 {
-    color: aliceblue;;
-    font-family: sans-serif;
+:root {
+    --purple: #6f42c1;
+    --purple-100: #d1c6e2;
+    --purple-200: #b3a6d6;
+    --purple-300: #9576c9;
+    --purple-400: #7a56bd;
+    --purple-500: #6f42c1;
+    --purple-600: #6541b8;
+    --purple-700: #5a3fae;
+    --purple-800: #4f3ea5;
+    --purple-900: #453d9c;
+}
+body {
+    background-color: var(--purple-100);
 }
 
-.Text-Emphasis {
-    font-weight: bold;
+.header {
+    color: var(--purple-500);
 }
 
-/* color-mix sourced from https://www.w3.org/TR/css-color-5/#color-mix */
-hr {
-    border-radius: 10px;
-    background-color: color-mix(in srgb, #6495ed 40%, black 60%);
-    padding: 5px;
-    margin-top: 2.5%;
-    margin-bottom: 2.5%;
-}
-
-.hr-Slender {
-    padding: 2.5px;
-}
-
-.Container {
-    background-color: #6495ed;
-    border-radius: 15px;
-    margin: 2.5%;
-    padding: 2.5%;
-    border: none;
-    justify-content: center;
-}
-
-.Container-Grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px;
-}
-
-@media (max-width: 866px) {
-    .Container-Grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.FormText {
-    color: darkblue;
-    font-size: 1.5em;
-    width: 100%;
-    font-family: "Helvetica";
-}
-
-.FormMid {
-    text-align: center;
-    margin: 0 auto;
-}
-
-.FormRounded{
-    width: 80%;
-    height: 40vh;
-    background-color: cornflowerblue;
-    border-radius: 2%;
-    padding-top: 3%;
-    padding-bottom: 3.5%;
-}
-
-.FormSubmitBox {
-    box-sizing: border-box;
-    border-radius: 18px;
-    background-color: darkblue;
-    color: ghostwhite;
-    width: 150px;
-    height: 5vh;
-    margin-top: 0.5%;
-
-}
-
-.FormTextBox {
-    margin-top: 0.5%;
-    border-radius: 10px;
-    background-color: azure;
-    width: 80%;
-    height: 30px;
-}
-
-.FormInputs {
-    padding: 1%;
-}
-
-.WelcomeText {
-    color: aliceblue;
-    font-family: sans-serif;
-    margin: 2%;
+.button {
+    background-color: var(--purple-700);
+    color: white;
 }

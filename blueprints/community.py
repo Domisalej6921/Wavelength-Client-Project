@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session
 
-from static import styles
+community = Blueprint("community", __name__)
 
-@app.route('/create_community')
+@community.route('/create_community')
 def create_community():
     return render_template('create_community.html')

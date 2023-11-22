@@ -9,5 +9,9 @@ app.secret_key = 'isodhfudyf8d9asye*sufhsd789fhds89ufhysuifdhsgf78fhasoidhsaidlg
 def index():
     return render_template('index.html')
 
+# Add community Blueprint
+from blueprints.community import community
+app.register_blueprint(community)
+
 if __name__ == '__main__':
     app.run(debug=True)

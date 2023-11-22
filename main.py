@@ -1,6 +1,9 @@
-from flask import Flask, Blueprint, render_template, request, redirect, session
+from flask import Flask, render_template
 import json
 import os
+
+# Used https://stackoverflow.com/questions/19663093/apply-gitignore-on-an-existing-repository-already-tracking-large-number-of-file
+# to help with .gitignore
 
 # Read appsettings.json and map it onto environ variables
 try:
@@ -18,10 +21,15 @@ app = Flask(__name__)
 
 app.secret_key = os.environ['FlaskSecretKey']
 
+
 # Route for the index page
 @app.route('/')
 def index():
     return render_template('index.html')
+
+# Import register blueprint
+from blueprints.Register import register
+app.register_blueprint(register)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,34 @@
+.align-content {
+    align-content: center;
+    text-align: center;
+}
+
+.container-form {
+    padding-top: 3%;
+    padding-bottom: 2.5%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.container-light {
+    background-color: #f1f1f1;
+    padding: 3.5%;
+    border-radius: 10px;
+}
+
+.btn-pastel {
+    --bs-btn-color: #000000;
+    --bs-btn-bg: #c0b3da;
+    --bs-btn-border-color: #c6bada;
+    --bs-btn-hover-color: #000000;
+    --bs-btn-hover-bg: #c2a8d9;
+    --bs-btn-hover-border-color: #c8b5da;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: #b095d7;
+    --bs-btn-active-border-color: #b29cd7;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #000000;
+    --bs-btn-disabled-bg: #f8f9fa;
+    --bs-btn-disabled-border-color:#f8f9fa
+}

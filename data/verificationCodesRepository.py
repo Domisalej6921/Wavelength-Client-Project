@@ -7,8 +7,8 @@ class VerificationCodesRepository:
 
     def insert(self, data: dict):
         """Inserts an account into the database."""
-        self.db.Execute(
+        self.db.execute(
             """INSERT INTO VerificationCodes (UserID, Code, isPasswordCode, Created) VALUES 
             (?, ?, ?, ?)""",
-            (data["UserID"], data["Code"], data["isPasswordCode"], data["Created"])
+            (data["userID"], data["code"], data["isPasswordCode"], data["created"])
         )

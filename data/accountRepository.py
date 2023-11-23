@@ -7,16 +7,16 @@ class AccountRepository:
 
     def getWithEmail(self, email: str):
         """Gets an account with an email."""
-        return self.db.SelectFirstWithParams("SELECT * FROM Accounts WHERE Email = ?", (email,))
+        return self.db.selectFirstWithParams("SELECT * FROM Users WHERE Email = ?", (email,))
 
     def getWithUsername(self, username: str):
         """Gets an account with a username."""
-        return self.db.SelectFirstWithParams("SELECT * FROM Accounts WHERE Username = ?", (username,))
+        return self.db.selectFirstWithParams("SELECT * FROM Users WHERE Username = ?", (username,))
 
     def insert(self, data: dict):
         """Inserts an account into the database."""
-        self.db.Execute(
-            """INSERT INTO Accounts (Name, Username, Email, Password, Salt, isMentor, awaitingApproval, Created) VALUES 
+        self.db.execute(
+            """INSERT INTO Users (Name, Username, Email, Password, Salt, isMentor, awaitingApproval, Created) VALUES 
             (?, ?, ?, ?, ?, ?, ?, ?)""",
-            (data["Name"], data["Username"], data["Email"], data["Password"], data["Salt"], data["isMentor"], data["awaitingApproval"], data["Created"])
+            (data["name"], data["username"], data["email"], data["password"], data["salt"], data["isMentor"], data["awaitingApproval"], data["created"])
         )

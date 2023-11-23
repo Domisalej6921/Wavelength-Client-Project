@@ -19,7 +19,7 @@ except:
 # Load the Flask app
 app = Flask(__name__)
 
-app.secret_key = os.environ['FlaskSecretKey']
+app.secret_key = os.environ['flaskSecretKey']
 
 
 # Route for the index page
@@ -28,7 +28,7 @@ def index():
     return render_template('index.html')
 
 # Import register blueprint
-from blueprints.Register import register
+from blueprints.register import register
 app.register_blueprint(register)
 
 if __name__ == '__main__':

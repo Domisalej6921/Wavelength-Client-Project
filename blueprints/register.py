@@ -1,5 +1,6 @@
 from flask import Flask, Blueprint, render_template, request, redirect, session
 import datetime
+import os
 
 from data.accountRepository import AccountRepository
 from data.verificationCodesRepository import VerificationCodesRepository
@@ -19,6 +20,8 @@ def register_auth():
     # Get the JSON payload from the request and inherit classes
     data = request.get_json()
 
+    print(data)
+
     accountRepository = AccountRepository()
     verificationCodesRepository = VerificationCodesRepository()
     cryptography = Cryptography()
@@ -30,40 +33,40 @@ def register_auth():
         return "No JSON payload was uploaded with the request!", 400
 
     # Check if the JSON has the required fields
-    if "Name" not in data or "Username" not in data or "Email" not in data or \
-            "Password" not in data or "isMentor" not in data:
+    if "name" not in data or "username" not in data or "email" not in data or \
+            "password" not in data or "repeatPassword" not in data or "isMentor" not in data:
         return "The JSON payload is missing required fields!", 400
 
     # Check if the JSON has the correct field types
-    if not type(data["Name"]) is str or not type(data["Username"]) is str or not type(data["Email"]) is str or \
-            not type(data["Password"]) is str or not type(data["isMentor"]) is bool:
+    if not type(data["name"]) is str or not type(data["username"]) is str or not type(data["email"]) is str or \
+            not type(data["password"]) is str or not type(data["repeatPassword"]) is str or not type(data["isMentor"]) is bool:
         return "The JSON payload has incorrect field types!", 400
 
     # Check if the password is long enough
-    if len(data["Password"]) < 8:
+    if len(data["password"]) < 8:
         return "The password must be at least 8 characters long!", 406
 
     # Check if the email is valid
-    if "@" not in data["Email"] or "." not in data["Email"]:
+    if "@" not in data["email"] or "." not in data["email"]:
         return "This email is invalid! It must contain a '@' symbol and a '.' character", 406
 
     # Check if the username is valid
-    if len(data["Username"]) < 3 or len(data.split(" ")) > 1:
+    if len(data["username"]) < 3 or len(data["username"].split(" ")) > 1:
         return "This username is invalid! It must be at least 3 characters and contain no whitespace.", 406
 
     # Check if the email is already in use
-    if accountRepository.getWithEmail(data["Email"]) is not None:
+    if accountRepository.getWithEmail(data["email"]) is not None:
         return "This email is already in use!", 406
 
     # Check if the username is already in use
-    if accountRepository.getWithUsername(data["Username"]) is not None:
+    if accountRepository.getWithUsername(data["username"]) is not None:
         return "This username is already in use!", 406
 
     # All checks have passed so proceed with registration
 
     # Create a salt and hash the password
     salt = cryptography.createSalt()
-    hashedPassword = cryptography.digest(data["Password"] + salt)
+    hashedPassword = cryptography.digest(data["password"] + salt)
 
     # Sourced from: https://www.tutorialspoint.com/how-to-convert-datetime-to-an-integer-in-python
     currentTime = int(datetime.datetime.now().timestamp())
@@ -72,39 +75,42 @@ def register_auth():
     # Check if the user is a mentor and if so set awaitingApproval to true
     if data["isMentor"]:
         accountRepository.insert({
-            "Name": data["Name"],
-            "Username": data["Username"],
-            "Email": data["Email"],
-            "Password": hashedPassword,
-            "Salt": salt,
+            "name": data["name"],
+            "username": data["username"],
+            "email": data["email"],
+            "password": hashedPassword,
+            "salt": salt,
             "isMentor": data["isMentor"],
             "awaitingApproval": True,
-            "Created": currentTime
+            "created": currentTime
         })
     else:
         accountRepository.insert({
-            "Name": data["Name"],
-            "Username": data["Username"],
-            "Email": data["Email"],
-            "Password": hashedPassword,
-            "Salt": salt,
+            "name": data["name"],
+            "username": data["username"],
+            "email": data["email"],
+            "password": hashedPassword,
+            "salt": salt,
             "isMentor": data["isMentor"],
             "awaitingApproval": False,
-            "Created": currentTime
+            "created": currentTime
         })
 
     # Create a verification code
     verificationCode = cryptography.createUUID()
 
     # Send the verification code to the user via email
-    Email.send("Verify your email address", f"Your verification code is: {verificationCode}", data["Email"])
+    Email.send(
+        "Verify your email address",
+        f"Please follow the link below to verify your account\n{os.environ['domain']}/verify?code={verificationCode}",
+        data["email"])
 
     # Insert the verification code into the database
     verificationCodesRepository.insert({
-        "UserID": accountRepository.getWithEmail(data["Email"])[0],
-        "Code": verificationCode,
+        "userID": accountRepository.getWithEmail(data["email"])[0],
+        "code": verificationCode,
         "isPasswordCode": False,
-        "Created": currentTime
+        "created": currentTime
     })
 
     # Return a success message

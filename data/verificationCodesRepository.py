@@ -5,6 +5,10 @@ class VerificationCodesRepository:
         # Inherit the DataHelper class
         self.db = DataHelper()
 
+    def getWithVerifyCode(self, code: str):
+        """Gets a verification code with a code."""
+        return self.db.selectFirstWithParams("SELECT * FROM VerificationCodes WHERE isPasswordCode = ? AND Code = ?", (0, code))
+
     def insert(self, data: dict):
         """Inserts an account into the database."""
         self.db.execute(
@@ -12,3 +16,7 @@ class VerificationCodesRepository:
             (?, ?, ?, ?)""",
             (data["userID"], data["code"], data["isPasswordCode"], data["created"])
         )
+
+    def delete(self, code: str):
+        """Deletes a verification code from the database."""
+        self.db.execute("DELETE FROM VerificationCodes WHERE Code = ?", (code,))

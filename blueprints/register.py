@@ -14,13 +14,27 @@ register = Blueprint('register', __name__)
 def register_page():
     return render_template('auth/register.html')
 
+@register.route('/verify')
+def verify_auth():
+    # Get the code from the URL and inherit classes
+    code = request.args.get("code")
+
+    verificationCodesRepository = VerificationCodesRepository()
+
+    # Check if the code exists
+    if code is not None:
+        data = verificationCodesRepository.getWithVerifyCode(code)
+        if data is not None:
+            # Delete the verification code and redirect to the login page
+            verificationCodesRepository.delete(code)
+            return redirect("/login")
+
+    return render_template('auth/verify.html')
 
 @register.route('/auth/register', methods=['POST'])
 def register_auth():
     # Get the JSON payload from the request and inherit classes
     data = request.get_json()
-
-    print(data)
 
     accountRepository = AccountRepository()
     verificationCodesRepository = VerificationCodesRepository()

@@ -57,7 +57,10 @@ CREATE TABLE Entities (
     ProfilePictureID integer REFERENCES Files(FileID),
     BackgroundID integer REFERENCES Files(FileID),
     isCompany integer,
+<<<<<<< HEAD
     isApproved integer,
+=======
+>>>>>>> 97ae9ef (Added SQL import files)
     Created integer
 );
 

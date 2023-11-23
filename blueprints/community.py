@@ -6,4 +6,4 @@ community = Blueprint("community", __name__)
 def create_community():
     return render_template('create_community.html')
 
-@community.route('')
+#@community.route('')

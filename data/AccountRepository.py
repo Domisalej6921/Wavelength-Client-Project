@@ -13,6 +13,10 @@ class AccountRepository:
         """Gets an account with a username."""
         return self.db.SelectFirstWithParams("SELECT * FROM Accounts WHERE Username = ?", (username,))
 
-    def Insert(self):
+    def Insert(self, data: dict):
         """Inserts an account into the database."""
-        pass
+        self.db.Execute(
+            """INSERT INTO Accounts (Name, Username, Email, Password, Salt, isMentor, awaitingApproval, Created) VALUES 
+            (?, ?, ?, ?, ?, ?, ?, ?)""",
+            (data["Name"], data["Username"], data["Email"], data["Password"], data["Salt"], data["isMentor"], data["awaitingApproval"], data["Created"])
+        )

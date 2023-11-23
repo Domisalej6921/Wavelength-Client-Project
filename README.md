@@ -25,3 +25,4 @@ For the app to work successfully, the following must be done:
 - The file should use the template in the appsettings.Example.json file which is located in the root directory.
 - For SMTP credentials the related fields can be left blank the server will instead:
   - Print out the email to the console.
+- **Database** must be initialised by running the dbImport.py file in the root directory.

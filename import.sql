@@ -2,6 +2,7 @@ CREATE TABLE Files(
     FileID int NOT NULL PRIMARY KEY,
     Name text,
     Extension text,
+    Description text,
     Created int
     );
 

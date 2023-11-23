@@ -1,3 +1,12 @@
+a {
+    text-decoration: none;
+    color: #73b5dc;
+}
+
+.black-a {
+    color: black;
+}
+
 .align-content {
     align-content: center;
     text-align: center;
@@ -12,7 +21,7 @@
 
 .container-light {
     background-color: #f1f1f1;
-    padding: 3.5%;
+    padding: 3%;
     border-radius: 10px;
 }
 
@@ -31,4 +40,18 @@
     --bs-btn-disabled-color: #000000;
     --bs-btn-disabled-bg: #f8f9fa;
     --bs-btn-disabled-border-color:#f8f9fa
+}
+
+/* Learnt about filters using:
+https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
+
+filter conversion for the colour code was done by:
+https://codepen.io/sosuke/pen/Pjoqqp*/
+
+.pastel-svg {
+    filter: invert(77%) sepia(28%) saturate(368%) hue-rotate(170deg) brightness(94%) contrast(93%);
+}
+
+.pastel-tooltip {
+  --bs-tooltip-bg: #c0b3da;
 }

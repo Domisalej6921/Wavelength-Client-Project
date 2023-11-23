@@ -16,7 +16,7 @@
         <div class="container-form">
             <div class="container-fluid container-light">
                 <p class="fs-1 align-content">Register</p>
-                <form class="form-floating">
+                <form class="form-floating" id="registerForm">
                     <div class="input-group mb-3">
                         <span class="input-group-text">@</span>
                         <div class="form-floating">
@@ -43,10 +43,19 @@
                         </select>
                         <label for="accountType">What type of account would you like to sign up for?</label>
                     </div>
+                    <!-- Used bootstrap documentation: https://getbootstrap.com/docs/5.2/components/tooltips/ -->
+                    <a href="" class="black-a" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="pastel-tooltip" data-bs-title="Mentees are students who are looking for a mentor to help them with their career. Mentors are professionals who are looking to help students with their career.">
+                        <p class="fs-6">
+                            <img src="/static/images/icons/help-square-rounded-filled.svg" class="icon" alt="info">
+                            What is a mentee/mentor?
+                        </p>
+                    </a>
                     <div class="align-content" id="registerForm">
                         <button class="btn btn-pastel btn-lg" onclick="SubmitForm()">Register</button>
                     </div>
                 </form>
+                <hr>
+                <p class="fs-5 align-content">Already have an account? <a href="/login">Login</a></p>
             </div>
         </div>
 

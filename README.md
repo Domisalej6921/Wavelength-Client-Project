@@ -1,9 +1,9 @@
 # README
 
 # **General Practices**
-- Use of Camel casing for variable names.
+- Use of Camel casing for variable, file and function names.
 - The variable names must clearly outline what is stored.
-- Use of Pascal casing for class and function names.
+- Use of Pascal casing for class names.
 - {{Header | safe}} must be added to the the top of each html page for the navigation menu.
 - {{Footer | safe}} must be added to the bottom of each html page for the footer.
 

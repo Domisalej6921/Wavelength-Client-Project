@@ -1,10 +1,10 @@
 from flask import Flask, Blueprint, render_template, request, redirect, session
 import datetime
 
-from data.AccountRepository import AccountRepository
-from data.VerificationCodesRepository import VerificationCodesRepository
-from logic.Cryptography import Cryptography
-from logic.Email import Email
+from data.accountRepository import AccountRepository
+from data.verificationCodesRepository import VerificationCodesRepository
+from logic.cryptography import Cryptography
+from logic.email import Email
 
 register = Blueprint('register', __name__)
 
@@ -52,18 +52,18 @@ def register_auth():
         return "This username is invalid! It must be at least 3 characters and contain no whitespace.", 406
 
     # Check if the email is already in use
-    if accountRepository.GetWithEmail(data["Email"]) is not None:
+    if accountRepository.getWithEmail(data["Email"]) is not None:
         return "This email is already in use!", 406
 
     # Check if the username is already in use
-    if accountRepository.GetWithUsername(data["Username"]) is not None:
+    if accountRepository.getWithUsername(data["Username"]) is not None:
         return "This username is already in use!", 406
 
     # All checks have passed so proceed with registration
 
     # Create a salt and hash the password
-    salt = cryptography.CreateSalt()
-    hashedPassword = cryptography.Digest(data["Password"] + salt)
+    salt = cryptography.createSalt()
+    hashedPassword = cryptography.digest(data["Password"] + salt)
 
     # Sourced from: https://www.tutorialspoint.com/how-to-convert-datetime-to-an-integer-in-python
     currentTime = int(datetime.datetime.now().timestamp())
@@ -71,7 +71,7 @@ def register_auth():
     # Insert the account into the database
     # Check if the user is a mentor and if so set awaitingApproval to true
     if data["isMentor"]:
-        accountRepository.Insert({
+        accountRepository.insert({
             "Name": data["Name"],
             "Username": data["Username"],
             "Email": data["Email"],
@@ -82,7 +82,7 @@ def register_auth():
             "Created": currentTime
         })
     else:
-        accountRepository.Insert({
+        accountRepository.insert({
             "Name": data["Name"],
             "Username": data["Username"],
             "Email": data["Email"],
@@ -94,14 +94,14 @@ def register_auth():
         })
 
     # Create a verification code
-    verificationCode = cryptography.CreateUUID()
+    verificationCode = cryptography.createUUID()
 
     # Send the verification code to the user via email
-    Email.Send("Verify your email address", f"Your verification code is: {verificationCode}", data["Email"])
+    Email.send("Verify your email address", f"Your verification code is: {verificationCode}", data["Email"])
 
     # Insert the verification code into the database
-    verificationCodesRepository.Insert({
-        "UserID": accountRepository.GetWithEmail(data["Email"])[0],
+    verificationCodesRepository.insert({
+        "UserID": accountRepository.getWithEmail(data["Email"])[0],
         "Code": verificationCode,
         "isPasswordCode": False,
         "Created": currentTime

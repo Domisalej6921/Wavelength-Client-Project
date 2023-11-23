@@ -1,19 +1,19 @@
-from data.DataHelper import DataHelper
+from data.dataHelper import DataHelper
 
 class AccountRepository:
     def __init__(self):
         # Inherit the DataHelper class
         self.db = DataHelper()
 
-    def GetWithEmail(self, email: str):
+    def getWithEmail(self, email: str):
         """Gets an account with an email."""
         return self.db.SelectFirstWithParams("SELECT * FROM Accounts WHERE Email = ?", (email,))
 
-    def GetWithUsername(self, username: str):
+    def getWithUsername(self, username: str):
         """Gets an account with a username."""
         return self.db.SelectFirstWithParams("SELECT * FROM Accounts WHERE Username = ?", (username,))
 
-    def Insert(self, data: dict):
+    def insert(self, data: dict):
         """Inserts an account into the database."""
         self.db.Execute(
             """INSERT INTO Accounts (Name, Username, Email, Password, Salt, isMentor, awaitingApproval, Created) VALUES 

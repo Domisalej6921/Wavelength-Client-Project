@@ -5,7 +5,7 @@ import os
 
 class Email:
     @staticmethod
-    def Send(subject: str, message: str, toaddrs: str) -> None:
+    def send(subject: str, message: str, toaddrs: str) -> None:
         # Check if SMTP is configured
         if os.environ['SMTPPort'] != 0 or os.environ['SMTPPort'] is not None:
             # Initialise SMTP session

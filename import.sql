@@ -1,87 +1,88 @@
 CREATE TABLE Files(
-    FileID int NOT NULL PRIMARY KEY,
+    FileID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     Name text,
     Extension text,
-    Created int
+    Description text,
+    Created integer
     );
 
 CREATE TABLE Users (
-    UserID int NOT NULL PRIMARY KEY,
+    UserID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     Name text,
     Username text,
     Email text,
     Password text,
     Salt text,
-    isMentor int,
-    awaitingApproval int,
-    ProfilePictureID int REFERENCES Files(FileID),
-    BackgroundID int REFERENCES Files(FileID),
-    LastLogin int,
-    Created int
+    isMentor integer,
+    awaitingApproval integer,
+    ProfilePictureID integer REFERENCES Files(FileID),
+    BackgroundID integer REFERENCES Files(FileID),
+    LastLogin integer,
+    Created integer
   );
 
 CREATE TABLE VerificationCodes (
-    UserID int NOT NULL REFERENCES Users(UserID),
+    UserID integer NOT NULL REFERENCES Users(UserID),
     Code text,
-    isPasswordCode int,
-    Created int
+    isPasswordCode integer,
+    Created integer
   );
 
 CREATE TABLE SitePermissions (
-    UserID int NOT NULL REFERENCES Users(UserID),
-    ManageTokens int,
-    ManageUsers int,
-    ManageReports int,
-    Created int
+    UserID integer NOT NULL REFERENCES Users(UserID),
+    ManageTokens integer,
+    ManageUsers integer,
+    ManageReports integer,
+    Created integer
 );
 
 CREATE TABLE Entities (
-    EntityID int NOT NULL PRIMARY KEY,
+    EntityID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     Name text,
     Description text,
-    ProfilePictureID int REFERENCES Files(FileID),
-    BackgroundID int REFERENCES Files(FileID),
-    isCompany int,
-    Created int
+    ProfilePictureID integer REFERENCES Files(FileID),
+    BackgroundID integer REFERENCES Files(FileID),
+    isCompany integer,
+    Created integer
 );
 
 CREATE TABLE EntityMembers (
-    EntityID int NOT NULL REFERENCES Entities(EntityID),
-    UserID int NOT NULL REFERENCES Users(UserID),
+    EntityID integer NOT NULL REFERENCES Entities(EntityID),
+    UserID integer NOT NULL REFERENCES Users(UserID),
     Role text,
-    isAdmin int,
-    Created int
+    isAdmin integer,
+    Created integer
 );
 
 CREATE TABLE Tokens (
     TokenID text NOT NULL PRIMARY KEY,
-    OwnerID int REFERENCES Entities(EntityID),
-    OwnerType int,
-    Created int
+    OwnerID integer REFERENCES Entities(EntityID),
+    OwnerType integer,
+    Created integer
 );
 
 CREATE TABLE Transactions (
-    TransactionID int NOT NULL PRIMARY KEY,
+    TransactionID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     TokenID text REFERENCES Tokens(TokenID),
-    SenderID int REFERENCES Entities(EntityID),
-    ReceiverID int REFERENCES Entities(EntityID),
-    isDonation int,
-    Created int
+    SenderID integer REFERENCES Entities(EntityID),
+    ReceiverID integer REFERENCES Entities(EntityID),
+    isDonation integer,
+    Created integer
 );
 
 CREATE TABLE Sessions (
-    SessionID int NOT NULL PRIMARY KEY,
-    MenteeID int REFERENCES Users(UserID),
-    MentorID int REFERENCES Users(UserID),
-    isComplete int,
+    SessionID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+    MenteeID integer REFERENCES Users(UserID),
+    MentorID integer REFERENCES Users(UserID),
+    isComplete integer,
     Notes text,
-    Created int
+    Created integer
 );
 
 CREATE TABLE Reviews (
-    ReviewID int NOT NULL PRIMARY KEY,
+    ReviewID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     SessionID text REFERENCES Sessions(SessionID),
-    isSatisfied int,
+    isSatisfied integer,
     Comment text,
-    Created int
+    Created integer
 );

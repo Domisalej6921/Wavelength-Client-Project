@@ -21,6 +21,20 @@ CREATE TABLE Users (
     Created integer
   );
 
+CREATE TABLE Tags (
+    TagID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+    CreatedBy integer REFERENCES Users(UserID),
+    Name text,
+    Colour text,
+    Created integer
+);
+
+CREATE TABLE AssignedTags (
+    TagID integer REFERENCES Tags(TagID),
+    UserID integer REFERENCES Users(UserID),
+    Created integer
+);
+
 CREATE TABLE VerificationCodes (
     UserID integer NOT NULL REFERENCES Users(UserID),
     Code text,

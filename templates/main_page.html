@@ -11,6 +11,7 @@
     <body>
         <!--Link to Java Bootstrap used throughout the webpage-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <script src="..\static\javascript\main_page.js"></script>
         
         {{Header | safe}}
 
@@ -25,43 +26,38 @@
         </div>
 
         <div class="SearchBarContainer">
+            <p>Begin searching for your ideal mentor below</p>
             <input type="text" placeholder="Search.."><br><br>
             <input type="text" placeholder="Insert Tags..."><br><br>
-            <button class="SearchSubmitButton" onclick="console.log('Searching.......')">Search</button>
+            <button class="SearchSubmitButton" onclick="console.log(var1)">Search</button>
         </div>
 
         <div class="MentorListContainer">
-            <div class="MentorItemContainer">
-                <div class="MentorImageContainer">
-                    <p>Image goes here</p>
-                </div>
-                <div class="MentorNameContainer">
-                    <p>Mentor Name</p>
-                </div>
-                <div class="MentorTagsContainer">
-                    Mentor Tags
+            <div class="card" style="width: 18rem;">
+                <img src="....." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulf of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Apply</a>
                 </div>
             </div>
-            <div class="MentorItemContainer">
-                <div class="MentorImageContainer">
-                    <p>Image goes here</p>
-                </div>
-                <div class="MentorNameContainer">
-                    <p>Mentor Name</p>
-                </div>
-                <div class="MentorTagsContainer">
-                    Mentor Tags
+            
+            <div class="card" style="width: 18rem;">
+                <img src="....." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulf of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Apply</a>
                 </div>
             </div>
-            <div class="MentorItemContainer">
-                <div class="MentorImageContainer">
-                    <p>Image goes here</p>
-                </div>
-                <div class="MentorNameContainer">
-                    <p>Mentor Name</p>
-                </div>
-                <div class="MentorTagsContainer">
-                    Mentor Tags
+
+            
+            <div class="card" style="width: 18rem;">
+                <img src="....." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulf of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Apply</a>
                 </div>
             </div>
         </div>

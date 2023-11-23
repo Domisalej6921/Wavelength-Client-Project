@@ -20,46 +20,35 @@ body {
 
 .SearchSubmitButton {
     border-radius: 8px;
+    transition: 0.5s;
+    background-color: #b4a7d5;
 }
 
 .MentorListContainer {
     display: flex;
 }
 
-.MentorItemContainer {
-    margin-top: 5%;
+.card {
     margin-right: 5%;
-    width: 35%;
+    margin-top: 5%;
 }
 
-.MentorImageContainer {
-    background-color: blue;
-    padding: 10px;
-    height: 140px;
-    color: white;
-    border-style: solid;
-    border-color: red;
-}
-.MentorNameContainer {
-    background-color: blue;
-    padding: 10px;
-    height: 50px;
-    color: white;
-    border-style: solid;
-    border-color: red;
-}
-
-.MentorTagsContainer {
-    background-color: blue;
-    padding: 10px;
-    height: 70px;
-    color: white;
-    border-style: solid;
-    border-color: red;
+.btn btn-primary {
+    background-color: #b4a7d5;
 }
 
 .ViewMoreButton {
     padding: 10px;
     margin: 55px;
-    width: 200px
+    width: 300px;
+    transition: 0.5s;
+    background-color: #b4a7d5;
+}
+
+
+.SearchSubmitButton:hover, .ViewMoreButton:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.225);
+    transition: 0.5s;
 }

@@ -1,1 +1,3 @@
-let var1 = 1234
+function fn1 () {
+    alert("Searching...");
+}

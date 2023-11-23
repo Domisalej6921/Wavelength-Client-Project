@@ -31,6 +31,7 @@ body {
 }
 
 .MentorListContainer {
+    display: inline-flex;
     align-content: center;
 }
 

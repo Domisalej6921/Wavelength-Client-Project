@@ -13,6 +13,10 @@
 **/appsettings.json
 **/appsettings.Development.json
 
+# Ignore local SQLite databases
+**/*.sqlite
+**/*.db
+
 # Add other files/directories to ignore here if needed
 **/Dockerfile
 **.DS_Store

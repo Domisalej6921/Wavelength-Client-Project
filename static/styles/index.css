@@ -38,8 +38,8 @@ a {
     --bs-btn-active-border-color: #b29cd7;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-disabled-color: #000000;
-    --bs-btn-disabled-bg: #f8f9fa;
-    --bs-btn-disabled-border-color:#f8f9fa
+    --bs-btn-disabled-bg: #c5bbdc;
+    --bs-btn-disabled-border-color: #c9c0da
 }
 
 /* Learnt about filters using:
@@ -50,8 +50,4 @@ https://codepen.io/sosuke/pen/Pjoqqp*/
 
 .pastel-svg {
     filter: invert(77%) sepia(28%) saturate(368%) hue-rotate(170deg) brightness(94%) contrast(93%);
-}
-
-.pastel-tooltip {
-  --bs-tooltip-bg: #c0b3da;
 }

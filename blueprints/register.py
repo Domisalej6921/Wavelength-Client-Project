@@ -26,7 +26,7 @@ def verify_auth():
 
         # Check if the code exists
         if code is not None:
-            data = verificationCodesRepository.getWithVerifyCode(code)
+            data = verificationCodesRepository.getVerifyWithCode(code)
             if data is not None:
                 # Delete the verification code and redirect to the login page
                 verificationCodesRepository.delete(code)

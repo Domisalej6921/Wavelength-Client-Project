@@ -31,5 +31,9 @@ def index():
 from blueprints.register import register
 app.register_blueprint(register)
 
+# Import login blueprint
+from blueprints.login import login
+app.register_blueprint(login)
+
 if __name__ == '__main__':
     app.run(debug=True)

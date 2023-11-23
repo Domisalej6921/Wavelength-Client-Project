@@ -5,7 +5,11 @@ class VerificationCodesRepository:
         # Inherit the DataHelper class
         self.db = DataHelper()
 
-    def getWithVerifyCode(self, code: str):
+    def getVerifyWithUserID(self, userID: int):
+        """Gets a verification code with a userID."""
+        return self.db.selectFirstWithParams("SELECT * FROM VerificationCodes WHERE isPasswordCode = ? AND UserID = ?", (0, userID))
+
+    def getVerifyWithCode(self, code: str):
         """Gets a verification code with a code."""
         return self.db.selectFirstWithParams("SELECT * FROM VerificationCodes WHERE isPasswordCode = ? AND Code = ?", (0, code))
 

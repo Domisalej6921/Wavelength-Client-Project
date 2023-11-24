@@ -13,6 +13,13 @@ class AccountRepository:
         """Gets an account with a username."""
         return self.db.selectFirstWithParams("SELECT * FROM Users WHERE Username = ?", (username,))
 
+    def putNewPassword(self, data: dict):
+        """Updates a user's password."""
+        self.db.execute(
+            "UPDATE Users SET Password = ?, Salt = ? WHERE UserID = ?",
+            (data["password"], data["salt"], data["userID"])
+        )
+
     def insert(self, data: dict):
         """Inserts an account into the database."""
         self.db.execute(

@@ -70,7 +70,7 @@ class ResetPassword {
 
                 // If we get here then an error occurred
                 document.getElementById("passwordResetFormSubmit").innerHTML = Buttons.getPastelButton('Get Reset Code', 'ResetPassword.submitInitiateForm()', 'lg');
-                if (this.status === 401 || this.status === 403) {
+                if (this.status === 406) {
                     document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(issue, "Invalid Input!");
                 }
                 else {
@@ -94,7 +94,25 @@ class ResetPassword {
             repeatPassword: document.getElementById("repeatPassword").value,
         }
 
+        // Local input validation
         let issue = "";
+
+        // Check if the password is at least 8 characters long
+        if (data.password.length < 8) {
+            issue = "Password must be at least 8 characters long.";
+        }
+        // Check if the passwords match
+        else if (data.password !== data.repeatPassword) {
+            issue = "Passwords do not match.";
+        }
+
+        if (issue.length > 0) {
+            // Set the form button to a default state and display an error alert
+            document.getElementById("passwordResetFormSubmit").innerHTML = Buttons.getPastelButton("Reset Password", "ResetPassword.submitResetForm()", "lg");
+            document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(issue, "Invalid Input!");
+
+            return
+        }
 
         // Send the form data to the server
         const xhttp = new XMLHttpRequest();
@@ -105,8 +123,8 @@ class ResetPassword {
                     // Redirect to the login page
                     window.location.href = "/login?reset=true";
                 }
-                // If the server returns a 406 status code (Not Acceptable)
-                else if (this.status === 406) {
+                // If the server returns a 401 status code (Unauthorized) or a 406 status code (Not Acceptable)
+                else if (this.status === 401 || this.status === 406) {
                     issue = this.responseText;
                 }
                 // If the server returns a 400 status code (Bad Request)
@@ -119,7 +137,7 @@ class ResetPassword {
 
                 // If we get here then an error occurred
                 document.getElementById("passwordResetFormSubmit").innerHTML = Buttons.getPastelButton("Reset Password", "ResetPassword.submitResetForm()", "lg")
-                if (this.status === 401 || this.status === 403) {
+                if (this.status === 401 || this.status === 406) {
                     document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(issue, "Invalid Input!");
                 }
                 else {

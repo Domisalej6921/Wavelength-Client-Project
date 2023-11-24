@@ -13,6 +13,10 @@ class VerificationCodesRepository:
         """Gets a verification code with a code."""
         return self.db.selectFirstWithParams("SELECT * FROM VerificationCodes WHERE isPasswordCode = ? AND Code = ?", (0, code))
 
+    def getResetWithCode(self, code: str):
+        """Gets a verification code with a code."""
+        return self.db.selectFirstWithParams("SELECT * FROM VerificationCodes WHERE isPasswordCode = ? AND Code = ?", (1, code))
+
     def insert(self, data: dict):
         """Inserts an account into the database."""
         self.db.execute(

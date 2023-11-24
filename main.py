@@ -21,7 +21,6 @@ app = Flask(__name__)
 
 app.secret_key = os.environ['flaskSecretKey']
 
-
 # Route for the index page
 @app.route('/')
 def index():

@@ -8,7 +8,7 @@ class FooterModel:
             <div class="container text-center">
               <div class="row align-items-center">
                 <div class="col justify-items-start">
-                  <a class="footer-logo" href="#">
+                  <a class="footer-logo" href="/home">
                       <img class="logo" src="../static/images/logo-temp.png"  alt="" width="45" height="45">
                   </a>
                 </div>
@@ -20,19 +20,19 @@ class FooterModel:
                   <ul class="contacts-list">
                       <li class="contacts-text">
                           Email:
-                          <a class="contacts-links" href="#">
+                          <a class="contacts-links" href="example@example.co.uk">
                               example@example.co.uk
                           </a>
                       </li>
                       <li class="contacts-text">
                           Phone:
-                          <a class="contacts-links" href="#">
+                          <a class="contacts-links" href="0777777777">
                               0777777777
                           </a>
                       </li>
                       <li class="contacts-text">
                           Address:
-                          <a class="contacts-links" href="#">
+                          <a class="contacts-links" href="Example Address">
                               Example Address
                           </a>
                       </li>
@@ -51,7 +51,7 @@ class HeaderModel:
         <nav class="navbar bg-primary" style="--bs-bg-opacity: .175;">
 
                 <ul class="nav justify-content-start">
-                    <a class="header-logo" href="#">
+                    <a class="header-logo" href="/home">
                         <img class="logo" src="../static/images/logo-temp.png"  alt="" width="45" height="45">
                     </a>
                 </ul>
@@ -71,12 +71,12 @@ class HeaderModel:
                       <div class="offcanvas-body">
                         <ul class="options-list">
                             <li>
-                                <a class="menu-links" href="#">
+                                <a class="menu-links" href="/login">
                                     Log In
                                 </a>
                             </li>
                             <li>
-                                <a class="menu-links" href="#">
+                                <a class="menu-links" href="/register">
                                     Sign Up
                                 </a>
                             </li>
@@ -111,17 +111,17 @@ class HeaderModel:
                   <div class="offcanvas-body">
                     <ul class="options-list">
                         <li>
-                            <a class="menu-links" href="#">
+                            <a class="menu-links" href="/account">
                                 Account
                             </a>
                         </li>
                         <li>
-                            <a class="menu-links" href="#">
+                            <a class="menu-links" href="/settings">
                                 Settings
                             </a>
                         </li>
                         <li>
-                            <a class="menu-links" href="#">
+                            <a class="menu-links" href="/logout">
                                 Log Out
                             </a>
                         </li>

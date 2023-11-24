@@ -22,6 +22,6 @@
 # **App Configuration**
 For the app to work successfully, the following must be done:
 - The appsettings.json file must be created in the root directory.
-- The file should use the template in the appsettings.json.Example.json file which is located in the root directory.
+- The file should use the template in the appsettings.Example.json file which is located in the root directory.
 - For SMTP credentials the related fields can be left blank the server will instead:
-- - Print out the email to the console.
+  - Print out the email to the console.

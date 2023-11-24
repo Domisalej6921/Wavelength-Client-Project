@@ -13,6 +13,7 @@ def create_community():
 @community.route('/create_community', methods=['POST'])
 def create_community_form():
     try:
+        # Gets the JSON payload from the request and inherits classes
         data = request.get_json()
 
         #Checks that data recieved from the POST meets all required fields

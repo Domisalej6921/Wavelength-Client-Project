@@ -76,6 +76,12 @@ body {
 @media (max-width: 866px) {
     body {
         font-size: 14px;
+        display: inline-block;
+        align-content: left;
+    }
+
+    .MentorListContainer {
+        display: inline;
     }
 }
 
@@ -83,5 +89,11 @@ body {
 @media (max-width: 480px) {
     body {
         font-size: 12px;
+        display: inline-block;
+        align-content: left;
+    }
+
+    .MentorListContainer {
+        display: inline;
     }
 }

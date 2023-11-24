@@ -1,5 +1,5 @@
 import os
-from data.datahelper import DataHelper
+from data.dataHelper import DataHelper
 
 # Check the databases directory exists and if not create it
 if not os.path.exists("data/databases"):
@@ -23,4 +23,4 @@ queries = dbInfo.split(";")
 
 # Execute each query
 for query in queries:
-    db.Execute(query)
+    db.execute(query)

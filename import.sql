@@ -43,8 +43,10 @@ CREATE TABLE Entities (
     ProfilePictureID integer REFERENCES Files(FileID),
     BackgroundID integer REFERENCES Files(FileID),
     isCompany integer,
+    isApproved integer,
     Created integer
 );
+
 
 CREATE TABLE EntityMembers (
     EntityID integer NOT NULL REFERENCES Entities(EntityID),

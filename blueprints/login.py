@@ -10,14 +10,21 @@ from logic.email import Email
 login = Blueprint('login', __name__)
 
 @login.route('/login')
-def login_page():
+def loginPage():
     if not ("UserID" in session):
         return render_template('auth/login.html')
     else:
         return redirect("/account/dashboard")
 
+@login.route('/password-reset')
+def passwordResetPage():
+    if not ("UserID" in session):
+        return render_template('auth/passwordReset.html')
+    else:
+        return redirect("/account/dashboard")
+
 @login.route('/auth/login', methods=['POST'])
-def login_auth():
+def loginAuth():
     if not ("UserID" in session):
         # Get the JSON payload from the request and inherit classes
         data = request.get_json()

@@ -10,14 +10,14 @@ from logic.email import Email
 register = Blueprint('register', __name__)
 
 @register.route('/register')
-def register_page():
+def registerPage():
     if not ("UserID" in session):
         return render_template('auth/register.html')
     else:
         return redirect("/account/dashboard")
 
 @register.route('/verify')
-def verify_auth():
+def verifyAuth():
     if not ("UserID" in session):
         # Get the code from the URL and inherit classes
         code = request.args.get("code")
@@ -37,7 +37,7 @@ def verify_auth():
         return redirect("/account/dashboard")
 
 @register.route('/auth/register', methods=['POST'])
-def register_auth():
+def registerAuth():
     if not ("UserID" in session):
         # Get the JSON payload from the request and inherit classes
         data = request.get_json()

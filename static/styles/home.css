@@ -1,5 +1,6 @@
-.body {
-    margin: 10%;
+.home-body {
+    margin: 1%;
+    background-color: #eeeeee;
 }
 
 .caption-1 {
@@ -45,12 +46,22 @@
 }
 
 .button-register {
-    padding: 2%;
-    align-self: center;
+    display: block;
+    padding: 6%;
+    align-items: center;
 }
 
+.button-register:hover {
+    color: inherit;
+}
+
+
 .card-text {
-    padding-top: 2%;
+    color: #8bbbbb;
+    font-size: large;
+    display: block;
+    padding-top: 6%;
     padding-bottom: 5%;
+    align-self: center;
     justify-self: center;
 }

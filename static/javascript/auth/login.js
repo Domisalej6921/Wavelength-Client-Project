@@ -1,4 +1,22 @@
 class Login {
+    static renderPreDefinedAlerts() {
+        // urlParams method was taken from https://www.sitepoint.com/get-url-parameters-with-javascript/
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        if (urlParams.get('verified') !== null) {
+            document.getElementById("formAlerts").innerHTML = Alerts.successAlert(
+                "Your account has been verified. You may now login.",
+                "Success!"
+            );
+        }
+        else if (urlParams.get('reset') !== null) {
+            document.getElementById("formAlerts").innerHTML = Alerts.successAlert(
+                "Your password has been reset. You may now login.",
+                "Success!"
+            );
+        }
+    }
     static submitForm() {
         // Set the form button to a loading state
         document.getElementById("loginFormSubmit").innerHTML = Buttons.getPastelButtonLoading('Authenticating...', 'lg');

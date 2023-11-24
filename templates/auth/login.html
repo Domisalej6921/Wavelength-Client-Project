@@ -13,7 +13,7 @@
         <!-- Import the main script -->
         <script src="/static/javascript/auth/login.js" type="text/javascript"></script>
     </head>
-    <body>
+    <body onload="Login.renderPreDefinedAlerts()">
         {{ header | safe }}
 
         <!-- Used bootstrap documentation: https://getbootstrap.com/docs/5.2/forms/overview/ -->

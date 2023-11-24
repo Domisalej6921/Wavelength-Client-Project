@@ -30,7 +30,7 @@ def verifyAuth():
             if data is not None:
                 # Delete the verification code and redirect to the login page
                 verificationCodesRepository.delete(code)
-                return redirect("/login")
+                return redirect("/login?verified=true")
 
         return render_template('auth/verify.html')
     else:

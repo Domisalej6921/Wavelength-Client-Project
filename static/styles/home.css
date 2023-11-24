@@ -1,41 +1,51 @@
 .home-body {
     margin: 1%;
-    background-color: #eeeeee;
+    background-image: url("/static/images/background-image.png");
+    background-attachment: scroll;
+    z-index: 0;
 }
 
 .caption-1 {
     justify-content: start;
     align-content: center;
+     z-index: 1;
 }
 
 .scroll-down {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 .move-down-button {
     padding: 10% 5%;
+    z-index: 1;
 }
 
 .sign-up-section {
-    height: 100vh;
+    height: 50vh;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
+
+
 
 .card {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 .card-body {
     display: block;
     justify-content: space-evenly;
     align-items: center;
+    z-index: 1;
 }
 
 .card-title {
@@ -43,25 +53,47 @@
     font-size: xxx-large;
     padding-bottom: 1%;
     padding-top: 5%;
+    z-index: 1;
 }
 
 .button-register {
     display: block;
     padding: 6%;
     align-items: center;
+    z-index: 1;
 }
 
 .button-register:hover {
     color: inherit;
+    z-index: 1;
 }
 
 
 .card-text {
-    color: #8bbbbb;
+    color: #0b0b5b;
     font-size: large;
     display: block;
     padding-top: 6%;
     padding-bottom: 5%;
     align-self: center;
     justify-self: center;
+    z-index: 1;
+}
+
+.info-title {
+    color: black;
+    font-size: x-large;
+    font-family: sans-serif;
+    padding-top: 3%;
+    padding-bottom: 2%;
+    z-index: 1;
+}
+
+.info-paragraph {
+    color: #0b0b5b;
+    font-size: small;
+    font-family: sans-serif;
+    padding-top: 3%;
+    padding-bottom: 2%;
+    z-index: 1;
 }

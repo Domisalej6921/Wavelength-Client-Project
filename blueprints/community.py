@@ -1,42 +1,63 @@
 from flask import Blueprint, render_template, request, redirect, session
-from data.ComunityRequestRepository import ComunityRequestRepository
+from datetime import datetime
+
+from data.communityRepository import CommunityRepository
+from data.accountRepository import AccountRepository
 
 community = Blueprint("community", __name__)
-community_repo = ComunityRequestRepository()
 
-@community.route('/create_community')
+@community.route('/community/create')
 def create_community():
-    return render_template('create_community.html')
+    return render_template('createCommunity.html')
 
 # To help me write the following code, I read through one of my team members backend code for creating a POST API route
 # The name of the file I learnt from is Registry.py within blueprints
-@community.route('/create_community', methods=['POST'])
+@community.route('/api/community/create', methods=['POST'])
 def create_community_form():
-    try:
+    if "UserID" in session:
         # Gets the JSON payload from the request and inherits classes
         data = request.get_json()
 
-        #Checks that data recieved from the POST meets all required fields
-        required_fields = ['name', 'description', 'profile_picture', 'profile_banner', 'is_company']
-        if not all(field in data for field in required_fields):
-            return "There are missing fields", 400
+        communityRepository = CommunityRepository()
+        accountRepository = AccountRepository()
 
-         
-        name = data.get('Name')
-        description = data.get('Description')
-        profile_picture = data.get('ProfilePictureID')
-        profile_banner = data.get('BackgroundID')
-        is_company = data.get('isCompany')
+        # Get the userID from the session cookie
+        userID = int(session["UserID"])
 
-        #Creating the community
-        result = community_repo.Create(name, description, profile_picture, profile_banner, is_company)
+        # Learnt about HTTP status codes from "https://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
+        # The status codes are appened to the end of the return statements is passed into the JS file to help the client understand the nature of the issue
+
+        # Check if the JSON exists
+        if data is None:
+            return "No JSON payload was uploaded with the request!", 400
+
+        # Checks that data recieved from the POST meets all required fields
+        if data not in ['name', 'description', 'isCompany']:
+            return "The JSON payload is missing required fields!", 400
+
+        # Check if the JSON has the correct field types
+        if type(data["name"]) is not str or type(data["description"]) is not str or type(data["isCompany"]) is not bool:
+            return "The JSON payload has incorrect field types!", 400
+        
+        # Get the user's account and check if the user if they have permissions to create a community
+        account = accountRepository.getWithID(userID)
+        if account[6] == 0:
+            return "Your account does not have permissions for this action.", 403
+
+        communityRepository.insert({
+            "Name": data["name"],
+            "Description": data["description"],
+            "ProfilePictureID": 0,
+            "BackgroundID": 0,
+            "isCompany": int(data["isCompany"]),
+            "isApproved": 0,
+            "Created": int(datetime.datetime.now().timestamp())
+        })
 
         # Success message
         return "Community created successfully", 200
-    
-    # Learning reasource for Exception groups "https://docs.python.org/3/library/exceptions.html"
-    except Exception as e:
-        return "Error creating community: " + str(e), 500
+    else:
+        return "You need to be authenticated to preform this task.", 401
 
 if __name__ == '__main__':
     app.run(debug=True)

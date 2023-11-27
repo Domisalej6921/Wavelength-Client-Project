@@ -13,6 +13,12 @@
     font-size: 1.5vw;
 }
 
+@media (max-width: 600px) {
+    .carousel-text {
+        font-size: 2vw;
+    }
+}
+
 .scroll-down {
     display: flex;
     justify-content: center;

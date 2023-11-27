@@ -5,10 +5,12 @@
     z-index: 0;
 }
 
-.caption-1 {
-    justify-content: start;
-    align-content: center;
-     z-index: 1;
+.carousel-title {
+    font-size: 4vw;
+}
+
+.carousel-text {
+    font-size: 1.5vw;
 }
 
 .scroll-down {
@@ -32,8 +34,6 @@
     z-index: 1;
 }
 
-
-
 .card {
     display: flex;
     justify-content: center;
@@ -50,7 +50,6 @@
 
 .card-title {
     font-family: sans-serif;
-    font-size: xxx-large;
     padding-bottom: 1%;
     padding-top: 5%;
     z-index: 1;
@@ -71,7 +70,6 @@
 
 .card-text {
     color: #0b0b5b;
-    font-size: large;
     display: block;
     padding-top: 6%;
     padding-bottom: 5%;
@@ -81,19 +79,37 @@
 }
 
 .info-title {
+    font-size: 3vw;
     color: black;
-    font-size: x-large;
     font-family: sans-serif;
     padding-top: 3%;
     padding-bottom: 2%;
     z-index: 1;
 }
 
+@media (min-width: 1200px) {
+    .info-title {
+        font-size: 2vw;
+    }
+}
+
 .info-paragraph {
+    font-size: 1.5vw;
     color: #0b0b5b;
-    font-size: small;
     font-family: sans-serif;
     padding-top: 3%;
     padding-bottom: 2%;
     z-index: 1;
+}
+
+@media (min-width: 1200px) {
+    .info-paragraph {
+        font-size: 1vw;
+    }
+}
+
+.hidden-link ,.hidden-link:hover {
+    color: inherit;
+    text-decoration: None;
+    cursor: default;
 }

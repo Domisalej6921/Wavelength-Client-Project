@@ -2,6 +2,8 @@ class CreditGeneration {
     //set up the class for the js to be called from
     static checkCheckbox() {
 
+        print("gaming")
+        
         document.addEventListener("DOMContentLoaded", function () {
             // the event listener that will get the elements then change them depending on the checkbox
             const unlock = document.getElementById("existingCommunity");

@@ -22,11 +22,11 @@
         <h3 class="container-title">Generate New Credits!</h3>
         <div id="formAlerts"></div>
         <form class="form-floating" id="creditCreationForm">
-            <div class="form-floating mb-3">
+            <div class="form-floating mb-3" id="numCreditsDiv">
                 <input class="form-control" id="numCredits" placeholder="Enter a Number">
                 <label for="numCredits">The Number of Credits</label>
             </div>
-            <div class="form-floating mb-3">
+            <div class="form-floating mb-3" id="numGroupsDiv">
                 <input class="form-control" id="numGroups" placeholder="Enter a Number">
                 <label for="numGroups">The Number of Groups of Credits</label>
             </div>
@@ -49,22 +49,22 @@
             </div>
             <div class="align-content" id="createCommunityDiv">
                 <div class="form-floating mb-3">
-                <input class="form-control" id="createCommunityName" placeholder="Enter a Community Name">
-                <label for="createCommunityName">The New Community Name</label>
+                    <a href="/community/create">
+                        <button class="btn btn-pastel btn-lg">
+                            Create a New Community Here!
+                        </button>
+                    </a>
                 </div>
-                <div class="form-floating mb-3">
-                <input class="form-control" id="createCommunityDescription" placeholder="Enter a Community Description">
-                <label for="createCommunityDescription">The New Community Description</label>
-                </div>
-            </div>
-
-            <div class="align-content">
-                <button class="btn btn-pastel btn-lg">
-                    Generate
-                </button>
             </div>
 
         </form>
+
+        <div class="align-content">
+            <button class="btn btn-pastel btn-lg">
+                Generate
+            </button>
+        </div>
+
     </div>
 </div>
 

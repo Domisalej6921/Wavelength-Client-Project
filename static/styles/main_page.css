@@ -22,12 +22,13 @@ body {
     text-align: center;
 }
 
-.SearchSubmitButton {
+.SearchSubmitButton, .ResetSearch {
     border-radius: 8px;
     transition: 0.5s;
     background-color: #b4a7d5;
     border-color: white;
     color: white;
+    margin: 1%;
 }
 
 .MentorListContainer {
@@ -54,9 +55,9 @@ body {
     border: none;
 }
 
-.ViewMoreButton {
+.ViewMoreButton, .BecomeMentor {
     padding: 10px;
-    margin: 55px;
+    margin-top: 5%;
     width: 300px;
     transition: 0.5s;
     background-color: #b4a7d5;
@@ -65,7 +66,7 @@ body {
 }
 
 
-.SearchSubmitButton:hover, .ViewMoreButton:hover {
+.SearchSubmitButton:hover, .ViewMoreButton:hover, .BecomeMentor:hover, .ResetSearch:hover {
     opacity: 0.8;
     cursor: pointer;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.225);

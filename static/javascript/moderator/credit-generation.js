@@ -1,24 +1,24 @@
 class CreditGeneration {
     static submitForm() {
 
-        document.addEventListener(type: "DOMContentLoaded", listener: function() {
-            const unlock = document.getElementById(elementId: "existingCommunity");
-            const chooseCommunityDiv = document.getElementById(elementId:"chooseCommunityDiv");
-            const createCommunityDiv = document.getElementById(elementId:"createCommunityDiv");
-            const numCreditsDiv = document.getElementById(elementId:"numCreditsDiv");
-            const numGroupsDiv = document.getElementById(elementId:"numGroupsDiv");
-            const generateButtonDiv = document.getElementById(elementId:"generateButtonDiv");
+        document.addEventListener("DOMContentLoaded",function() {
+            const unlock = document.getElementById("existingCommunity");
+            const chooseCommunityDiv = document.getElementById("chooseCommunityDiv");
+            const createCommunityDiv = document.getElementById("createCommunityDiv");
+            const numCreditsDiv = document.getElementById("numCreditsDiv");
+            const numGroupsDiv = document.getElementById("numGroupsDiv");
+            const generateButtonDiv = document.getElementById("generateButtonDiv");
 
-            unlock.addEventListener(type: "change", listener: function() {
+            unlock.addEventListener("change",function() {
                 if (unlock.checked) {
                     chooseCommunityDiv.style.display = "block";
-                    createCommunityDiv.style.display = "None";
+                    createCommunityDiv.style.display = "none";
 
                 } else {
-                    chooseCommunityDiv.style.display = "None";
-                    numCreditsDiv.style.display = "None";
-                    numGroupsDiv.style.display = "None";
-                    generateButtonDiv.style.display = "None";
+                    chooseCommunityDiv.style.display = "none";
+                    numCreditsDiv.style.display = "none";
+                    numGroupsDiv.style.display = "none";
+                    generateButtonDiv.style.display = "none";
                     createCommunityDiv.style.display = "block";
                 }
             })
@@ -33,3 +33,7 @@ class CreditGeneration {
 
     }
 }
+
+document.addEventListener("DOMContentLoaded",function() {
+    CreditGeneration.submitForm()
+});

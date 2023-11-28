@@ -22,20 +22,28 @@
         <h3 class="container-title">Generate New Credits!</h3>
         <div id="formAlerts"></div>
         <form class="form-floating" id="creditCreationForm">
+
             <div class="form-floating mb-3" id="numCreditsDiv">
                 <input class="form-control" id="numCredits" placeholder="Enter a Number">
                 <label for="numCredits">The Number of Credits</label>
             </div>
+
             <div class="form-floating mb-3" id="numGroupsDiv">
                 <input class="form-control" id="numGroups" placeholder="Enter a Number">
                 <label for="numGroups">The Number of Groups of Credits</label>
             </div>
+
+            <div id="displayCreditsDiv">
+                <p>There will be <strong id="creditTotal"> 0 </strong> credits generated.</p>
+            </div>
+
             <div>
                 <label>
                 <input class="form-check-input mt-0" type="checkbox" id="existingCommunity" value="" aria-label="Checkbox for following text input">
                 Is this for an existing Community?
                 </label>
             </div>
+
             <div class="align-content" id="chooseCommunityDiv">
                 <div class="form-floating mb-3">
                 <select class="form-select" id="chooseCommunity" aria-label="Floating label select example">
@@ -47,6 +55,7 @@
                 <label for="chooseCommunity">What community are these credits for?</label>
                 </div>
             </div>
+
 
         </form>
 

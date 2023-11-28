@@ -7,6 +7,6 @@ profile = Blueprint('profile', __name__)
 @profile.route('/account/profile')
 def profilePage():
     if "UserID" in session:
-        pass
+        return render_template("profile.html")
     else:
         return redirect("/login")

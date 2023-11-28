@@ -35,5 +35,9 @@ app.register_blueprint(register)
 from blueprints.login import login
 app.register_blueprint(login)
 
+# Import profile blueprint
+from blueprints.profile import profile
+app.register_blueprint(profile)
+
 if __name__ == '__main__':
     app.run(debug=True)

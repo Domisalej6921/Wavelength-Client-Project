@@ -6,7 +6,8 @@ class CreditGeneration {
             const chooseCommunityDiv = document.getElementById(elementId:"chooseCommunityDiv");
             const createCommunityDiv = document.getElementById(elementId:"createCommunityDiv");
             const numCreditsDiv = document.getElementById(elementId:"numCreditsDiv");
-            const numGroupsDiv = document.getElementById(elementId;:"numGroupsDiv");
+            const numGroupsDiv = document.getElementById(elementId:"numGroupsDiv");
+            const generateButtonDiv = document.getElementById(elementId:"generateButtonDiv");
 
             unlock.addEventListener(type: "change", listener: function() {
                 if (unlock.checked) {
@@ -17,6 +18,7 @@ class CreditGeneration {
                     chooseCommunityDiv.style.display = "None";
                     numCreditsDiv.style.display = "None";
                     numGroupsDiv.style.display = "None";
+                    generateButtonDiv.style.display = "None";
                     createCommunityDiv.style.display = "block";
                 }
             })

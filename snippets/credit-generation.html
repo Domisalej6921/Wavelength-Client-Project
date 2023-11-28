@@ -36,8 +36,8 @@
                 Is this for an existing Community?
                 </label>
             </div>
-            <div class="align-content">
-                <div class="form-floating mb-3" id="optionsDiv">
+            <div class="align-content" id="chooseCommunityDiv">
+                <div class="form-floating mb-3">
                 <select class="form-select" id="chooseCommunity" aria-label="Floating label select example">
                     <option>Community One</option>
                     <option>Community Two</option>
@@ -45,6 +45,16 @@
                     <option>Community Four</option>
                 </select>
                 <label for="chooseCommunity">What community are these credits for?</label>
+                </div>
+            </div>
+            <div class="align-content" id="createCommunityDiv">
+                <div class="form-floating mb-3">
+                <input class="form-control" id="createCommunityName" placeholder="Enter a Community Name">
+                <label for="createCommunityName">The New Community Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                <input class="form-control" id="createCommunityDescription" placeholder="Enter a Community Description">
+                <label for="createCommunityDescription">The New Community Description</label>
                 </div>
             </div>
 

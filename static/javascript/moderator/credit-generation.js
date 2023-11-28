@@ -3,13 +3,17 @@ class CreditGeneration {
 
         document.addEventListener(type: "DOMContentLoaded", listener:function() {
             var unlock = document.getElementById(elementId: "existingCommunity");
-            var optionsDiv = document.getElementById(elementId:"optionsDiv");
+            var chooseCommunityDiv = document.getElementById(elementId:"chooseCommunityDiv");
+            var createCommunityDiv = document.getElementById(elementId:"createCommunityDiv");
 
             unlock.addEventListener(type:"change", listener:function() {
                 if (unlock.checked) {
-                    optionsDiv.style.display = "block";
+                    chooseCommunityDiv.style.display = "block";
+                    createCommunityDiv.style.display = "None";
+
                 } else {
-                    optionsDiv.style.display = "None";
+                    chooseCommunityDiv.style.display = "None";
+                    createCommunityDiv.style.display = "block";
                 }
             })
         })

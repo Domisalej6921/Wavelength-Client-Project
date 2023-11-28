@@ -1,3 +1,5 @@
 class CreditGeneration {
+    static submitForm() {
 
+    }
 }

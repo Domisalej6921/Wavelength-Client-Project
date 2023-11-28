@@ -1,7 +1,9 @@
 class CreditGeneration {
-    static submitForm() {
+    //set up the class for the js to be called from
+    static checkCheckbox() {
 
-        document.addEventListener("DOMContentLoaded",function() {
+        document.addEventListener("DOMContentLoaded", function () {
+            // the event listener that will get the elements then change them depending on the checkbox
             const unlock = document.getElementById("existingCommunity");
             const chooseCommunityDiv = document.getElementById("chooseCommunityDiv");
             const createCommunityDiv = document.getElementById("createCommunityDiv");
@@ -9,7 +11,8 @@ class CreditGeneration {
             const numGroupsDiv = document.getElementById("numGroupsDiv");
             const generateButtonDiv = document.getElementById("generateButtonDiv");
 
-            unlock.addEventListener("change",function() {
+            // adds an event listener to the unlock checkbox for the "change" event.
+            unlock.addEventListener("change", function () {
                 if (unlock.checked) {
                     chooseCommunityDiv.style.display = "block";
                     createCommunityDiv.style.display = "none";
@@ -23,7 +26,9 @@ class CreditGeneration {
                 }
             })
         })
+    }
 
+    static submitForm () { //submit form that will get the data from the form elements
         const data = {
             username: document.getElementById("numCredits").value,
             name: document.getElementById("numGroups").value,
@@ -32,6 +37,7 @@ class CreditGeneration {
 
 
     }
+
 }
 
 document.addEventListener("DOMContentLoaded",function() {

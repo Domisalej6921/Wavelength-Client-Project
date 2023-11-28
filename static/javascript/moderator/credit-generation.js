@@ -30,11 +30,28 @@ class CreditGeneration {
 
     }
 
+    //Used to calculate and update the display of the number of credits being generated
+    static totalCredits () {
+        var numCredits = document.getElementById("numCredits").value;
+        var numGroups = document.getElementById("numGroups").value;
+
+        if (numCredits === null) {
+            numCredits = 0
+        }
+        if (numGroups === null) {
+            numGroups = 0
+        }
+
+        var creditTotal = numCredits * numGroups
+        document.getElementById("creditTotal").innerHTML = creditTotal;
+        console.log(creditTotal)
+    }
+
     static submitForm () { //submit form that will get the data from the form elements
 
         const checked = document.getElementById("existingCommunity").checked;
         if (checked === true) {
-            
+
             const data = {
                 numCredits: document.getElementById("numCredits").value,
                 numGroups: document.getElementById("numGroups").value,

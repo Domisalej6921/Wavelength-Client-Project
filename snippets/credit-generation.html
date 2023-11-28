@@ -12,7 +12,7 @@
     <script src="/static/javascript/moderator/credit-generation.js" type="text/javascript"></script>
 
 </head>
-<body class="home-body" onload="CreditGeneration.checkCheckbox()">
+<body class="home-body">
 
 {{Header | safe}}
 
@@ -39,7 +39,7 @@
 
             <div>
                 <label>
-                <input class="form-check-input mt-0" type="checkbox" id="existingCommunity" value="" aria-label="Checkbox for following text input">
+                <input class="form-check-input mt-0" type="checkbox" onchange="CreditGeneration.checkCheckbox()" id="existingCommunity" value="" aria-label="Checkbox for following text input">
                 Is this for an existing Community?
                 </label>
             </div>

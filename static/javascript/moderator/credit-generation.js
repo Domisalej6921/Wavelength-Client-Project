@@ -4,7 +4,6 @@ class CreditGeneration {
 
         // the event listener that will get the elements then change them depending on the checkbox
         const unlock = document.getElementById("existingCommunity").checked;
-        console.log(unlock)
         const chooseCommunityDiv = document.getElementById("chooseCommunityDiv");
         const createCommunityDiv = document.getElementById("createCommunityDiv");
         const numCreditsDiv = document.getElementById("numCreditsDiv");
@@ -26,15 +25,16 @@ class CreditGeneration {
             numGroupsDiv.style.display = "none";
             numCreditsDiv.style.display = "none";
             generateButtonDiv.style.display = "none";
-            createCommunityDiv.style.display = "block"; //makes this visable
+            createCommunityDiv.style.display = "block"; //makes this visible
         }
 
     }
 
     static submitForm () { //submit form that will get the data from the form elements
 
+        const checked = document.getElementById("existingCommunity").checked;
         if (checked === true) {
-
+            
             const data = {
                 numCredits: document.getElementById("numCredits").value,
                 numGroups: document.getElementById("numGroups").value,

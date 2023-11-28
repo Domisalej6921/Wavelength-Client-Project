@@ -2,13 +2,13 @@ class CreditGeneration {
     static submitForm() {
 
         document.addEventListener(type: "DOMContentLoaded", listener: function() {
-            var unlock = document.getElementById(elementId: "existingCommunity");
-            var chooseCommunityDiv = document.getElementById(elementId:"chooseCommunityDiv");
-            var createCommunityDiv = document.getElementById(elementId:"createCommunityDiv");
-            var numCreditsDiv = document.getElementById(elementId:"numCreditsDiv");
-            var numGroupsDiv = document.getElementById(elementId:"numGroupsDiv");
+            const unlock = document.getElementById(elementId: "existingCommunity");
+            const chooseCommunityDiv = document.getElementById(elementId:"chooseCommunityDiv");
+            const createCommunityDiv = document.getElementById(elementId:"createCommunityDiv");
+            const numCreditsDiv = document.getElementById(elementId:"numCreditsDiv");
+            const numGroupsDiv = document.getElementById(elementId;:"numGroupsDiv");
 
-            unlock.addEventListener(type:"change", listener: function() {
+            unlock.addEventListener(type: "change", listener: function() {
                 if (unlock.checked) {
                     chooseCommunityDiv.style.display = "block";
                     createCommunityDiv.style.display = "None";

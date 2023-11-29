@@ -1,24 +1,26 @@
 import passlib.hash as passlib
 import uuid
+import base64
+import os
 import random
 
 class Cryptography:
     @staticmethod
-    def Digest(text: str) -> str:
+    def digest(text: str) -> str:
         """
         Hash the text using the sha256 algorithm
         """
         return passlib.sha256_crypt.hash(text)
 
     @staticmethod
-    def DigestImage(imagePath: str) -> int:
+    def digestImage(imagePath: str) -> int:
         """
         Hash the image using perceptual hashing
         """
         pass
 
     @staticmethod
-    def CreateSalt() -> str:
+    def createSalt() -> str:
         characters = '1234567890!@£$%=+-_~qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
         salt = ''
         for i in range(0, 16):
@@ -26,7 +28,7 @@ class Cryptography:
         return salt
 
     @staticmethod
-    def VerifyPassword(text: str, hashedText: str) -> bool:
+    def verifyPassword(text: str, hashedText: str) -> bool:
         """
         Verify the text matches the hashed text
         """
@@ -35,7 +37,7 @@ class Cryptography:
         return False
 
     @staticmethod
-    def CreateUUID() -> str:
+    def createUUID() -> str:
         # Generate a random UUID and remove dashes
         random_uuid = str(uuid.uuid4().hex)
 
@@ -43,3 +45,32 @@ class Cryptography:
         sixteen_digit_uuid = random_uuid[:16]
 
         return sixteen_digit_uuid
+
+    @staticmethod
+    def decodeImage(httpEncoding: str) -> tuple[str, str]:
+        """
+        Decode the image using base64 then store the image in a temporary file, returning the UUID
+        """
+
+        # Check that the temp directory exists, if not create it
+        if not os.path.exists("temp/"):
+            os.mkdir("temp/")
+
+        # Split the encoding into the image type and the image data
+        encoding = httpEncoding.split(",")[1]
+        extension = httpEncoding.split(";")[0].split("/")[1]
+
+        # Convert the encoding to bytes
+        image = encoding.encode()
+
+        # Create a UUID for the image name
+        imageUUID = Cryptography.createUUID()
+
+        # Write the image to a temporary file
+        # Used Stackoverflow to help with loading python objects:
+        # https://stackoverflow.com/questions/2323128/convert-string-in-base64-to-image-and-save-on-filesystem
+        with open(f"temp/{imageUUID}.{extension}", "wb") as file:
+            file.write(base64.decodebytes(image))
+
+        # Return the UUID and file extension
+        return imageUUID, extension

@@ -1,17 +1,14 @@
 from data.dataHelper import DataHelper
 
 class FilesRepository:
-    self.db = DataHelper()
-
-    def getFileWithID(self, id: int):
-        return self.db.selectFirstWithParams("SELECT * FROM Files WHERE FileID = ?;", (id,))
-
-
+    def __init__(self):
+        # Inherit the DataHelper class
+        self.db = DataHelper()
 
     def insert(self, data: dict):
-        self.db.execute("""
-        INSERT INTO files (FileID, Name, Extension, Description, Created)
-            VALUES (?, ?, ?, ?, ?)
-        """,
-        (data["FileID"], data["Name"], data["Extension"], data["Description"], data["Created"])
+        """Inserts an account into the database."""
+        self.db.execute(
+            """INSERT INTO Files (FileID, Name, Extension, Description, Created) VALUES 
+            (?, ?, ?, ?, ?)""",
+            (data["FileID"], data["Name"], data["Extension"], data["Description"], data["Created"])
         )

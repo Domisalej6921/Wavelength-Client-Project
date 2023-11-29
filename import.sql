@@ -1,5 +1,5 @@
 CREATE TABLE Files(
-    FileID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+    FileID text NOT NULL PRIMARY KEY,
     Name text,
     Extension text,
     Description text,
@@ -15,8 +15,8 @@ CREATE TABLE Users (
     Salt text,
     isMentor integer,
     awaitingApproval integer,
-    ProfilePictureID integer REFERENCES Files(FileID),
-    BackgroundID integer REFERENCES Files(FileID),
+    ProfilePictureID text REFERENCES Files(FileID),
+    BackgroundID text REFERENCES Files(FileID),
     LastLogin integer,
     Created integer
   );
@@ -54,8 +54,8 @@ CREATE TABLE Entities (
     EntityID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     Name text,
     Description text,
-    ProfilePictureID integer REFERENCES Files(FileID),
-    BackgroundID integer REFERENCES Files(FileID),
+    ProfilePictureID text REFERENCES Files(FileID),
+    BackgroundID text REFERENCES Files(FileID),
     isCompany integer,
     isApproved integer,
     Created integer

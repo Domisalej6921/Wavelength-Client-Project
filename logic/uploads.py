@@ -3,7 +3,8 @@ import shutil
 import datetime
 
 from data.filesRepository import FilesRepository
-from cryptography import Cryptography
+from logic.cryptography import Cryptography
+
 
 class Uploads:
     @staticmethod
@@ -26,10 +27,15 @@ class Uploads:
         """
         Process the image by storing it in the uploads directory and storing a new record in the database
         """
+
+        # Check that the temp directory exists, if not create it
+        if not os.path.exists("static/uploads/"):
+            os.mkdir("static/uploads/")
+        
         # Move the image from the temp directory to the uploads directory
         # Learnt about how to use shutil from:
         # https://stackoverflow.com/questions/8858008/how-do-i-move-a-file-in-python
-        shutil.move("temp/" + imageID + "." + extension, "uploads/" + imageID + "." + extension)
+        shutil.move("temp/" + imageID + "." + extension, "static/uploads/" + imageID + "." + extension)
 
         # Sourced from: https://www.tutorialspoint.com/how-to-convert-datetime-to-an-integer-in-python
         currentTime = int(datetime.datetime.now().timestamp())

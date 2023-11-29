@@ -3,7 +3,7 @@ class Profile {
         document.getElementById("formModalHeader").innerHTML = Modals.header("Edit Profile");
         document.getElementById("formModalBody").innerHTML = Modals.editProfile();
 
-        document.getElementById("root").innerHTML = `<button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Open modal</button>`;
+        document.getElementById("root").innerHTML = `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Open modal</button>`;
     }
 
     static editFormSubmit() {
@@ -17,7 +17,7 @@ class Profile {
         let profilePicture = document.getElementById("profilePicture");
         const profileFile = profilePicture.files[0];
         FileUploads.format(profileFile).then((result) => {
-            fileUploads.profilePicture = result;
+            formData.profilePicture = result;
             console.log(result)
         });
     }

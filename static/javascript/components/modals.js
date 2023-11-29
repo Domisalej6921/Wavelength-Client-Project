@@ -1,17 +1,17 @@
 class Modals {
     static header(title) {
-        return `<div className="modal-header">
-            <h5 className="modal-title" id="exampleModalLabel">${title}</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        return `<div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">${title}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>`
     }
 
     static editProfile() {
         return `<div id="formAlerts"></div>
-        <form className="form-floating" id="loginForm">
-            <div className="form-floating mb-3">
-                <input type="text" className ="form-control" id="modalUsername" placeholder="Username">
-                <label htmlFor="text" >Username</label>
+        <form class="form-floating" id="loginForm">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="modalUsername" placeholder="Username">
+                <label class="text" >Username</label>
             </div>
             <div class="mb-3">
                 <label for="profilePicture" class="FormText">Profile Picture</label>
@@ -22,8 +22,8 @@ class Modals {
                 <input type="file" class="form-control" id="profileBanner">
             </div>
         </form>
-        <div className="align-content" id="loginFormSubmit">
-            <button className="btn btn-pastel btn-lg" onClick="Profile.editFormSubmit()">Edit</button>
+        <div class="align-content" id="loginFormSubmit">
+            <button class="btn btn-pastel btn-lg" onClick="Profile.editFormSubmit()">Edit</button>
         </div>`
     }
 }

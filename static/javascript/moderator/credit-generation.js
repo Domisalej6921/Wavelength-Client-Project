@@ -52,15 +52,20 @@ class CreditGeneration {
         console.log(creditTotal)
     }
 
-    static submitForm () { //submit form that will get the data from the form elements
+    static generateCredits () { //submit form that will get the data from the form elements
 
         const checked = document.getElementById("existingCommunity").checked;
         if (checked === true) {
 
+            var numCredits = document.getElementById("numCredits").value;
+            var numGroups = document.getElementById("numGroups").value;
+            var totalNumCredits = numGroups * numCredits;
+
             const data = {
-                numCredits: document.getElementById("numCredits").value,
-                numGroups: document.getElementById("numGroups").value,
                 chosenCommunity: document.getElementById("chooseCommunity").value,
+                numGroups: numGroups,
+                numCredits: numCredits,
+                totalNumCredits: totalNumCredits,
             }
         }
 

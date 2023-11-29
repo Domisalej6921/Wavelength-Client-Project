@@ -9,6 +9,7 @@ class CreditGeneration {
         const numCreditsDiv = document.getElementById("numCreditsDiv");
         const numGroupsDiv = document.getElementById("numGroupsDiv");
         const generateButtonDiv = document.getElementById("generateButtonDiv");
+        const displayCreditsDIV = document.getElementById("displayCreditsDiv");
         // adds an event listener to the unlock checkbox for the "change" event.
 
         if (unlock === true) {
@@ -17,6 +18,7 @@ class CreditGeneration {
             numCreditsDiv.style.display = "block";
             numGroupsDiv.style.display = "block";
             generateButtonDiv.style.display = "block";
+            displayCreditsDIV.style.display = "block";
             createCommunityDiv.style.display = "none"; //makes this not visible
         }
         else {
@@ -25,6 +27,7 @@ class CreditGeneration {
             numGroupsDiv.style.display = "none";
             numCreditsDiv.style.display = "none";
             generateButtonDiv.style.display = "none";
+            displayCreditsDIV.style.display = "none";
             createCommunityDiv.style.display = "block"; //makes this visible
         }
 

@@ -91,12 +91,19 @@ class CreditGeneration {
         // console.log(creditTotal)
     }
 
+    static showSearchBar () {
+
+        const selected = document.getElementById("chooseCommunity").selected("otherOptionsSearch");
+        console.log(selected)
+
+    }
+
     static generateCredits () { //submit form that will get the data from the form elements
 
         const numCredits = document.getElementById("numCredits").value;
         const numGroups = document.getElementById("numGroups").value;
-        console.log(numCredits)
-        console.log(numGroups)
+        // console.log(numCredits)
+        // console.log(numGroups)
 
         if (!(Number.isInteger(numCredits))) {
             this.checkValid()

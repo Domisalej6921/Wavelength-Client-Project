@@ -1,6 +1,13 @@
 class HeaderModel:
 
     @staticmethod
+    def renderHeader(session) -> str:
+        if "UserID" in session:
+            return HeaderModel.loggedInHeader()
+        else:
+            return HeaderModel.standardHeader()
+
+    @staticmethod
     def standardHeader() -> str:
         return f"""
         <nav class="navbar bg-primary" style="--bs-bg-opacity: .175;">

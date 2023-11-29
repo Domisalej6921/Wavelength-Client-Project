@@ -1,4 +1,4 @@
-let formData = {
+let data = {
     username: null,
     profilePicture: null,
     profileBanner: null
@@ -18,7 +18,7 @@ class Profile {
         let picture = document.getElementById(documentID);
         const file = picture.files[0];
         FileUploads.format(file).then((result) => {
-            formData[cacheID] = result;
+            data[cacheID] = result;
             // Reset the submit button
             document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "Profile.editFormSubmit()", "lg");
         });
@@ -27,10 +27,41 @@ class Profile {
     static editFormSubmit() {
         // Make the submit button a loading state
         document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButtonLoading("Editing...", "lg");
-        // Get the username input
-        formData.username = document.getElementById("modalUsername").value;
 
+        // Get the username input
+        data.username = document.getElementById("modalUsername").value;
+
+        // Local input validation
         let issue = "";
+
+        // Check if the username is not empty
+        if (data.username.length > 0) {
+            // Check if the username is at least 3 characters long
+            if (data.username.length < 3) {
+                issue = "Username must be at least 3 characters long.";
+            }
+            // Check if the username has whitespace
+            else if (data.username.includes(" ")) {
+                issue = "Username cannot contain whitespace.";
+            }
+        }
+        // If it is empty, set it to null
+        else {
+            data.username = null;
+        }
+
+        // Check if anything is being uploaded
+        if (data.username === null && data.profilePicture === null && data.profileBanner === null) {
+            issue = "You must change at least one field.";
+        }
+
+        if (issue.length > 0) {
+            // Set the form button to a default state and display an error alert
+            document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "Profile.editFormSubmit()", "lg");
+            document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.warningAlert(issue, "Invalid Input!");
+
+            return
+        }
 
         // Send the form data to the server
         const xhttp = new XMLHttpRequest();
@@ -40,6 +71,8 @@ class Profile {
                 if (this.status === 200) {
                     // Clear the form and display a success message
                     document.getElementById("modalEditProfileForm").reset();
+                    data = {username: null, profilePicture: null, profileBanner: null};
+
                     document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.successAlert(
                         "Your profile has been updated.",
                         "Success!"
@@ -70,13 +103,10 @@ class Profile {
                 else {
                     document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.errorAlert(issue, "System Error!");
                 }
-
-                // Clear the password field
-                document.getElementById("password").value = "";
             }
         };
         xhttp.open("POST", "/api/profile-edit", true);
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.send(JSON.stringify(formData));
+        xhttp.send(JSON.stringify(data));
     }
 }

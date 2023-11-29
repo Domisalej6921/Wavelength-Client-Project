@@ -47,12 +47,15 @@ def profileEditApi():
         accountData = {
             "UserID": userID,
             "Username": account[2],
-            "ProfilePicture": account[8],
+            "ProfilePictureID": account[8],
             "BackgroundID": account[9]
         }
 
         # Check if the username is being changed
-        if data["username"] is not None or data["username"] != "":
+        if data["username"] is not None:
+            # Check if the username is valid
+            if len(data["username"]) < 3 or len(data["username"].split(" ")) > 1:
+                return "This username is invalid! It must be at least 3 characters and contain no whitespace.", 406
             # Check if the username is already taken
             if accountRepository.getWithUsername(data["username"]) is not None:
                 return "The username is already taken!", 406
@@ -61,9 +64,9 @@ def profileEditApi():
 
         # Check if the profile picture is being changed
         # imageFields = list of tuples: (JSON payload field name, database field name, max size in MB)
-        imageFields = [("profilePicture", "ProfilePicture", 2), ("profileBanner", "BackgroundID", 5)]
+        imageFields = [("profilePicture", "ProfilePictureID", 2), ("profileBanner", "BackgroundID", 5)]
         for field, dbField, maxSize in imageFields:
-            if data[field] is not None or data[field] != "":
+            if data[field] is not None:
                 # Validate the image
                 imageID, extension, size = uploads.checkImage(data[field])
                 # Check if the profile picture is above x MB
@@ -76,7 +79,7 @@ def profileEditApi():
 
                 # Otherwise override the profile picture in the dictionary
                 # Delete the old image
-                uploads.removeImage(imageID)
+                uploads.removeImage(accountData[dbField])
 
                 uploads.acceptImage(imageID, extension)
                 accountData[dbField] = imageID

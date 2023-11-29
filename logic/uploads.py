@@ -2,6 +2,8 @@ import os
 import shutil
 import datetime
 
+from typing import Union
+
 from data.filesRepository import FilesRepository
 from logic.cryptography import Cryptography
 
@@ -57,10 +59,14 @@ class Uploads:
         os.remove("temp/" + imageID + "." + extension)
 
     @staticmethod
-    def removeImage(imageID: str) -> None:
+    def removeImage(imageID: Union[str, None]) -> None:
         """
         Remove the image by deleting it from the uploads directory and database
         """
+        # Check if the imageID is None
+        if imageID is None:
+            return
+
         # Create a new instance of the FilesRepository class
         filesRepository = FilesRepository()
 

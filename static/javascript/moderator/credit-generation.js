@@ -5,7 +5,7 @@ class CreditGeneration {
         const numCredits = document.getElementById("numCredits").value;
         var reasonInvalid = "";
 
-        if (numCredits.isInteger()) { //Checks if the value is an integer
+        if (Number.isInteger(numCredits)) { //Checks if the value is an integer
 
             if (numCredits > 1000) { // Limits the number of credits to 1000
                 reasonInvalid = "That is too many credits to generate at once!";
@@ -23,12 +23,12 @@ class CreditGeneration {
             reasonInvalid = "Please Input a integer!"
         }
 
-        if (reasonInvalid = false) {
+        if (reasonInvalid === false) {
             this.totalCredits()
         }
 
         else {
-            console.log("invalid input", reasonInvalid)
+            console.log("Invalid Input", reasonInvalid)
         }
     }
 

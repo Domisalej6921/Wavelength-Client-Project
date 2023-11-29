@@ -1,5 +1,37 @@
 class CreditGeneration {
     //set up the class for the js to be called from
+
+    static checkValid() { // Input validation for the credits
+        const numCredits = document.getElementById("numCredits").value;
+        var reasonInvalid = "";
+
+        if (numCredits.isInteger()) { //Checks if the value is an integer
+
+            if (numCredits > 1000) { // Limits the number of credits to 1000
+                reasonInvalid = "That is too many credits to generate at once!";
+            }
+
+            else if (numCredits < 0) { //Checks if the value is positive
+                reasonInvalid = "Please do not generate negative credits!"
+            }
+
+            else {
+                reasonInvalid = false
+            }
+        }
+        else {
+            reasonInvalid = "Please Input a integer!"
+        }
+
+        if (reasonInvalid = false) {
+            this.totalCredits()
+        }
+
+        else {
+            console.log("invalid input", reasonInvalid)
+        }
+    }
+
     static checkCheckbox() {
 
         // the event listener that will get the elements then change them depending on the checkbox

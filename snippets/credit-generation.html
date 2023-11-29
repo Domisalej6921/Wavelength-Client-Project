@@ -12,7 +12,7 @@
     <script src="/static/javascript/moderator/credit-generation.js" type="text/javascript"></script>
 
 </head>
-<body class="home-body">
+<body class="home-body" onload="CreditGeneration.checkCheckbox()">
 
 {{Header | safe}}
 
@@ -23,7 +23,7 @@
         <form class="form-floating" id="creditCreationForm">
 
             <div class="form-floating mb-3" id="numCreditsDiv">
-                <input class="form-control" id="numCredits" placeholder="Enter a Number" onchange="CreditGeneration.totalCredits()">
+                <input class="form-control" id="numCredits" placeholder="Enter a Number" onchange="CreditGeneration.checkValid()">
                 <label for="numCredits">The Number of Credits</label>
             </div>
 
@@ -38,7 +38,7 @@
 
             <div>
                 <label>
-                <input class="form-check-input mt-0" type="checkbox" onchange="CreditGeneration.checkCheckbox()" id="existingCommunity" value="" aria-label="Checkbox for following text input">
+                <input class="form-check-input mt-0" type="checkbox" onchange="CreditGeneration.checkCheckbox()" id="existingCommunity" value="" aria-label="Checkbox for following text input" checked>
                 Is this for an existing Community?
                 </label>
             </div>

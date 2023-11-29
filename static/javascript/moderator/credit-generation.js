@@ -4,29 +4,29 @@ class CreditGeneration {
     static checkValid() { // Input validation for the credits
         const numCredits = Number(document.getElementById("numCredits").value);
         var reasonInvalid = "";
-        console.log(typeof numCredits)
-        console.log(Number.isInteger(numCredits))
+        // console.log(typeof numCredits)
+        // console.log(Number.isInteger(numCredits))
 
         if (Number.isInteger(numCredits)) { //Checks if the value is an integer
 
-            if (numCredits > 1000) { // Limits the number of credits to 1000
+            if (numCredits > 200) { // Limits the number of credits to 200
                 reasonInvalid = "That is too many credits to generate at once!";
-                console.log(reasonInvalid)
+                // console.log(reasonInvalid)
             }
 
             else if (numCredits < 0) { //Checks if the value is positive
                 reasonInvalid = "Please do not generate negative credits!"
-                console.log(reasonInvalid)
+                // console.log(reasonInvalid)
             }
 
             else {
                 reasonInvalid = false
-                console.log(reasonInvalid)
+                // console.log(reasonInvalid)
             }
         }
         else {
             reasonInvalid = "Please Input a integer!"
-            console.log(reasonInvalid)
+            // console.log(reasonInvalid)
         }
 
         if (reasonInvalid === false) {
@@ -34,7 +34,7 @@ class CreditGeneration {
         }
 
         else {
-            console.log("Invalid Input", reasonInvalid)
+            // console.log("Invalid Input", reasonInvalid)
             document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(reasonInvalid, "Invalid Input!");
         }
     }
@@ -88,28 +88,38 @@ class CreditGeneration {
 
         var creditTotal = numCredits * numGroups
         document.getElementById("creditTotal").innerHTML = creditTotal;
-        console.log(creditTotal)
+        // console.log(creditTotal)
     }
 
     static generateCredits () { //submit form that will get the data from the form elements
 
-        const checked = document.getElementById("existingCommunity").checked;
-        if (checked === true) {
+        const numCredits = document.getElementById("numCredits").value;
+        const numGroups = document.getElementById("numGroups").value;
+        console.log(numCredits)
+        console.log(numGroups)
 
-            var numCredits = document.getElementById("numCredits").value;
-            var numGroups = document.getElementById("numGroups").value;
-            var totalNumCredits = numGroups * numCredits;
-
-            const data = {
-                chosenCommunity: document.getElementById("chooseCommunity").value,
-                numGroups: numGroups,
-                numCredits: numCredits,
-                totalNumCredits: totalNumCredits,
-            }
+        if (!(Number.isInteger(numCredits))) {
+            this.checkValid()
         }
+        else if (!(Number.isInteger(numGroups))) {
+            this.checkValid()
+        }
+        else{
+            const checked = document.getElementById("existingCommunity").checked;
+            if (checked === true) {
+                const totalNumCredits = numGroups * numCredits;
+                const data = {
+                    chosenCommunity: document.getElementById("chooseCommunity").value,
+                    numGroups: numGroups,
+                    numCredits: numCredits,
+                    totalNumCredits: totalNumCredits,
+                }
+            }
 
-        else {
-            return null
+            else {
+                return null
+            }
+
         }
     }
 }

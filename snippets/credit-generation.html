@@ -30,7 +30,7 @@
             </div>
 
             <div class="form-floating mb-3" id="numGroupsDiv">
-                <input type="range" class="form-range" min="1" max="100" step="1" id="numGroups" onchange="CreditGeneration.checkValid()">
+                <input type="range" class="form-range" min="1" max="50" step="1" id="numGroups" onchange="CreditGeneration.checkValid()">
                 <label for="numGroups" class="form-label">The Number of Groups of Credits</label>
             </div>
 
@@ -69,7 +69,7 @@
         </div>
 
         <div class="align-content" id="generateButtonDiv">
-            <button class="btn btn-pastel btn-lg">
+            <button class="btn btn-pastel btn-lg" onclick="CreditGeneration.generateCredits()">
                 Generate
             </button>
         </div>

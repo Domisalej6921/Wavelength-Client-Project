@@ -9,16 +9,16 @@ class Profile {
     static editFormSubmit() {
         // Define a local variable to store file uploads
         let formData = {
+            username: null,
             profilePicture: null,
             profileBanner: null
         };
 
-        // Get the file input element
+        // Get the profilePicture file input
         let profilePicture = document.getElementById("profilePicture");
         const profileFile = profilePicture.files[0];
         FileUploads.format(profileFile).then((result) => {
             formData.profilePicture = result;
-            console.log(result)
         });
     }
 }

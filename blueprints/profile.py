@@ -2,8 +2,6 @@ from flask import Flask, Blueprint, render_template, request, redirect, session
 import datetime
 import os
 
-from typing import Union
-
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
 from data.accountRepository import AccountRepository
@@ -39,9 +37,9 @@ def profileEditApi():
             return "The JSON payload is missing required fields!", 400
 
         # Check the types of the fields, if they exist
-        for item in [('username', Union[str, None]), ('profilePicture', Union[str, None]), ('profileBanner', Union[str, None])]:
+        for item in [('username', str), ('profilePicture', str), ('profileBanner', str)]:
             if item[0] in data:
-                if type(data[item[0]]) != item[1]:
+                if not (type(data[item[0]]) == item[1] or data[item[0]] is None):
                     return "The JSON payload has invalid types!", 400
 
         # Get the account data from the database and map it to the dictionary for updating

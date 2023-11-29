@@ -2,25 +2,31 @@ class CreditGeneration {
     //set up the class for the js to be called from
 
     static checkValid() { // Input validation for the credits
-        const numCredits = document.getElementById("numCredits").value;
+        const numCredits = Number(document.getElementById("numCredits").value);
         var reasonInvalid = "";
+        console.log(typeof numCredits)
+        console.log(Number.isInteger(numCredits))
 
         if (Number.isInteger(numCredits)) { //Checks if the value is an integer
 
             if (numCredits > 1000) { // Limits the number of credits to 1000
                 reasonInvalid = "That is too many credits to generate at once!";
+                console.log(reasonInvalid)
             }
 
             else if (numCredits < 0) { //Checks if the value is positive
                 reasonInvalid = "Please do not generate negative credits!"
+                console.log(reasonInvalid)
             }
 
             else {
                 reasonInvalid = false
+                console.log(reasonInvalid)
             }
         }
         else {
             reasonInvalid = "Please Input a integer!"
+            console.log(reasonInvalid)
         }
 
         if (reasonInvalid === false) {
@@ -29,6 +35,7 @@ class CreditGeneration {
 
         else {
             console.log("Invalid Input", reasonInvalid)
+            document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(reasonInvalid, "Invalid Input!");
         }
     }
 

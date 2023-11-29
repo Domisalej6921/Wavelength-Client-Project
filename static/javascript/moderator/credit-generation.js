@@ -35,6 +35,8 @@ class CreditGeneration {
 
     //Used to calculate and update the display of the number of credits being generated
     static totalCredits () {
+
+
         var numCredits = document.getElementById("numCredits").value;
         var numGroups = document.getElementById("numGroups").value;
 

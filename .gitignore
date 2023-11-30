@@ -17,8 +17,9 @@
 **/*.sqlite
 **/*.db
 
-# Ignore the uploads folder
+# Ignore the upload and temp folder
 /static/uploads/
+/temp/
 
 # Add other files/directories to ignore here if needed
 **/Dockerfile

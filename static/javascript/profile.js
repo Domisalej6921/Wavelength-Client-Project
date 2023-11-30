@@ -15,13 +15,20 @@ class Profile {
     static handleUpload(documentID, cacheID) {
         // Make the submit button a loading state
         document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButtonLoading("Formatting file...", "lg");
+        // Get the file
         let picture = document.getElementById(documentID);
         const file = picture.files[0];
-        FileUploads.format(file).then((result) => {
-            data[cacheID] = result;
-            // Reset the submit button
+        // Check if there is a file
+        if (file !== undefined) {
+            FileUploads.format(file).then((result) => {
+                data[cacheID] = result;
+                // Reset the submit button
+                document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "Profile.editFormSubmit()", "lg");
+            });
+        }
+        else {
             document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "Profile.editFormSubmit()", "lg");
-        });
+        }
     }
 
     static editFormSubmit() {

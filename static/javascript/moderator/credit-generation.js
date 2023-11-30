@@ -7,8 +7,28 @@ class CreditGeneration {
     }
 
     static getCommunities() { //Function for getting a list of the first x communities to put in the dropdown
-        
+
+        const optionsFilled = 0
+        const totalOptions = 5
+
+        while (optionsFilled < totalOptions ) {
+
+            const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+            xhttp.open("POST", "/listCommunities", true); //set method and the url and if it asynchornus
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.send(JSON.stringify(data));
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) { //200 = server is okay
+                    const response = JSON.parse(this.responseText); // passing back the server response
+                    console.log(response.result);
+
+                    document.getElementById("chooseCommunity").innerHTML = <options> result </options>;
+                }
+            };
+        }
     }
+
     static checkValid() { // Input validation for the credits
         const numCredits = Number(document.getElementById("numCredits").value);
         var reasonInvalid = "";

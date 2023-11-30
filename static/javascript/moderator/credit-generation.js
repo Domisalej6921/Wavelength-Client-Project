@@ -93,7 +93,8 @@ class CreditGeneration {
 
     static showSearchBar () {
 
-        const selected = document.getElementById("chooseCommunity").selected("otherOptionsSearch");
+        console.log("Here")
+        const selected = document.getElementById("chooseCommunity").value;
         console.log(selected)
 
     }

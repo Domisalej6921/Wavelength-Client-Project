@@ -47,12 +47,12 @@
 
             <div class="align-content" id="chooseCommunityDiv">
                 <div class="form-floating mb-3">
-                <select class="form-select" id="chooseCommunity" aria-label="Floating label select example">
+                <select class="form-select" id="chooseCommunity" onchange="CreditGeneration.showSearchBar()" aria-label="Floating label select example">
                     <option>Community One</option>
                     <option>Community Two</option>
                     <option>Community Three</option>
                     <option>Community Four</option>
-                    <option class="otherOptionsSearch" onclick="CreditGeneration.showSearchBar()"> Other </option>
+                    <option class="otherOptionsSearch"> Other </option>
                 </select>
                 <label for="chooseCommunity">What community are these credits for?</label>
                 </div>

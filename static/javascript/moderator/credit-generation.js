@@ -141,19 +141,26 @@ class CreditGeneration {
         }
         else{
             const checked = document.getElementById("existingCommunity").checked;
-            if (checked === true) {
-                const totalNumCredits = numGroups * numCredits;
-                const data = {
-                    chosenCommunity: document.getElementById("chooseCommunity").value,
-                    numGroups: numGroups,
-                    numCredits: numCredits,
-                    totalNumCredits: totalNumCredits,
-                }
+
+            const totalNumCredits = numGroups * numCredits;
+            const data = {
+                chosenCommunity: document.getElementById("chooseCommunity").value,
+                numGroups: numGroups,
+                numCredits: numCredits,
+                totalNumCredits: totalNumCredits,
             }
 
-            else {
-                return null
-            }
+            const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+            xhttp.open("POST", "/create", true); //set method and the url and if it asynchornus
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.send(JSON.stringify(data));
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) { //200 = server is okay
+                    const response = JSON.parse(this.responseText); // passing back the server response
+                    console.log(response.result);
+                }
+            };
 
         }
     }

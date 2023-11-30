@@ -15,7 +15,9 @@ def search():
 
 @creditGeneration.route("/create", methods=["POST"])
 def create():
-    # lets make some fucking credits
     creditsMade = []
 
-    return creditsMade
+    returnedValues = "temporary text"
+    
+    creditsMade.append(returnedValues)
+    return jsonify(creditsMade)

@@ -13,7 +13,7 @@
     <script src="/static/javascript/moderator/credit-generation.js" type="text/javascript"></script>
 
 </head>
-<body class="home-body" onload="CreditGeneration.checkCheckbox()">
+<body class="home-body" onload="CreditGeneration.checkCheckbox()" onload="CreditGeneration.showSearchBar()">
 
 {{Header | safe}}
 
@@ -58,9 +58,9 @@
                 </div>
             </div>
 
-            <div class="align-content" id="chooseCommunityDiv">
+            <div class="align-content" id="searchCommunityDiv">
                 <div class="mb-3">
-                    <label for="searchBar" class="form-label">Search fo Other Communities:</label>
+                    <label for="searchBar" class="form-label">Search For Other Communities:</label>
                     <input type="text" class="form-control" id="searchBar" placeholder="Community Name">
                 </div>
             </div>

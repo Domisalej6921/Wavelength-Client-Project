@@ -48,7 +48,8 @@ class CreditGeneration {
         const numCreditsDiv = document.getElementById("numCreditsDiv");
         const numGroupsDiv = document.getElementById("numGroupsDiv");
         const generateButtonDiv = document.getElementById("generateButtonDiv");
-        const displayCreditsDIV = document.getElementById("displayCreditsDiv");
+        const displayCreditsDiv = document.getElementById("displayCreditsDiv");
+        const searchCommunityDiv = document.getElementById("searchCommunityDiv");
         // adds an event listener to the unlock checkbox for the "change" event.
 
         if (unlock === true) {
@@ -57,7 +58,7 @@ class CreditGeneration {
             numCreditsDiv.style.display = "block";
             numGroupsDiv.style.display = "block";
             generateButtonDiv.style.display = "block";
-            displayCreditsDIV.style.display = "block";
+            displayCreditsDiv.style.display = "block";
             createCommunityDiv.style.display = "none"; //makes this not visible
         }
         else {
@@ -66,7 +67,8 @@ class CreditGeneration {
             numGroupsDiv.style.display = "none";
             numCreditsDiv.style.display = "none";
             generateButtonDiv.style.display = "none";
-            displayCreditsDIV.style.display = "none";
+            displayCreditsDiv.style.display = "none";
+            searchCommunityDiv.style.display = "none";
             createCommunityDiv.style.display = "block"; //makes this visible
         }
 
@@ -91,11 +93,18 @@ class CreditGeneration {
         // console.log(creditTotal)
     }
 
-    static showSearchBar () {
-
-        console.log("Here");
+    static showSearchBar () { // function used to hide and show the search function
+        // console.log("Here");
         const selected = document.getElementById("chooseCommunity").value;
-        console.log(selected);
+        const searchCommunityDiv = document.getElementById("searchCommunityDiv");
+        // console.log(selected);
+
+        if (selected === "Other") { // Shows the search bar if they choose the "other" option
+            searchCommunityDiv.style.display = "block";
+        }
+        else { // Hides the search bar if a community has been chosen
+            searchCommunityDiv.style.display = "none";
+        }
 
     }
 

@@ -13,7 +13,7 @@
     <script src="/static/javascript/moderator/credit-generation.js" type="text/javascript"></script>
 
 </head>
-<body class="home-body" onload="CreditGeneration.checkCheckbox()" onload="CreditGeneration.showSearchBar()">
+<body class="home-body" onload="CreditGeneration.checkCheckbox()">
 
 {{Header | safe}}
 
@@ -48,11 +48,11 @@
             <div class="align-content" id="chooseCommunityDiv">
                 <div class="form-floating mb-3">
                 <select class="form-select" id="chooseCommunity" onchange="CreditGeneration.showSearchBar()" aria-label="Floating label select example">
+                    <option class="otherOptionsSearch"> Other </option>
                     <option>Community One</option>
                     <option>Community Two</option>
                     <option>Community Three</option>
                     <option>Community Four</option>
-                    <option class="otherOptionsSearch"> Other </option>
                 </select>
                 <label for="chooseCommunity">What community are these credits for?</label>
                 </div>
@@ -61,7 +61,7 @@
             <div class="align-content" id="searchCommunityDiv">
                 <div class="mb-3">
                     <label for="searchBar" class="form-label">Search For Other Communities:</label>
-                    <input type="text" class="form-control" id="searchBar" placeholder="Community Name">
+                    <input type="text" class="form-control" id="searchBar" placeholder="Community Name" onchange="CreditGeneration.search()">
                 </div>
             </div>
 

@@ -77,7 +77,6 @@ class CreditGeneration {
     //Used to calculate and update the display of the number of credits being generated
     static totalCredits () {
 
-
         var numCredits = document.getElementById("numCredits").value;
         var numGroups = document.getElementById("numGroups").value;
 
@@ -88,8 +87,7 @@ class CreditGeneration {
             numGroups = 0
         }
 
-        var creditTotal = numCredits * numGroups
-        document.getElementById("creditTotal").innerHTML = creditTotal;
+        document.getElementById("creditTotal").innerHTML = numCredits * numGroups;
         // console.log(creditTotal)
     }
 
@@ -108,12 +106,24 @@ class CreditGeneration {
 
     }
 
-    static search () {
+    static search () { // function to search the database for communities
 
-        console.log("here");
+        // console.log("here");
         const searchTerm = document.getElementById("searchBar").value;
-        console.log(searchTerm)
+        // console.log(searchTerm)
+        const data = { searchTerm }; // creates an object for the searchterm
 
+        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+        xhttp.open("POST", "/search", true); //set method and the url and if it asynchornus
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify(data));
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) { //200 = server is okay
+                const response = JSON.parse(this.responseText); // passing back the server response
+                console.log(response.result);
+            }
+        };
     }
 
     static generateCredits () { //submit form that will get the data from the form elements

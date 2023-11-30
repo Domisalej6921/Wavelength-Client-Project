@@ -1,6 +1,14 @@
 class CreditGeneration {
     //set up the class for the js to be called from
 
+    static onLoadFunctions() { //Function that calls the functions to run when the page loads
+        this.getCommunities()
+        this.checkCheckbox()
+    }
+
+    static getCommunities() { //Function for getting a list of the first x communities to put in the dropdown
+        
+    }
     static checkValid() { // Input validation for the credits
         const numCredits = Number(document.getElementById("numCredits").value);
         var reasonInvalid = "";

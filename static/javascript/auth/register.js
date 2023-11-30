@@ -68,6 +68,7 @@ class Register {
                         "You have registered successfully. A verification code has been sent to your email inbox please follow the instructions provided on the email.",
                         "Success!"
                     );
+                    return
                 }
                 // If the server returns a 406 status code (Not Acceptable)
                 else if (this.status === 406) {

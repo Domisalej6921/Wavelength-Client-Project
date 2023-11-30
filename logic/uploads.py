@@ -63,6 +63,7 @@ class Uploads:
         """
         Remove the image by deleting it from the uploads directory and database
         """
+        print(imageID)
         # Check if the imageID is None
         if imageID is None:
             return
@@ -72,6 +73,8 @@ class Uploads:
 
         # Get the image data from the database
         image = filesRepository.getWithID(imageID)
+
+        print(image)
 
         # Delete the image from the uploads directory
         os.remove("static/uploads/" + imageID + "." + image[2])

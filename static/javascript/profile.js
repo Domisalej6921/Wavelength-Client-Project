@@ -73,10 +73,12 @@ class Profile {
                     document.getElementById("modalEditProfileForm").reset();
                     data = {username: null, profilePicture: null, profileBanner: null};
 
+                    document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "Profile.editFormSubmit()", "lg");
                     document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.successAlert(
                         "Your profile has been updated.",
                         "Success!"
                     );
+                    return
                 }
                 // If the server returns a 401 status code (Unauthorized)
                 else if (this.status === 401) {

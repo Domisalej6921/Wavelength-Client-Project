@@ -21,12 +21,9 @@ app = Flask(__name__)
 
 app.secret_key = os.environ['flaskSecretKey']
 
-<<<<<<< HEAD
-=======
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
 
->>>>>>> 9dfe5d72ce42109eccb1d6cb0c8b0b9a466a1095
 # Route for the index page
 @app.route('/')
 def index():

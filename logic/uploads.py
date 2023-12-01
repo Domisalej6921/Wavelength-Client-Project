@@ -1,10 +1,6 @@
-import os
-import shutil
-import datetime
-
+from typing import Union
 from data.filesRepository import FilesRepository
 from logic.cryptography import Cryptography
-
 
 class Uploads:
     @staticmethod
@@ -31,7 +27,11 @@ class Uploads:
         # Check that the temp directory exists, if not create it
         if not os.path.exists("static/uploads/"):
             os.mkdir("static/uploads/")
-        
+
+        # Check that the uploads directory exists, if not create it
+        if not os.path.exists("static/uploads/"):
+            os.mkdir("static/uploads/")
+
         # Move the image from the temp directory to the uploads directory
         # Learnt about how to use shutil from:
         # https://stackoverflow.com/questions/8858008/how-do-i-move-a-file-in-python
@@ -49,9 +49,32 @@ class Uploads:
             "Created": currentTime
         })
 
+    @staticmethod
     def rejectImage(imageID: str, extension: str) -> None:
         """
         Reject the image by deleting it from the temp directory
         """
         # Delete the image from the temp directory
         os.remove("temp/" + imageID + "." + extension)
+        os.remove("temp/" + imageID + "." + extension)
+
+    @staticmethod
+    def removeImage(imageID: Union[str, None]) -> None:
+        """
+        Remove the image by deleting it from the uploads directory and database
+        """
+        # Check if the imageID is None
+        if imageID is None:
+            return
+
+        # Create a new instance of the FilesRepository class
+        filesRepository = FilesRepository()
+
+        # Get the image data from the database
+        image = filesRepository.getWithID(imageID)
+
+        # Delete the image from the uploads directory
+        os.remove("static/uploads/" + imageID + "." + image[2])
+
+        # Delete the image from the database
+        filesRepository.delete(imageID)

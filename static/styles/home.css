@@ -83,6 +83,7 @@
     z-index: 1;
 }
 
+
 .info-title {
     font-size: 3vw;
     color: black;
@@ -114,7 +115,7 @@
 
 @media (min-width: 1200px) {
     .info-paragraph {
-        font-size: 1vw;
+        font-size: 0.75vw;
     }
 }
 

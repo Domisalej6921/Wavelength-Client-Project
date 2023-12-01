@@ -1,9 +1,11 @@
-from typing import Union
-from data.filesRepository import FilesRepository
-from logic.cryptography import Cryptography
 import os
 import shutil
 import datetime
+
+from typing import Union
+
+from data.filesRepository import FilesRepository
+from logic.cryptography import Cryptography
 
 class Uploads:
     @staticmethod
@@ -26,10 +28,6 @@ class Uploads:
         """
         Process the image by storing it in the uploads directory and storing a new record in the database
         """
-
-        # Check that the temp directory exists, if not create it
-        if not os.path.exists("static/uploads/"):
-            os.mkdir("static/uploads/")
 
         # Check that the uploads directory exists, if not create it
         if not os.path.exists("static/uploads/"):
@@ -58,7 +56,6 @@ class Uploads:
         Reject the image by deleting it from the temp directory
         """
         # Delete the image from the temp directory
-        os.remove("temp/" + imageID + "." + extension)
         os.remove("temp/" + imageID + "." + extension)
 
     @staticmethod

@@ -21,20 +21,13 @@ app = Flask(__name__)
 
 app.secret_key = os.environ['flaskSecretKey']
 
-<<<<<<< HEAD
-=======
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
 
->>>>>>> 9dfe5d72ce42109eccb1d6cb0c8b0b9a466a1095
 # Route for the index page
 @app.route('/')
 def index():
     return render_template('index.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
-
-#Route for main page
-from blueprints.mentorsPage import main_blueprint
-app.register_blueprint(main_blueprint)
 
 # Import register blueprint
 from blueprints.register import register
@@ -47,6 +40,10 @@ app.register_blueprint(login)
 # Import profile blueprint
 from blueprints.profile import profile
 app.register_blueprint(profile)
+
+# Import mentors blueprint
+from blueprints.mentors import mentors
+app.register_blueprint(mentors)
 
 if __name__ == '__main__':
     app.run(debug=True)

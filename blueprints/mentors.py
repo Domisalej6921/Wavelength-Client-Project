@@ -3,14 +3,14 @@ from flask import *
 from data.filesRepository import FilesRepository
 from data.accountRepository import AccountRepository
 
-main_blueprint = Blueprint('main_blueprint', __name__)
+mentors = Blueprint('mentors', __name__)
 
-@main_blueprint.route('/main_page')
-def main_page():
-    return render_template('main_page.html')
+@mentors.route('/account/dashboard')
+def mainPage():
+    return render_template('mainPage.html')
 
-@main_blueprint.route('/api/mentors', methods=['POST'])
-def retrieveMentor():
+@mentors.route('/api/mentors', methods=['POST'])
+def mentorSearch():
     if "UserID" in session:
         # Get the JSON payload from the request and inherit classes
         data = request.get_json()

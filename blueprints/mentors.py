@@ -2,12 +2,14 @@ from flask import *
 
 from data.filesRepository import FilesRepository
 from data.accountRepository import AccountRepository
+from models.footerModel import FooterModel
+from models.headerModel import HeaderModel
 
 mentors = Blueprint('mentors', __name__)
 
 @mentors.route('/account/dashboard')
 def mainPage():
-    return render_template('mainPage.html')
+    return render_template('mainPage.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
 
 @mentors.route('/api/mentors', methods=['POST'])
 def mentorSearch():

@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, render_template, request, redirect, session
 import datetime
 import os
 
+from models.footerModel import FooterModel
+from models.headerModel import HeaderModel
 from data.accountRepository import AccountRepository
 from data.verificationCodesRepository import VerificationCodesRepository
 from logic.cryptography import Cryptography
@@ -12,14 +14,14 @@ login = Blueprint('login', __name__)
 @login.route('/login')
 def loginPage():
     if not ("UserID" in session):
-        return render_template('auth/login.html')
+        return render_template('auth/login.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
     else:
         return redirect("/account/dashboard")
 
 @login.route('/password-reset')
 def passwordResetPage():
     if not ("UserID" in session):
-        return render_template('auth/passwordReset.html')
+        return render_template('auth/passwordReset.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
     else:
         return redirect("/account/dashboard")
 

@@ -45,10 +45,9 @@ class Cryptography:
         sixteen_digit_uuid = random_uuid[:16]
 
         return sixteen_digit_uuid
-        
-    # Peer programmed method "decodeImage": Tom & Akshay
+
     @staticmethod
-    def decodeImage(self, httpEncoding: str) -> str:
+    def decodeImage(httpEncoding: str) -> tuple[str, str]:
         """
         Decode the image using base64 then store the image in a temporary file, returning the UUID
         """
@@ -60,12 +59,12 @@ class Cryptography:
         # Split the encoding into the image type and the image data
         encoding = httpEncoding.split(",")[1]
         extension = httpEncoding.split(";")[0].split("/")[1]
-        
+
         # Convert the encoding to bytes
         image = encoding.encode()
 
         # Create a UUID for the image name
-        imageUUID = self.createUUID()
+        imageUUID = Cryptography.createUUID()
 
         # Write the image to a temporary file
         # Used Stackoverflow to help with loading python objects:
@@ -73,5 +72,5 @@ class Cryptography:
         with open(f"temp/{imageUUID}.{extension}", "wb") as file:
             file.write(base64.decodebytes(image))
 
-        # Return the UUID
-        return imageUUID
+        # Return the UUID and file extension
+        return imageUUID, extension

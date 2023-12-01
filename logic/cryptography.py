@@ -45,19 +45,26 @@ class Cryptography:
         sixteen_digit_uuid = random_uuid[:16]
 
         return sixteen_digit_uuid
-
+        
     # Peer programmed method "decodeImage": Tom & Akshay
     @staticmethod
-    def decodeImage(self, image: str):
+    def decodeImage(self, httpEncoding: str) -> str:
         """
-        Decode the image using base64 then store the image in a temporary file, returning the image as a UUID
+        Decode the image using base64 then store the image in a temporary file, returning the UUID
         """
-        # Check if the temp directory exsits, if not create it
-        if not os.path.exsits("temp/"):
+
+        # Check that the temp directory exists, if not create it
+        if not os.path.exists("temp/"):
             os.mkdir("temp/")
 
+        # Split the encoding into the image type and the image data
+        encoding = httpEncoding.split(",")[1]
+        extension = httpEncoding.split(";")[0].split("/")[1]
+        
+        # Convert the encoding to bytes
+        image = encoding.encode()
 
-        # Create an image object
+        # Create a UUID for the image name
         imageUUID = self.createUUID()
 
         # Write the image to a temporary file
@@ -65,6 +72,6 @@ class Cryptography:
         # https://stackoverflow.com/questions/2323128/convert-string-in-base64-to-image-and-save-on-filesystem
         with open(f"temp/{imageUUID}.{extension}", "wb") as file:
             file.write(base64.decodebytes(image))
-        
+
         # Return the UUID
-        return UUID
+        return imageUUID

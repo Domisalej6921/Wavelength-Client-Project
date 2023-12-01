@@ -25,7 +25,7 @@ def create_community_form():
         userID = int(session["UserID"])
 
         # Learnt about HTTP status codes from "https://en.wikipedia.org/wiki/List_of_HTTP_status_codes"
-        # The status codes are appened to the end of the return statements is passed into the JS file to help the client understand the nature of the issue
+        # The status codes return to the JS file to help the client understand the nature of the issue
 
         # Check if the JSON exists
         if data is None:
@@ -43,6 +43,22 @@ def create_community_form():
         account = accountRepository.getWithID(userID)
         if account[6] == 0:
             return "Your account does not have permissions for this action.", 403
+
+        # Assigns the variable to the set file extentions in the app settings JSON file
+        allowedFileExtensions = os.environ["allowedFileExtensions"]
+
+        # Gets the profile picture, and ensures it is the correct file type and then checks if its under 2MB
+        fileName, extension, size = checkImage(data["ProfilePictureID"])
+        if extention not in allowedFileExtensions:
+            return "The JSON payload has incorrect profile picure type!", 406
+        if size > 2:
+            return "The Profile picure size is to large, needs to be less than 2MB", 406
+        # Gets the profile banner, and ensures it is the correct file type and then checks if its under 5MB
+        fileName, extension, size = checkImage(data["BackgroundID"])
+        if extention not in allowedFileExtensions:
+            return "The JSON payload has incorrect profile banner type!", 406
+        if size > 5:
+            return "The Profile banner size is to large, needs to be less than 5MB", 406
 
         communityRepository.insert({
             "Name": data["name"],

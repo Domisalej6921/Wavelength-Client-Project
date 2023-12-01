@@ -19,6 +19,10 @@
 
 # Ignore the uploads folder
 /static/uploads/
+/temp/
+
+# Ignore the python virtual env
+/venv/
 
 # Add other files/directories to ignore here if needed
 **/Dockerfile

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 import json
 import os
 
@@ -21,11 +21,13 @@ app = Flask(__name__)
 
 app.secret_key = os.environ['flaskSecretKey']
 
+from models.footerModel import FooterModel
+from models.headerModel import HeaderModel
 
 # Route for the index page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
 
 # Import register blueprint
 from blueprints.register import register

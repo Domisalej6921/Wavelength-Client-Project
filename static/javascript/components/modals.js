@@ -1,14 +1,17 @@
 class Modals {
+    /* Used examples of modals from:
+    https://www.w3schools.com/bootstrap5/bootstrap_modal.php */
     static header(title) {
-        return `<div class="modal-header">
-            <h5 class="modal-title">${title}</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>`
+        return `<h4 class="modal-title">${title}</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>`
     }
 
     static editProfile() {
         return `<div id="modalEditProfileFormAlerts"></div>
         <form class="form-floating" id="modalEditProfileForm">
+            <div class="mb-3">
+                <p class="h6"><b>Note: </b>Fields you do not wish to edit should be left empty.</p>
+            </div>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="modalUsername" placeholder="Username">
                 <label class="text" >Username</label>

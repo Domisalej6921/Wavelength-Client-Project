@@ -9,7 +9,7 @@ class FilesRepository:
 
     def getWithID(self, fileID: str) -> Union[tuple, None]:
         """Gets a file from the database using its ID."""
-        return self.db.execute(
+        return self.db.selectFirstWithParams(
             """SELECT * FROM Files WHERE FileID = ?""",
             (fileID,)
         )

@@ -27,7 +27,7 @@ def index():
     return render_template('index.html')
 
 #Route for main page
-from blueprints.main_page import main_blueprint
+from blueprints.mentorsPage import main_blueprint
 app.register_blueprint(main_blueprint)
 
 # Import register blueprint

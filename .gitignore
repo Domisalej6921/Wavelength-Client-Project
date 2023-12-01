@@ -19,6 +19,7 @@
 
 # Ignore the uploads folder
 /static/uploads/
+/temp/
 
 # Add other files/directories to ignore here if needed
 **/Dockerfile

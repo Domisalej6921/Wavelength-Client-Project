@@ -6,7 +6,6 @@ class FilesRepository:
         # Inherit the DataHelper class
         self.db = DataHelper()
 
-    def insert(self, data: dict):
     def getWithID(self, fileID: str) -> Union[tuple, None]:
         """Gets a file from the database using its ID."""
         return self.db.execute(

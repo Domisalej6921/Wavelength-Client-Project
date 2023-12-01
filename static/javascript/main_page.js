@@ -7,5 +7,5 @@ const loadMoreButton = document.getElementById("ViewMoreButton")
 class MainPage {
     static displayMentorImages {
         xhttp.open("GET", "/api/main_page", true);
-}
+    }
 }

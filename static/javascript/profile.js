@@ -15,13 +15,20 @@ class Profile {
     static handleUpload(documentID, cacheID) {
         // Make the submit button a loading state
         document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButtonLoading("Formatting file...", "lg");
+        // Get the file
         let picture = document.getElementById(documentID);
         const file = picture.files[0];
-        FileUploads.format(file).then((result) => {
-            data[cacheID] = result;
-            // Reset the submit button
+        // Check if there is a file
+        if (file !== undefined) {
+            FileUploads.format(file).then((result) => {
+                data[cacheID] = result;
+                // Reset the submit button
+                document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "Profile.editFormSubmit()", "lg");
+            });
+        }
+        else {
             document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "Profile.editFormSubmit()", "lg");
-        });
+        }
     }
 
     static editFormSubmit() {
@@ -73,10 +80,12 @@ class Profile {
                     document.getElementById("modalEditProfileForm").reset();
                     data = {username: null, profilePicture: null, profileBanner: null};
 
+                    document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "Profile.editFormSubmit()", "lg");
                     document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.successAlert(
                         "Your profile has been updated.",
                         "Success!"
                     );
+                    return
                 }
                 // If the server returns a 401 status code (Unauthorized)
                 else if (this.status === 401) {

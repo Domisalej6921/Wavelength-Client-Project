@@ -17,7 +17,7 @@
 **/*.sqlite
 **/*.db
 
-# Ignore the uploads folder
+# Ignore the upload and temp folder
 /static/uploads/
 /temp/
 

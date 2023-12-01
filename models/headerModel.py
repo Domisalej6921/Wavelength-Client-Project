@@ -13,7 +13,7 @@ class HeaderModel:
         <nav class="navbar bg-primary" style="--bs-bg-opacity: .175;">
 
                 <ul class="nav justify-content-start">
-                    <a class="header-logo" href="/home">
+                    <a class="header-logo" href="/">
                         <img class="logo" src="../static/images/logo-temp.png"  alt="" width="45" height="45">
                     </a>
                 </ul>
@@ -38,7 +38,7 @@ class HeaderModel:
         <nav class="navbar bg-primary" style="--bs-bg-opacity: .175;">
 
             <ul class="nav justify-content-start">
-                <a class="header-logo" href="#">
+                <a class="header-logo" href="/">
                     <img class="logo" src="../static/images/logo-temp.png"  alt="" width="45" height="45">
                 </a>
             </ul>

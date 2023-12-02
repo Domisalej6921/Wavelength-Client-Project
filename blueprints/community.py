@@ -63,8 +63,8 @@ def create_community_form():
         communityRepository.insert({
             "Name": data["name"],
             "Description": data["description"],
-            "ProfilePictureID": 0,
-            "BackgroundID": 0,
+            "ProfilePictureID": data["profilePicture"],
+            "BackgroundID": data["profileBanner"],
             "isCompany": int(data["isCompany"]),
             "isApproved": 0,
             "Created": int(datetime.datetime.now().timestamp())

@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, session
 from datetime import datetime
-
+import os
 from data.communityRepository import CommunityRepository
 from data.accountRepository import AccountRepository
+from logic.uploads import Uploads
 
 community = Blueprint("community", __name__)
 
@@ -32,7 +33,7 @@ def create_community_form():
             return "No JSON payload was uploaded with the request!", 400
 
         # Checks that data recieved from the POST meets all required fields
-        if data not in ['name', 'description', 'isCompany']:
+        if not all(field in data for field in ['name', 'description', 'isCompany']):
             return "The JSON payload is missing required fields!", 400
 
         # Check if the JSON has the correct field types
@@ -55,7 +56,7 @@ def create_community_form():
             return "The Profile picure size is to large, needs to be less than 2MB", 406
         # Gets the profile banner, and ensures it is the correct file type and then checks if its under 5MB
         fileName, extension, size = checkImage(data["BackgroundID"])
-        if extention not in allowedFileExtensions:
+        if extension not in allowedFileExtensions:
             return "The JSON payload has incorrect profile banner type!", 406
         if size > 5:
             return "The Profile banner size is to large, needs to be less than 5MB", 406
@@ -65,7 +66,7 @@ def create_community_form():
             "Description": data["description"],
             "ProfilePictureID": data["profilePicture"],
             "BackgroundID": data["profileBanner"],
-            "isCompany": int(data["isCompany"]),
+            "isCompany": data["isCompany"],
             "isApproved": 0,
             "Created": int(datetime.datetime.now().timestamp())
         })

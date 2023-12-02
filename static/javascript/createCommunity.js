@@ -83,7 +83,7 @@ class CreateCommunity {
         }
         xhttp.open("POST", "/api/community/create", true);
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.send(JSON.stringify(data));
+        xhttp.send(JSON.stringify(data))
     }
     
 }

@@ -4,6 +4,10 @@ class CommunityRepository():
     def __init__(self):
         self.db = DataHelper()
 
+    def getIDWithProfilePictureID(self, profilePictureID: str):
+        """Gets a community's ID with a profile picture ID."""
+        return self.db.selectFirstWithParams("SELECT EntityID FROM Entities WHERE ProfilePictureID = ?", (profilePictureID,))
+
     def insert(self, data: dict) -> None:
         """Inserts a community into the database."""
         self.db.execute(

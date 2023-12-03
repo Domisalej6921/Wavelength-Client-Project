@@ -1,89 +1,74 @@
 class CreateCommunity {
-    //Peer programmed component; handeling profile picture and banner: Tom & Akshay
-    /* To help understand what this file should contain, I got insipation from my teammates branches
-    looking throught there javascript file to help understand what needs to be done here.*/
+    //Peer programmed component; handling profile picture and banner: Tom & Akshay
+    /* To help understand what this file should contain, I got inspiration from my teammates branches
+    looking through their javascript file to help understand what needs to be done here.*/
     /* Learnt about resolving async promises from:
     https://www.w3schools.com/Js/js_async.asp */
     static async submitForm() {
         // Set the form button to a loading state
-        document.getElementById("submitButton").innerHTML = Buttons.getPastelButtonLoading('Loading...', 'lg');
+        document.getElementById("createCommunitySubmit").innerHTML = Buttons.getPastelButtonLoading('Creating...', 'lg');
 
-        // Gets form data
-        const data = {
-            name: document.getElementById("name").value,
-            description: document.getElementById("description").value,
-            profilePicture: document.getElementById("profilePicture"),
-            profileBanner: document.getElementById("profileBanner"),
-            isCompany: $("#isCompany").is(':checked') /* Learnt this from:
+        // Create a variable to store issues and create a variable to store the form data
+        let issue = "";
+        let data = {
+            name: null,
+            description: null,
+            profilePicture: null,
+            profileBanner: null,
+            isCompany: null
+        }
+
+        // Get the form data
+        try {
+            data.name = document.getElementById("name").value;
+            data.description = document.getElementById("description").value;
+            data.profilePicture = await FileUploads.format(document.getElementById("profilePicture").files[0]);
+            data.profileBanner = await FileUploads.format(document.getElementById("profileBanner").files[0]);
+            data.isCompany = $("#isCompany").is(':checked') /* Learnt this from:
             "https://stackoverflow.com/questions/9887360/how-can-i-check-if-a-checkbox-is-checked"*/
         }
-
-        /* Checks that there is a file uploaded for the profile picture
-        and if so puts it through 'FileUploads' to get the encodded version*/
-        if (data.profilePicture) {
-            data.profilePicture = await FileUploads.format(data.profilePicture.files[0]);
-            console.log("Profile Picture Result:", data.profilePicture);
-        } else {
-            console.log("No file selected for profile picture");
+        catch (e) {
+            // Set the form button to a default state and display an error alert
+            document.getElementById("createCommunitySubmit").innerHTML = Buttons.getPastelButton('Create', 'CreateCommunity.submitForm()', 'lg');
+            document.getElementById("formAlerts").innerHTML = Alerts.warningAlert("One or more fields are empty or contain invalid data.", "Invalid Input!");
+            return
         }
-        /* Checks that there is a file uploaded for the profile banner
-        and if so puts it through 'FileUploads' to get the encodded version*/
-        if (data.profileBanner) {
-            data.profileBanner = await FileUploads.format(data.profileBanner.files[0]);
-            console.log("Profile Banner:", data.profileBanner);
-        } else {
-            console.log("No file selected for profile banner");
-        }
-
-        // Returning the dictionary to the console, which helps with debugging
-        console.log("Form submitted with data:", data);
-    
-        let issue = "";
 
         /*The following code for sending the form data to the server
           was adapted from the login page*/
-        const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState === 4) {
-                // If the seeturns a 200 status code (Success)
-                if (this.status === 200) {
-                    // redirect to main page
-                    window.location.href = "";
-                }
-                // If the server returns a 401 status code (Unauthorized)
-                else if (this.status === 401) {
-                    issue = "You need to be authenticated to preform this task.";
-                }
-                // If the server returns a 403 status code (Forbidden)
-                else if (this.status === 403) {
-                    issue = "Your account does not have permissions for this action.";
-                }    
-                // If the server returns a 406 status code (Not Acceptable)
-                else if (this.status === 406) {
-                    issue = "There is an incorrect file type or a file which is too large.";
-                }
-                // If the server returns a 400 status code (Bad Request)
-                else if (this.status === 400) {
-                    issue = "Missing or incorrect field(s).";
-                }
-                // For an unexpected server status code
-                else {
-                    issue = "An internal server error occurred. Please try again later."
-                }
-                // If we get here then an error occurred
-                document.getElementById("submitButton").innerHTML = Buttons.getPastelButton('Submit', 'createCommunity.submitForm()', 'lg');
-                if (this.status === 401 || this.status === 403 || this.status === 406) {
-                    document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(issue, "Not Authorised for this action");
-                }
-                else {
-                    document.getElementById("formAlerts").innerHTML = Alerts.errorAlert(issue, "System Error!");
-                }
 
-            }
+        // Send the form data to the server using the fetch API
+        // Used: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        const response = await fetch("/api/community/create", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            body: JSON.stringify(data)
+        });
+
+        // Check if the response was successful
+        if (response.ok) {
+            // Display a success alert
+            document.getElementById("formAlerts").innerHTML = Alerts.successAlert("Your community has been created and is now awaiting approval!", "Success!");
         }
-        xhttp.open("POST", "/api/community/create", true);
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.send(JSON.stringify(data))
+        else {
+            // If the response was not successful, display an error alert
+            if (response.status === 401 || response.status === 403 || response.status === 406) {
+                document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(await response.text(), "Invalid Input!");
+            }
+            // If the response is due to a bad request, display an error alert
+            else if (response.status === 400) {
+                document.getElementById("formAlerts").innerHTML = Alerts.errorAlert("An unknown error occurred. Please try again later.", "Invalid Input!");
+            }
+            // Any other response is due to a system error
+            else {
+                document.getElementById("formAlerts").innerHTML = Alerts.errorAlert("An internal server error occurred. Please try again later.", "System Error!");
+            }
+            document.getElementById("createCommunitySubmit").innerHTML = Buttons.getPastelButton('Create', 'CreateCommunity.submitForm()', 'lg');
+        }
+        // Reset the form button
+        document.getElementById("createCommunitySubmit").innerHTML = Buttons.getPastelButton('Create', 'CreateCommunity.submitForm()', 'lg');
     }
     
 }

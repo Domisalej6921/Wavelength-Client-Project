@@ -2,14 +2,17 @@ from flask import Blueprint, render_template, request, redirect, session
 from datetime import datetime
 import os
 from data.communityRepository import CommunityRepository
+from data.communityMembersRepository import CommunityMembersRepository
 from data.accountRepository import AccountRepository
 from logic.uploads import Uploads
 
 community = Blueprint("community", __name__)
 
+
 @community.route('/community/create')
 def create_community():
     return render_template('createCommunity.html')
+
 
 # To help me write the following code, I read through one of my team members backend code for creating a POST API route
 # The name of the file I learnt from is Registry.py within blueprints
@@ -20,7 +23,9 @@ def create_community_form():
         data = request.get_json()
 
         communityRepository = CommunityRepository()
+        communityMembersRepository = CommunityMembersRepository()
         accountRepository = AccountRepository()
+        uploads = Uploads()
 
         # Get the userID from the session cookie
         userID = int(session["UserID"])
@@ -32,49 +37,68 @@ def create_community_form():
         if data is None:
             return "No JSON payload was uploaded with the request!", 400
 
-        # Checks that data recieved from the POST meets all required fields
+        # Checks if the JSON has the required fields
         if not all(field in data for field in ['name', 'description', 'isCompany']):
             return "The JSON payload is missing required fields!", 400
 
         # Check if the JSON has the correct field types
         if type(data["name"]) is not str or type(data["description"]) is not str or type(data["isCompany"]) is not bool:
             return "The JSON payload has incorrect field types!", 400
-        
-        # Get the user's account and check if the user if they have permissions to create a community
+
+        # Check that the user is allowed to create a community
         account = accountRepository.getWithID(userID)
         if account[6] == 0:
-            return "Your account does not have permissions for this action.", 403
+            return "Your account does not have the required permissions to preform this action!", 403
 
-        # Assigns the variable to the set file extentions in the app settings JSON file
-        allowedFileExtensions = os.environ["allowedFileExtensions"]
-
-        # Gets the profile picture, and ensures it is the correct file type and then checks if its under 2MB
-        fileName, extension, size = checkImage(data["ProfilePictureID"])
-        if extention not in allowedFileExtensions:
-            return "The JSON payload has incorrect profile picure type!", 406
-        if size > 2:
-            return "The Profile picure size is to large, needs to be less than 2MB", 406
-        # Gets the profile banner, and ensures it is the correct file type and then checks if its under 5MB
-        fileName, extension, size = checkImage(data["BackgroundID"])
-        if extension not in allowedFileExtensions:
-            return "The JSON payload has incorrect profile banner type!", 406
-        if size > 5:
-            return "The Profile banner size is to large, needs to be less than 5MB", 406
-
-        communityRepository.insert({
+        # Create community data dictionary
+        communityData = {
             "Name": data["name"],
             "Description": data["description"],
-            "ProfilePictureID": data["profilePicture"],
-            "BackgroundID": data["profileBanner"],
+            "ProfilePictureID": "",
+            "BackgroundID": "",
             "isCompany": data["isCompany"],
             "isApproved": 0,
-            "Created": int(datetime.datetime.now().timestamp())
+            "Created": datetime.now().timestamp()
+        }
+
+        # Check if the profile picture is being changed
+        # imageFields = list of tuples: (JSON payload field name, database field name, max size in MB)
+        imageFields = [("profilePicture", "ProfilePictureID", 2), ("profileBanner", "BackgroundID", 5)]
+        for field, dbField, maxSize in imageFields:
+            if data[field] is not None:
+                # Validate the image
+                imageID, extension, size = uploads.checkImage(data[field])
+                # Check if the profile picture is above x MB
+                if size > maxSize:
+                    uploads.rejectImage(imageID, extension)
+                    return f"The picture is too large! Max size is {maxSize}MB", 406
+                elif extension not in os.environ["allowedFileExtensions"]:
+                    uploads.rejectImage(imageID, extension)
+                    return "The picture does not use a valid file extension", 406
+
+                # Otherwise accept and override the image in the dictionary
+
+                uploads.acceptImage(imageID, extension)
+                communityData[dbField] = imageID
+            else:
+                return "The JSON payload is missing required fields!", 400
+
+        # Insert the community into the database
+        communityRepository.insert(communityData)
+
+        # Get the new community's ID
+        communityID = int(communityRepository.getIDWithProfilePictureID(communityData["ProfilePictureID"])[0])
+
+        # Insert the user into the community members table
+        communityMembersRepository.insert({
+            "CommunityID": communityID,
+            "UserID": userID,
+            "Role": "Founder",
+            "isAdmin": 1,
+            "Created": datetime.now().timestamp()
         })
 
-        # Success message
+        # Return a success message
         return "Community created successfully", 200
     else:
         return "You need to be authenticated to preform this task.", 401
-
-if __name__ == '__main__':
-    app.run(debug=True)

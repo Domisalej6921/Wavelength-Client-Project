@@ -72,10 +72,10 @@ def profileEditApi():
                 # Check if the profile picture is above x MB
                 if size > maxSize:
                     uploads.rejectImage(imageID, extension)
-                    return f"The profile picture is too large! Max size is {maxSize}MB", 406
+                    return f"The picture is too large! Max size is {maxSize}MB", 406
                 elif extension not in os.environ["allowedFileExtensions"]:
                     uploads.rejectImage(imageID, extension)
-                    return "The profile picture does not use a valid file extension", 406
+                    return "The picture does not use a valid file extension", 406
 
                 # Otherwise override the profile picture in the dictionary
                 # Delete the old image
@@ -87,6 +87,7 @@ def profileEditApi():
         # Update the database
         accountRepository.putEditForm(accountData)
 
+        # Return a success message
         return "Account data has been edited successfully!", 200
     else:
         return "You need to be authenticated to preform this task.", 401

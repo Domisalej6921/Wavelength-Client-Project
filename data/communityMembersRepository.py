@@ -8,6 +8,6 @@ class CommunityMembersRepository():
         """Inserts a community into the database."""
         self.db.execute(
             """INSERT INTO EntityMembers (EntityID, UserID, Role, isAdmin, Created) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            VALUES (?, ?, ?, ?, ?)""",
             (data["EntityID"], data["UserID"], data["Role"], data["isAdmin"], data["Created"])
         )

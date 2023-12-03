@@ -18,15 +18,15 @@ class Modals {
             </div>
             <div class="mb-3">
                 <label for="modalProfilePicture" class="FormText">Profile Picture</label>
-                <input type="file" class="form-control" id="modalProfilePicture" onchange="Profile.handleUpload('modalProfilePicture', 'profilePicture')">
+                <input type="file" class="form-control" id="modalProfilePicture">
             </div>
             <div class="mb-3">
                 <label for="modalProfileBanner" class="FormText">Profile Banner</label>
-                <input type="file" class="form-control" id="modalProfileBanner" onchange="Profile.handleUpload('modalProfileBanner', 'profileBanner')">
+                <input type="file" class="form-control" id="modalProfileBanner">
             </div>
         </form>
         <div class="align-content" id="modalEditProfileSubmit">
-            <button class="btn btn-pastel btn-lg" onClick="Profile.editFormSubmit()">Edit</button>
+            <button class="btn btn-pastel btn-lg" onClick="EditProfile.formSubmit()">Edit</button>
         </div>`
     }
 }

@@ -91,7 +91,7 @@ def create_community_form():
 
         # Insert the user into the community members table
         communityMembersRepository.insert({
-            "CommunityID": communityID,
+            "EntityID": communityID,
             "UserID": userID,
             "Role": "Founder",
             "isAdmin": 1,

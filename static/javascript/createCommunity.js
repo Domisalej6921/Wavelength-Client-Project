@@ -48,14 +48,18 @@ class CreateCommunity {
         });
 
         // Check if the response was successful
-        if (response.ok) {
+        if (response.status === 200) {
             // Display a success alert
             document.getElementById("formAlerts").innerHTML = Alerts.successAlert("Your community has been created and is now awaiting approval!", "Success!");
         }
         else {
             // If the response was not successful, display an error alert
-            if (response.status === 401 || response.status === 403 || response.status === 406) {
+            if (response.status === 403 || response.status === 406) {
                 document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(await response.text(), "Invalid Input!");
+            }
+            // If the response is due to an unauthorized request, redirect the user to the login page
+            else if (response.status === 401) {
+                window.location.href = "/login";
             }
             // If the response is due to a bad request, display an error alert
             else if (response.status === 400) {

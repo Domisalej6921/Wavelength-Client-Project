@@ -40,7 +40,7 @@ def create_community_form():
             return "No JSON payload was uploaded with the request!", 400
         
         # Checks if the JSON has the required fields
-        if not all(field in data for field in ['name', 'description', 'isCompany']):
+        if "name" not in data or "description" not in data or "isCompany" not in data:
             return "The JSON payload is missing required fields!", 400
 
         # Checks if the JSON has empty fields for name and description

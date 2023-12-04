@@ -20,3 +20,4 @@ async function loadIntoTable(url, card) {
 }
 
 loadIntoTable(/mainPage.json, document.querySelector("card"));
+    console.log("jhcgjhsvcjhcsv")

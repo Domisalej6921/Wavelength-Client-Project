@@ -1,5 +1,4 @@
 from flask import Flask, Blueprint, render_template, request, redirect, session
-import datetime
 import os
 
 from models.footerModel import FooterModel
@@ -38,6 +37,10 @@ def profileDetails():
         if type(data["userID"]) is not int:
             return "The JSON payload has incorrect field types!", 400
 
+        # If the ID is 0 then use the session ID
+        if data["userID"] == 0:
+            data["userID"] = int(session["UserID"])
+
         # Get the account data from the database
         account = accountRepository.getWithID(data["userID"])
 
@@ -74,7 +77,7 @@ def profileDetails():
                 }
 
         # Return the JSON object
-        return returnData, 200
+        return {"data": returnData}, 200
     else:
         return "You need to be authenticated to preform this task.", 401
 

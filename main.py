@@ -41,5 +41,9 @@ app.register_blueprint(login)
 from blueprints.profile import profile
 app.register_blueprint(profile)
 
+# Import tags blueprint
+from blueprints.tags import tags
+app.register_blueprint(tags)
+
 if __name__ == '__main__':
     app.run(debug=True)

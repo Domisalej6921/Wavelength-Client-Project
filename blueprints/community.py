@@ -5,13 +5,15 @@ from data.communityRepository import CommunityRepository
 from data.communityMembersRepository import CommunityMembersRepository
 from data.accountRepository import AccountRepository
 from logic.uploads import Uploads
+from models.footerModel import FooterModel
+from models.headerModel import HeaderModel
 
 community = Blueprint("community", __name__)
 
 
 @community.route('/community/create')
 def create_community():
-    return render_template('createCommunity.html')
+    return render_template('createCommunity.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
 
 
 # To help me write the following code, I read through one of my team members backend code for creating a POST API route
@@ -36,13 +38,18 @@ def create_community_form():
         # Check if the JSON exists
         if data is None:
             return "No JSON payload was uploaded with the request!", 400
-
+        
         # Checks if the JSON has the required fields
         if not all(field in data for field in ['name', 'description', 'isCompany']):
             return "The JSON payload is missing required fields!", 400
 
+        # Checks if the JSON has empty fields for name and description
+        if data['name'] == "" or data['description'] == "":
+            return "The JSON payload contains empty fields!", 400
+
         # Check if the JSON has the correct field types
-        if type(data["name"]) is not str or type(data["description"]) is not str or type(data["isCompany"]) is not bool:
+        # Learnt about the isdigit method from "https://www.w3schools.com/python/ref_string_isdigit.asp"
+        if data['name'].isdigit() or data['description'].isdigit():
             return "The JSON payload has incorrect field types!", 400
 
         # Check that the user is allowed to create a community

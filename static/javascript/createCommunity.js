@@ -33,7 +33,15 @@ class CreateCommunity {
             document.getElementById("formAlerts").innerHTML = Alerts.warningAlert("One or more fields are empty or contain invalid data.", "Invalid Input!");
             return
         }
-
+        
+        // Ensures that the name and description is not only comprised of numbers or empty strings
+        // Learnt how to do this check from "https://stackoverflow.com/questions/1779013/check-if-string-contains-only-digits
+        if (/^\d+$/.test(data.name) || /^\d+$/.test(data.description) || data.name === "" || data.description === "") {
+            document.getElementById("createCommunitySubmit").innerHTML = Buttons.getPastelButton('Create', 'CreateCommunity.submitForm()', 'lg');
+            document.getElementById("formAlerts").innerHTML = Alerts.warningAlert("One or more fields are empty or contain invalid data.", "Invalid Input!");
+            return;
+        }
+        
         /*The following code for sending the form data to the server
           was adapted from the login page*/
 

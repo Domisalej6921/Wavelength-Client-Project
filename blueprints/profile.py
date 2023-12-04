@@ -5,6 +5,7 @@ import os
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
 from data.accountRepository import AccountRepository
+from data.filesRepository import FilesRepository
 from logic.uploads import Uploads
 
 profile = Blueprint('profile', __name__)
@@ -15,6 +16,67 @@ def profilePage():
         return render_template("profile.html", footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
     else:
         return redirect("/login")
+
+@profile.route('/api/profile')
+def profileDetails():
+    if 'UserID' in session:
+        # Get the JSON payload from the request and inherit classes
+        data = request.get_json()
+
+        accountRepository = AccountRepository()
+        filesRepository = FilesRepository()
+
+        # Check if the JSON exists
+        if data is None:
+            return "No JSON payload was uploaded with the request!", 400
+
+        # Check if the JSON has the required fields
+        if "userID" not in data:
+            return "The JSON payload is missing required fields!", 400
+
+        # Check if the JSON has the correct field types
+        if type(data["userID"]) is not int:
+            return "The JSON payload has incorrect field types!", 400
+
+        # Get the account data from the database
+        account = accountRepository.getWithID(data["userID"])
+
+        # Check if the account exists
+        if account is None:
+            return "This account does not exist!", 404
+
+        # Check if the account is the same as the one requesting the data
+        isMyAccount = False
+        if account[0] != session["UserID"]:
+            isMyAccount = True
+
+        # Create a JSON object to return
+        returnData = {
+            "userID": account[0],
+            "username": account[2],
+            "isMentor": account[6],
+            "awaitingApproval": account[7],
+            "profilePicture": None,
+            "profileBanner": None,
+            "isMyAccount": isMyAccount
+        }
+
+        # Get the profile picture and profile banner from the database
+        imageFields = [("profilePicture", 8), ("profileBanner", 9)]
+        for image, i in imageFields:
+            picture = filesRepository.getWithID(account[i])
+
+            # Check if the profile picture exists
+            if picture is not None:
+                returnData[image] = {
+                    "file": picture[1] + picture[2],
+                    "description": picture[3]
+                }
+
+        # Return the JSON object
+        return returnData, 200
+    else:
+        return "You need to be authenticated to preform this task.", 401
 
 @profile.route('/api/profile-edit', methods=['POST'])
 def profileEditApi():

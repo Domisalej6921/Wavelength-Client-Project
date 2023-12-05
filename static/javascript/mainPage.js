@@ -1,4 +1,4 @@
-async function loadIntoTable(url, card) {
+async function loadIntoContainer(url, card) {
     const mentorImage = card.querySelector("img");
     const mentorTitle = card.querySelector("h5");
     const mentorDesc = card.querySelector("p");
@@ -10,14 +10,49 @@ async function loadIntoTable(url, card) {
     mentorTitle.innerHTML = "<h5></h5>";
     mentorDesc.innerHTML = "<p></p>";
 
-    //Populate Headers
+    //Populate images
     for (const imageData of img) {
         const imgDisplay = document.createElement("img");
 
         imgDisplay.textContent = imageData;
         mentorImage.querySelector("img").appendChild(imgDisplay);
     }
+
+    //Populate the titles
+    for (const titleData of title) {
+        const titleDisplay = document.createElement("h5");
+
+        titleDisplay.textContent = titleData;
+        mentorTitle.querySelector("h5").appendChild(titleDisplay);
+    }
+
+    //Populate the Description
+    for (const descData of desc) {
+        const descDisplay = document.createElement("p");
+
+        descDisplay.textContent = descData;
+        mentorDesc.querySelector("p").appendChild(descDisplay);
+    }
 }
 
-loadIntoTable(/mainPage.json, document.querySelector("card"));
-    console.log("jhcgjhsvcjhcsv")
+function loadAdditionalRow() {
+    var newContainer = document.createElement('div');
+    newContainer.className = 'card';
+
+    newContainer.innerHTML = "<p>Loading....</p>";
+
+    var parentContainer = document.getElementById('card');
+
+    var lastRowContainer = parentContainer.lastElementChild;
+    if(!lastRowContainer || lastRowContainer.childElementCount === 3) {
+        lastRowContainer = document.createElement('div');
+        lastRowContainer.className = 'row-container';
+        parentContainer.appendChild(lastRowContainer);
+    }
+
+    lastRowContainer.appendChild(newContainer);
+}
+
+document.getElementById('ViewMoreButton').addEventListener('click', loadAdditionalRow)
+
+//loadIntoTable(/mainPage.json, document.querySelector("card"));

@@ -2,6 +2,7 @@ from flask import *
 
 from data.filesRepository import FilesRepository
 from data.accountRepository import AccountRepository
+from data.assignedTagsRepository import AssignedTagsRepository
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
 
@@ -19,6 +20,7 @@ def mentorSearch():
 
         filesRepository = FilesRepository()
         accountRepository = AccountRepository()
+        assignedTagsRepository = AssignedTagsRepository()
 
         if data is None:
             return "No JSON payload was uploaded with the request!", 400
@@ -39,17 +41,49 @@ def mentorSearch():
         mentors = accountRepository.getMentorWithLimit(data["limit"])
 
         for mentor in mentors:
+            # Define the JSON for each mentor
             mentorData = {
-                "UserID": mentor[0],
-                "Name": mentor[1],
-                "Username": mentor[2],
-                "ProfilePicture": {},
-                "Background": {}
+                "userID": mentor[0],
+                "name": mentor[1],
+                "username": mentor[2],
+                "description": mentor[6],
+                "tags": [],
+                "profilePicture": {
+                    "path": "",
+                    "alt": ""
+                },
+                "background": {
+                    "path": "",
+                    "alt": ""
+                }
             }
+
+            # Get the images using a list of tuples
+            images = [('profilePicture', mentor[9]), ('background', mentor[10])]
+            for path, imageID in images:
+                try:
+                    # Get the image data from the Files table
+                    imageData = filesRepository.getWithID(imageID)
+
+                    # Update the mentorData directory
+                    mentorData[path]['path'] = f'{imageData[1]}.{imageData[2]}'
+                    mentorData[path]['alt'] = imageData[3]
+                except:
+                    mentorData[path]['path'] = ''
+                    mentorData[path]['alt'] = ''
+
+            tags = assignedTagsRepository.getWithUserID(mentor[0])
+            for tag in tags:
+                mentorData["tags"].append({
+                    "tagID": tag[0],
+                    "name": tag[1],
+                    "colour": tag[2]
+                })
+
             returnData.append(mentorData)
 
-
-
-        return str(data), 200
+        # Used W3schools to help convert json to string
+        # Source: https://www.w3schools.com/python/python_json.asp
+        return json.dumps(returnData), 200
     else:
         return "You need to be authenticated to preform this task.", 401

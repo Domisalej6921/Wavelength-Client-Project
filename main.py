@@ -37,6 +37,10 @@ app.register_blueprint(register)
 from blueprints.login import login
 app.register_blueprint(login)
 
+# Add community Blueprint
+from blueprints.community import community
+app.register_blueprint(community)
+
 # Import profile blueprint
 from blueprints.profile import profile
 app.register_blueprint(profile)

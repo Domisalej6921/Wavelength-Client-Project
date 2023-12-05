@@ -61,6 +61,7 @@ CREATE TABLE Entities (
     Created integer
 );
 
+
 CREATE TABLE EntityMembers (
     EntityID integer NOT NULL REFERENCES Entities(EntityID),
     UserID integer NOT NULL REFERENCES Users(UserID),

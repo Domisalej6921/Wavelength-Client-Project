@@ -1,0 +1,59 @@
+
+.background {
+    background-color: white;
+}
+
+.header {
+    color: black;
+    margin-top: 0 auto;
+}
+
+.containerColour {
+    margin: 2%;
+    background-color: #f1f1f1;
+    padding: 3.5%;
+    border-radius: 10px;
+    margin-top: 4%;
+}
+.FormMid {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 12.5%;/*margin-top and margin-bottom needs to be adjusted after the header and footer is added*/
+    margin-bottom: 12.5%;   
+}
+
+.FormSubmit {
+    text-align: center;
+    margin-top: 1%;
+}
+
+.FormText {
+    display: block;
+    text-align: left;
+    margin: 0 auto;
+    font-size:larger;
+}
+
+.FormCompany {
+    font-size:medium;
+}
+
+/*The following class was created by my teammate, Tommas Brown. The CSS is reused to keep consistant themes
+  for submit buttons*/
+
+.btn-pastel {
+    --bs-btn-color: #000000;
+    --bs-btn-bg: #c0b3da;
+    --bs-btn-border-color: #c6bada;
+    --bs-btn-hover-color: #000000;
+    --bs-btn-hover-bg: #c2a8d9;
+    --bs-btn-hover-border-color: #c8b5da;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: #b095d7;
+    --bs-btn-active-border-color: #b29cd7;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #000000;
+    --bs-btn-disabled-bg: #f8f9fa;
+    --bs-btn-disabled-border-color:#f8f9fa
+}

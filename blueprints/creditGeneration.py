@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, render_template, request, redirect, session 
 import datetime
 import os
 
+from data.entitiesRepository import EntitiesRepository
+from data.tokensRepository import TokensRepository
 from logic.cryptography import Cryptography
 
 creditGeneration = Blueprint("creditGeneration", __name__)
@@ -33,7 +35,9 @@ def createTokens(self, newTokenId: int, ownerID: int, ownerType: int, timeCreate
 
 @creditGeneration.route("/listCommunities", methods=["POST"])
 def listCommunities():
-    communities = []
+
+    entitiesRepository = EntitiesRepository()
+    communities = entitiesRepository.getCommunitiesOrdered(10)
 
     return jsonify(communities)
 

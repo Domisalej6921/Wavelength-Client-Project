@@ -7,6 +7,10 @@ from logic.cryptography import Cryptography
 
 creditGeneration = Blueprint("creditGeneration", __name__)
 
+@creditGeneration.route("/credit-generation")
+def creditGenerationPage():
+    return render_template("credits/credit-generation")
+
 def getTime(self):
     return int(datetime.datetime.now().timestamp())
 
@@ -15,13 +19,18 @@ def generateTokenId(self):
     newTokenId = cryptography.createUUID()
     return newTokenId
 
-@creditGeneration.route("/listCommunities", methods=["POST"])
+@creditGeneration.route("/listCommunities", methods=["GET"])
 def listCommunities():
 
     entitiesRepository = EntitiesRepository()
     communities = entitiesRepository.getCommunitiesOrdered(10)
 
-    return jsonify(communities)
+    returndata = []
+
+    for community in communities:
+        returndata.append(community)
+
+    return jsonify(returndata)
 
 @creditGeneration.route("/search", methods=["POST"])
 def search():

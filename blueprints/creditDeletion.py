@@ -6,6 +6,10 @@ from data.tokensRepository import TokensRepository
 
 creditDeletion = Blueprint("creditDeletion", __name__)
 
+@creditDeletion.route("/credit-deletion")
+def creditDeletionPage():
+    return render_template("credits/delete-credits.html")
+
 def getTime(self):
     return int(datetime.datetime.now().timestamp())
 

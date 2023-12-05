@@ -35,5 +35,13 @@ app.register_blueprint(register)
 from blueprints.login import login
 app.register_blueprint(login)
 
+# Import credit generation blueprint
+from blueprints.creditGeneration import creditGeneration
+app.register_blueprint(creditGeneration)
+
+# Import credit deletion blueprint
+from blueprints.creditDeletion import creditDeletion
+app.register_blueprint(creditDeletion)
+
 if __name__ == '__main__':
     app.run(debug=True)

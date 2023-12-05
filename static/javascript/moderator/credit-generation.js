@@ -8,24 +8,20 @@ class CreditGeneration {
 
     static getCommunities() { //Function for getting a list of the first x communities to put in the dropdown
 
-        const optionsFilled = 0
-        const totalOptions = 5
+        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+        xhttp.open("GET", "/listCommunities", true); //set method and the url and if it asynchornus
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-        while (optionsFilled < totalOptions ) {
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) { //200 = server is okay
+                const response = JSON.parse(this.responseText); // passing back the server response
 
-            const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
-            xhttp.open("POST", "/listCommunities", true); //set method and the url and if it asynchornus
-            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-            xhttp.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) { //200 = server is okay
-                    const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response.result);
-
-                    document.getElementById("chooseCommunity").innerHTML = <options> result </options>;
+                for (let i = 0; i < response.length; i++) {
+                    document.getElementById("chooseCommunity").innerHTML += `<option value="${response[i]}"> ${response[i]} </option>`;
                 }
-            };
-        }
+            }
+        };
+        xhttp.send()
     }
 
     static checkValid() { // Input validation for the credits

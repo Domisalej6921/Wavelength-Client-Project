@@ -34,7 +34,7 @@
         </div>
 
         <div class="MentorListContainer" id="mentorList">
-            <div class="card" style="width: 18rem;">
+            <div id="mentorFrame" class="card" style="width: 18rem;">
                 <img id="image" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
@@ -44,7 +44,7 @@
                 </div>
             </div>
             
-            <div class="card" style="width: 18rem;">
+            <div id="mentorFrame" class="card" style="width: 18rem;">
                 <img src="....." class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
@@ -55,7 +55,7 @@
             </div>
 
             
-            <div class="card" style="width: 18rem;">
+            <div id="mentorFrame" class="card" style="width: 18rem;">
                 <img src="....." class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
@@ -66,9 +66,11 @@
             </div>
         </div><br>
 
-        <button class="ViewMoreButton" onclick="loadAdditionalRow()">Load More</button><br>
+        <div class="buttonContainer">
+            <button id="LoadMoreButton" class="ViewMoreButton" onclick="loadAdditionalRow()">Load More</button><br>
 
-        <button class="BecomeMentor" onclick="console.log('Your a mentor now yay')">Become a Mentor</button>
+            <button class="BecomeMentor" onclick="console.log('Your a mentor now yay')">Become a Mentor</button>
+        </div>
 
         {{footer | safe}}
 

@@ -35,15 +35,15 @@ async function loadIntoContainer(url, card) {
     }
 }
 
-function loadAdditionalRow() {
-    var newContainer = document.createElement('div');
+ function loadAdditionalRow() {
+    let newContainer = document.createElement('div');
     newContainer.className = 'card';
 
     newContainer.innerHTML = "<p>Loading....</p>";
 
-    var parentContainer = document.getElementById('card');
+    let parentContainer = document.getElementById('mentorFrame');
 
-    var lastRowContainer = parentContainer.lastElementChild;
+    let lastRowContainer = parentContainer.lastElementChild;
     if(!lastRowContainer || lastRowContainer.childElementCount === 3) {
         lastRowContainer = document.createElement('div');
         lastRowContainer.className = 'row-container';
@@ -53,6 +53,6 @@ function loadAdditionalRow() {
     lastRowContainer.appendChild(newContainer);
 }
 
-document.getElementById('ViewMoreButton').addEventListener('click', loadAdditionalRow)
+document.getElementById('LoadMoreButton').addEventListener('click', loadAdditionalRow)
 
-//loadIntoTable(/mainPage.json, document.querySelector("card"));
+loadIntoContainer(/mainpage.json, document.querySelector("card"));

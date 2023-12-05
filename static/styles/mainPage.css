@@ -1,6 +1,7 @@
 body {
     text-align: center;
     background-color: #eeeeee;
+    position: sticky; right: auto;
 }
 
 .InitialInfo {
@@ -77,11 +78,21 @@ body {
 @media (max-width: 866px) {
     body {
         font-size: 14px;
-        display: inline-block;
-        align-content: left;
+        display: inline;
+        align-content: center;
     }
 
     .MentorListContainer {
+        display: flex;
+        text-align: center;
+        align-content: center;
+    }
+
+    .buttonContainer {
+        position: relative;
+    }
+
+    .ViewMoreButton, .BecomeMentor {
         display: inline;
     }
 }
@@ -90,11 +101,21 @@ body {
 @media (max-width: 480px) {
     body {
         font-size: 12px;
-        display: inline-block;
-        align-content: left;
+        display: inline;
+        align-content: center;
     }
 
     .MentorListContainer {
+        display: flex;
+        text-align: center;
+        align-content: center;
+    }
+
+    .buttonContainer {
+        position: relative;
+    }
+
+    .ViewMoreButton, .BecomeMentor {
         display: inline;
     }
 }

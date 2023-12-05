@@ -43,6 +43,9 @@ def create_community_form():
         if "name" not in data or "description" not in data or "isCompany" not in data:
             return "The JSON payload is missing required fields!", 400
 
+        if type(data["name"]) is not str or type(data["description"]) is not str or type(data["isCompany"]) is not bool:
+            return "The JSON payload has incorrect field types!", 400
+
         # Checks if the JSON has empty fields for name and description
         if data['name'] == "" or data['description'] == "":
             return "The JSON payload contains empty fields!", 400
@@ -50,7 +53,7 @@ def create_community_form():
         # Check if the JSON has the correct field types
         # Learnt about the isdigit method from "https://www.w3schools.com/python/ref_string_isdigit.asp"
         if data['name'].isdigit() or data['description'].isdigit():
-            return "The JSON payload has incorrect field types!", 400
+            return "The name or description should not exclusively contain numbers!", 406
 
         # Check that the user is allowed to create a community
         account = accountRepository.getWithID(userID)

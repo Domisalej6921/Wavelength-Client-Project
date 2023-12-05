@@ -44,7 +44,7 @@ def create_community_form():
             return "The JSON payload is missing required fields!", 400
 
         # Checks if the JSON has empty fields for name and description
-        if data['name'] == "" or data['description'] == "":
+        if len(data["name"]) == 0 or len(data["description"]) == 0:
             return "The JSON payload contains empty fields!", 400
 
         # Check if the JSON has the correct field types

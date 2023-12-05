@@ -14,8 +14,13 @@ def getInacactiveCredits():
 
     tokensRepository = TokensRepository()
     inactiveCredits = tokensRepository.getInactiveTokens(getTime())
-    
+
     return jsonify(inactiveCredits)
 
-@creditDeletion.route("/getInactiveCredits", methods=["POST"])
-def getInacactiveCredits():
+@creditDeletion.route("/getSelectedInactiveCredits", methods=["POST"])
+def getSelectedInactiveCredits():
+
+    return jsonify(selectedCredits)
+
+@creditDeletion.route("/deleteInactiveCredits", methods=["POST"])
+def deleteInacactiveCredits():

@@ -2,8 +2,8 @@ class CreditGeneration {
     //set up the class for the js to be called from
 
     static onLoadFunctions() { //Function that calls the functions to run when the page loads
-        this.getCommunities()
-        this.checkCheckbox()
+        CreditGeneration.getCommunities()
+        CreditGeneration.checkCheckbox()
     }
 
     static getCommunities() { //Function for getting a list of the first x communities to put in the dropdown
@@ -30,7 +30,7 @@ class CreditGeneration {
 
     static checkValid() { // Input validation for the credits
         const numCredits = Number(document.getElementById("numCredits").value);
-        var reasonInvalid = "";
+        let reasonInvalid = "";
         // console.log(typeof numCredits)
         // console.log(Number.isInteger(numCredits))
 
@@ -104,8 +104,8 @@ class CreditGeneration {
     //Used to calculate and update the display of the number of credits being generated
     static totalCredits () {
 
-        var numCredits = document.getElementById("numCredits").value;
-        var numGroups = document.getElementById("numGroups").value;
+        let numCredits = document.getElementById("numCredits").value;
+        let numGroups = document.getElementById("numGroups").value;
 
         if (numCredits === null) {
             numCredits = 0
@@ -161,10 +161,10 @@ class CreditGeneration {
         // console.log(numGroups)
 
         if (!(Number.isInteger(numCredits))) {
-            this.checkValid()
+            CreditGeneration.checkValid()
         }
         else if (!(Number.isInteger(numGroups))) {
-            this.checkValid()
+            CreditGeneration.checkValid()
         }
         else{
             const checked = document.getElementById("existingCommunity").checked;

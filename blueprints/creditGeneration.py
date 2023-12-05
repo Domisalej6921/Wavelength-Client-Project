@@ -9,7 +9,7 @@ creditGeneration = Blueprint("creditGeneration", __name__)
 
 @creditGeneration.route("/credit-generation")
 def creditGenerationPage():
-    return render_template("credits/credit-generation")
+    return render_template("credits/credit-generation.html")
 
 def getTime(self):
     return int(datetime.datetime.now().timestamp())

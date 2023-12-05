@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session
 from datetime import datetime
+import json
 import os
 from data.entitiesRepository import EntitiesRepository
 from data.entitiesMembersRepository import EntitiesMembersRepository
@@ -7,9 +8,10 @@ from data.accountRepository import AccountRepository
 from logic.uploads import Uploads
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
+from data.sitePermissionsRepository import SitePermissionsRepository
+
 
 community = Blueprint("community", __name__)
-
 
 @community.route('/community/create')
 def create_community():
@@ -68,7 +70,7 @@ def create_community_form():
             "BackgroundID": "",
             "isCompany": data["isCompany"],
             "isApproved": 0,
-            "Created": datetime.now().timestamp()
+            "Created": int(datetime.now().timestamp())
         }
 
         # Check if the profile picture is being changed
@@ -105,10 +107,51 @@ def create_community_form():
             "UserID": userID,
             "Role": "Founder",
             "isAdmin": 1,
-            "Created": datetime.now().timestamp()
+            "Created": int(datetime.now().timestamp())
         })
 
         # Return a success message
         return "Community created successfully", 200
+    else:
+        return "You need to be authenticated to preform this task.", 401
+
+
+@community.route('/community/review')
+def review_community():
+    if "UserID" in session:
+        sitePermissionsRepository = SitePermissionsRepository()
+
+        perms = sitePermissionsRepository.getWithID(int(session['UserID']))
+
+        if perms is not None:
+            if perms[1] == 1:
+                return render_template('communityReview.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+
+        return redirect('/account/dashboard')
+    else:
+        return redirect('/login')
+
+@community.route('/api/community/listNotApproved', methods=['GET'])
+def get_not_approved_community():
+    if 'UserID' in session:
+        sitePermissionsRepository = SitePermissionsRepository()
+        entitiesRepository = EntitiesRepository()
+
+        perms = sitePermissionsRepository.getWithID(int(session['UserID']))
+
+        if perms is not None:
+            if perms[1] == 1:
+                entities = entitiesRepository.getReviewPageData()
+                returnData = []
+                if entities is not None:
+                    for entity in entities:
+                        returnData.append({
+                            "entityID": entity[0],
+                            "name": entity[1],
+                            "created": entity[7]
+                        })
+                return json.dumps(returnData)
+
+        return "You do not have the permissions to execute that command", 403
     else:
         return "You need to be authenticated to preform this task.", 401

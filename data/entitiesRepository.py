@@ -12,7 +12,6 @@ class EntitiesRepository:
             (count,)
         )
 
-
     def getCommunity(self, name: str):
         """Get a community with the name."""
         return self.db.selectFirstWithParams(

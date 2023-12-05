@@ -16,7 +16,6 @@ class CreditGeneration {
             const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
             xhttp.open("POST", "/listCommunities", true); //set method and the url and if it asynchornus
             xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhttp.send(JSON.stringify(data));
 
             xhttp.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) { //200 = server is okay

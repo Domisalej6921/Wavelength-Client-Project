@@ -72,7 +72,7 @@ CREATE TABLE EntityMembers (
 CREATE TABLE Tokens (
     TokenID text NOT NULL PRIMARY KEY,
     OwnerID integer REFERENCES Entities(EntityID),
-    OwnerType integer,
+    isEntity integer,
     Created integer
 );
 

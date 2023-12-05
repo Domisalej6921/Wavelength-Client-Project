@@ -10,7 +10,7 @@ class TokensRepository:
         """Generates the token entries"""
 
         return self.db.execute(
-            "INSERT INTO Tokens (TokenID, OwnerID, OwnerType, Created) VALUES (?, ?, ?, ?)",
+            "INSERT INTO Tokens (TokenID, OwnerID, isEntity, Created) VALUES (?, ?, ?, ?)",
             (newTokenId, ownerID, ownerType, timeCreated)
         )
 

@@ -1,6 +1,6 @@
 from data.dataHelper import DataHelper
 
-class CommunityRepository():
+class EntitiesRepository():
     def __init__(self):
         self.db = DataHelper()
 

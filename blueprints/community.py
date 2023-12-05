@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, session
 from datetime import datetime
 import os
-from data.communityRepository import CommunityRepository
-from data.communityMembersRepository import CommunityMembersRepository
+from data.entitiesRepository import EntitiesRepository
+from data.entitiesMembersRepository import EntitiesMembersRepository
 from data.accountRepository import AccountRepository
 from logic.uploads import Uploads
 from models.footerModel import FooterModel
@@ -24,8 +24,8 @@ def create_community_form():
         # Gets the JSON payload from the request and inherits classes
         data = request.get_json()
 
-        communityRepository = CommunityRepository()
-        communityMembersRepository = CommunityMembersRepository()
+        entitiesRepository = EntitiesRepository()
+        entitiesMembersRepository = EntitiesMembersRepository()
         accountRepository = AccountRepository()
         uploads = Uploads()
 
@@ -91,13 +91,13 @@ def create_community_form():
                 return "The JSON payload is missing required fields!", 400
 
         # Insert the community into the database
-        communityRepository.insert(communityData)
+        entitiesRepository.insert(communityData)
 
         # Get the new community's ID
-        communityID = int(communityRepository.getIDWithProfilePictureID(communityData["ProfilePictureID"])[0])
+        communityID = int(entitiesRepository.getIDWithProfilePictureID(communityData["ProfilePictureID"])[0])
 
         # Insert the user into the community members table
-        communityMembersRepository.insert({
+        entitiesMembersRepository.insert({
             "EntityID": communityID,
             "UserID": userID,
             "Role": "Founder",

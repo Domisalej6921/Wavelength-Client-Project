@@ -1,6 +1,5 @@
-from flask import Flask, Blueprint, render_template, request, redirect, session , jsonify
+from flask import Flask, Blueprint, render_template, request, jsonify
 import datetime
-import os
 
 from data.entitiesRepository import EntitiesRepository
 from data.tokensRepository import TokensRepository
@@ -10,15 +9,11 @@ creditGeneration = Blueprint("creditGeneration", __name__)
 
 def getTime(self):
     return int(datetime.datetime.now().timestamp())
+
 def generateTokenId(self):
     cryptography = Cryptography()
     newTokenId = cryptography.createUUID()
     return newTokenId
-
-def getCommunitiesSimilar(self, searchTerm: str):
-    possibleCommunities = []
-    possibleCommunities.append("SELECT * FROM Entities WHERE Name LIKE searchTerm")
-    return possibleCommunities
 
 @creditGeneration.route("/listCommunities", methods=["POST"])
 def listCommunities():

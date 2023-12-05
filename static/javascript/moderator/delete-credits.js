@@ -35,5 +35,17 @@ class CreditDeletion {
     //Function to delete the credits
     static deleteCredits() {
 
+
+        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+            xhttp.open("POST", "/deleteInactiveCredits", true); //set method and the url and if it asynchornus
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) { //200 = server is okay
+                    const response = JSON.parse(this.responseText); // passing back the server response
+                    console.log(response.result);
+                }
+            };
+
     }
 }

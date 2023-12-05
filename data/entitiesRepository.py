@@ -23,5 +23,5 @@ class EntitiesRepository:
         """Gets communities that have names like the search term."""
         return self.db.selectWithParams(
             "SELECT * FROM Entities WHERE Name LIKE ?",
-            (searchTerm,)
+            ("%" + searchTerm + "%",)
         )

@@ -145,11 +145,55 @@ def get_not_approved_community():
                 returnData = []
                 if entities is not None:
                     for entity in entities:
+                        # Learnt about the datetime and ctime methods from:
+                        # "https://docs.python.org/3/library/datetime.html"
+                        dataTimeStamp = entity[7]
+                        dataDateTime = datetime.fromtimestamp(dataTimeStamp)
                         returnData.append({
                             "entityID": entity[0],
                             "name": entity[1],
-                            "created": entity[7]
+                            "created": dataDateTime.ctime()
                         })
+                return json.dumps(returnData)
+
+        return "You do not have the permissions to execute that command", 403
+    else:
+        return "You need to be authenticated to preform this task.", 401
+
+
+@community.route('/api/community/listNotApproved/selected', methods=['GET'])
+def get_not_approved_community_Review():
+    if 'UserID' in session:
+        # Learnt how to get parameters from URLs from:
+        # "https://stackoverflow.com/questions/24892035/how-can-i-get-the-named-parameters-from-a-url-using-flask/24892131#24892131"
+        CurrentEntity = request.args.get("entityID")
+        print(CurrentEntity)
+        sitePermissionsRepository = SitePermissionsRepository()
+        entitiesRepository = EntitiesRepository()
+
+        perms = sitePermissionsRepository.getWithID(int(session['UserID']))
+
+        if perms is not None:
+            if perms[1] == 1:
+                entities = entitiesRepository.getWithEntityID(CurrentEntity)
+                returnData = []
+                if entities is not None:
+                    for entity in entities:
+                        booly = entity[5]
+                        if booly == 1:
+                            booly = "Yes"
+                        else:
+                            booly = "No"
+                        returnData.append({
+                            "entityID": entity[0],
+                            "name": entity[1],
+                            "description": entity[2],
+                            "profilePicture": entity[3],
+                            "Background": entity[4],
+                            "isCompany": booly,
+                            "isApproved": entity[6]
+                        })
+
                 return json.dumps(returnData)
 
         return "You do not have the permissions to execute that command", 403

@@ -14,6 +14,10 @@ class EntitiesRepository():
             """SELECT * FROM Entities Where isApproved = 0"""
         )
 
+    def getWithEntityID(self, specificEntity: int) -> Union[list[tuple], None]:
+        """Gets data for the selected entity."""
+        return self.db.select("SELECT * FROM Entities WHERE EntityID = %s" % specificEntity)
+
     def insert(self, data: dict) -> None:
         """Inserts a community into the database."""
         self.db.execute(

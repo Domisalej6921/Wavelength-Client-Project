@@ -29,6 +29,23 @@
            </table>
         </div>
     </div>
+    <!-- Used W3Schools to help with bootstrap modals: -->
+    <!--"https://www.w3schools.com/bootstrap5/tryit.asp?filename=trybs_modal_centered"-->
+    <div class="modal" id="reviewModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Community Reviewal</h5>
+            <button type="button" class="btn-close btn btn-pastel btn-lg" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="communityModal"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-pastel btn-lg" data-bs-dismiss="modal" onclick="">Accept</button>
+            <button type="button" class="btn btn-pastel btn-lg" data-bs-dismiss="modal" onclick="">Reject</button>
+          </div>
+        </div>
+      </div>
+    </div>
     {{footer | safe}}
     </body>
 </html>

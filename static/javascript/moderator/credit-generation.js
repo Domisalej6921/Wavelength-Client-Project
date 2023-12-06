@@ -140,7 +140,7 @@ class CreditGeneration {
         const searchTerm = document.getElementById("searchBar").value;
         const chooseCommunitySearchedDiv = document.getElementById("chooseCommunitySearchedDiv");
         // console.log(searchTerm)
-        const data = { searchTerm }; // creates an object for the searchterm
+        const data = {searchTerm}; // creates an object for the searchterm
 
         const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
         xhttp.open("POST", "/search", true); //set method and the url and if it asynchornus

@@ -37,7 +37,7 @@ def search():
 
     search_term = request.json.get("searchTerm")
     entitiesRepository = EntitiesRepository()
-    response = entitiesRepository.getCommunitiesSimilar(search_term)
+    response = entitiesRepository.getCommunitiesSimilar(search_term, True)
 
     return jsonify(response)
 

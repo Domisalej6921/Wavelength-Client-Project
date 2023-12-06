@@ -125,6 +125,7 @@ class CreditGeneration {
 
         if (selected === "Other") { // Shows the search bar if they choose the "other" option
             searchCommunityDiv.style.display = "block";
+            chooseCommunitySearchedDiv.style.display = "block";
         }
         else { // Hides the search bar if a community has been chosen
             searchCommunityDiv.style.display = "none";
@@ -147,15 +148,18 @@ class CreditGeneration {
         xhttp.send(JSON.stringify(data));
 
         xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) { //200 = server is okay
-                const response = JSON.parse(this.responseText); // passing back the server response
-                console.log(response.result);
+            if (this.readyState === 4) { // checks its ready
+                if (this.status === 200) { //200 = server is okay
+                    const response = JSON.parse(this.responseText); // passing back the server response
+                    console.log(response.result);
+                    console.log(response);
 
-                for (let i = 0; i < response.length; i++) {
-                    document.getElementById("chooseCommunitySearched").innerHTML += `<option value="${response[i]}"> ${response[i]} </option>`;
+                    for (let i = 0; i < response.length; i++) {
+                        document.getElementById("chooseCommunitySearched").innerHTML += `<option value="${response[i]}"> ${response[i]} </option>`;
+                    }
+
+                    chooseCommunitySearchedDiv.style.display = "block";
                 }
-
-                chooseCommunitySearchedDiv.style.display = "block";
             }
         };
     }

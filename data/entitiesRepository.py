@@ -12,21 +12,19 @@ class EntitiesRepository:
             (count,)
         )
 
-    def getCommunity(self, name: str, wantName: bool):
-        """Get a community name or ID via the name."""
+    def getCommunityReturnId(self, name: str):
+        """Get a community id via the name."""
+        return self.db.selectWithParams(
+            "SELECT EntityId FROM Entities WHERE Name = ?",
+            (name,)
+        )
 
-        if wantName:
-            return self.db.selectFirstWithParams(
-                "SELECT Name FROM Entities WHERE Name = ?",
-                (name,)
-            )
-        elif not wantName:
-            return self.db.selectWithParams(
-                "SELECT EntityId FROM Entities WHERE Name = ?",
-                (name,)
-            )
-        else:
-            return "Invalid input"
+    def getCommunityReturnName(self, name: str):
+        """Get a community name via the name."""
+        return self.db.selectFirstWithParams(
+            "SELECT Name FROM Entities WHERE Name = ?",
+            (name,)
+        )
 
 
     def getCommunitiesSimilar(self, searchTerm: str):

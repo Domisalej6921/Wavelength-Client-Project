@@ -38,7 +38,7 @@ def search():
         search_term = request.json.get("searchTerm")
         if search_term is not None:
             entitiesRepository = EntitiesRepository()
-            response = entitiesRepository.getCommunitiesSimilar(search_term, True)
+            response = entitiesRepository.getCommunitiesSimilarReturnName(search_term)
 
             if response is not None:
                 return jsonify(response)

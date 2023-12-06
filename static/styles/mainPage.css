@@ -31,14 +31,17 @@ body {
 }
 
 .MentorListContainer {
-    display: inline-block;
-    box-sizing: border-box;
+    max-width: 1200px;
     margin: 0 auto 5%;
-    padding-left: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /*padding-left: 10%;*/
 }
 
 .card {
     width: calc(100% / 3);
+    box-sizing: border-box;
     float: left;
     align-items: center;
     margin-right: 5%;

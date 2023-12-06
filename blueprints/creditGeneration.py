@@ -34,13 +34,17 @@ def listCommunities():
 
 @creditGeneration.route("/search", methods=["POST"])
 def search():
+
     search_term = request.json.get("searchTerm")
     entitiesRepository = EntitiesRepository()
     response = entitiesRepository.getCommunitiesSimilar(search_term)
+
     return jsonify(response)
 
 @creditGeneration.route("/create", methods=["POST"])
-def create(data: object):
+def create():
+
+    data = request.get_json()
     tokenIds = []
     numTokens = data["totalNumCredits"]
 

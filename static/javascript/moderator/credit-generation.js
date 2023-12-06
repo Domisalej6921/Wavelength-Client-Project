@@ -73,6 +73,7 @@ class CreditGeneration {
         const generateButtonDiv = document.getElementById("generateButtonDiv");
         const displayCreditsDiv = document.getElementById("displayCreditsDiv");
         const searchCommunityDiv = document.getElementById("searchCommunityDiv");
+        const chooseCommunitySearchedDiv = document.getElementById("chooseCommunitySearchedDiv");
         // adds an event listener to the unlock checkbox for the "change" event.
 
         if (unlock === true) {
@@ -92,6 +93,7 @@ class CreditGeneration {
             generateButtonDiv.style.display = "none";
             displayCreditsDiv.style.display = "none";
             searchCommunityDiv.style.display = "none";
+            chooseCommunitySearchedDiv.style.display = "none";
             createCommunityDiv.style.display = "block"; //makes this visible
         }
 
@@ -118,6 +120,7 @@ class CreditGeneration {
         // console.log("Here");
         const selected = document.getElementById("chooseCommunity").value;
         const searchCommunityDiv = document.getElementById("searchCommunityDiv");
+        const chooseCommunitySearchedDiv = document.getElementById("chooseCommunitySearchedDiv");
         // console.log(selected);
 
         if (selected === "Other") { // Shows the search bar if they choose the "other" option
@@ -125,6 +128,7 @@ class CreditGeneration {
         }
         else { // Hides the search bar if a community has been chosen
             searchCommunityDiv.style.display = "none";
+            chooseCommunitySearchedDiv.style.display = "none";
         }
 
     }
@@ -133,6 +137,7 @@ class CreditGeneration {
 
         // console.log("here");
         const searchTerm = document.getElementById("searchBar").value;
+        const chooseCommunitySearchedDiv = document.getElementById("chooseCommunitySearchedDiv");
         // console.log(searchTerm)
         const data = { searchTerm }; // creates an object for the searchterm
 
@@ -145,6 +150,12 @@ class CreditGeneration {
             if (this.readyState === 4 && this.status === 200) { //200 = server is okay
                 const response = JSON.parse(this.responseText); // passing back the server response
                 console.log(response.result);
+
+                for (let i = 0; i < response.length; i++) {
+                    document.getElementById("chooseCommunitySearched").innerHTML += `<option value="${response[i]}"> ${response[i]} </option>`;
+                }
+
+                chooseCommunitySearchedDiv.style.display = "block";
             }
         };
     }

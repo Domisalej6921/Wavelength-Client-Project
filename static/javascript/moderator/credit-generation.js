@@ -201,12 +201,13 @@ class CreditGeneration {
                 xhttp.send(JSON.stringify(data));
 
                 xhttp.onreadystatechange = function () {
-                    if (this.readyState === 4 && this.status === 200) { //200 = server is okay
-                        const response = JSON.parse(this.responseText); // passing back the server response
-                        console.log(response.result);
+                    if (this.readyState === 4) { // checks its ready
+                        if (this.status === 200) { //200 = server is okay
+                            const response = JSON.parse(this.responseText); // passing back the server response
+                            console.log(response.result);
+                        }
                     }
                 };
-
             }
         }
     }

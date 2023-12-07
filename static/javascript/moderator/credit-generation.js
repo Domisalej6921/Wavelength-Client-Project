@@ -176,27 +176,68 @@ class CreditGeneration {
 
         const numCredits = Number(document.getElementById("numCredits").value);
         const numGroups = Number(document.getElementById("numGroups").value);
-        const chosenCommunity = document.getElementById("chooseCommunity").value
+        const chosenCommunity = document.getElementById("chooseCommunity").value;
+        const chosenCommunitySearched = document.getElementById("chooseCommunitySearched").value;
+
         console.log(numCredits)
         console.log(numGroups)
         console.log(Number.isInteger(numCredits))
+        console.log(chosenCommunitySearched)
 
-        if (chosenCommunity === "Other") {
-            document.getElementById("formAlerts").innerHTML = Alerts.warningAlert("Please Choose A Community!", "Invalid Input!");
+        if (chosenCommunitySearched === ""){
+            if (chosenCommunity === "Other") {
+                document.getElementById("formAlerts").innerHTML = Alerts.warningAlert("Please Choose A Community!", "Invalid Input!");
+            }
+
+            else {
+                if (!(Number.isInteger(numCredits))) {
+                    CreditGeneration.checkValid()
+                    console.log("First Invalid")
+                }
+                else if (!(Number.isInteger(numGroups))) {
+                    CreditGeneration.checkValid()
+                    console.log("Second Invalid")
+                }
+                else {
+                    const totalNumCredits = numGroups * numCredits;
+                    const data = {
+                        chosenCommunity: chosenCommunity,
+                        numGroups: numGroups,
+                        numCredits: numCredits,
+                        totalNumCredits: totalNumCredits,
+                    }
+                    console.log(data)
+
+                    const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+                    xhttp.open("POST", "/create", true); //set method and the url and if it asynchornus
+                    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                    xhttp.send(JSON.stringify(data));
+
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState === 4) { // checks its ready
+                            if (this.status === 200) { //200 = server is okay
+                                const response = JSON.parse(this.responseText); // passing back the server response
+                                console.log(response.result);
+                            }
+                        }
+                    };
+                }
+            }
         }
 
         else {
             if (!(Number.isInteger(numCredits))) {
                 CreditGeneration.checkValid()
                 console.log("First Invalid")
-            } else if (!(Number.isInteger(numGroups))) {
+            }
+            else if (!(Number.isInteger(numGroups))) {
                 CreditGeneration.checkValid()
                 console.log("Second Invalid")
-            } else {
-
+            }
+            else {
                 const totalNumCredits = numGroups * numCredits;
                 const data = {
-                    chosenCommunity: chosenCommunity,
+                    chosenCommunity: chosenCommunitySearched,
                     numGroups: numGroups,
                     numCredits: numCredits,
                     totalNumCredits: totalNumCredits,

@@ -1,10 +1,12 @@
 from flask import Flask, Blueprint, render_template, request, redirect, session
+import json
 import os
 
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
 from data.accountRepository import AccountRepository
 from data.filesRepository import FilesRepository
+from data.tagsRepository import TagsRepository
 from logic.uploads import Uploads
 
 profile = Blueprint('profile', __name__)
@@ -24,6 +26,7 @@ def profileDetails():
 
         accountRepository = AccountRepository()
         filesRepository = FilesRepository()
+        tagsRepository = TagsRepository()
 
         # Check if the JSON exists
         if data is None:
@@ -57,12 +60,22 @@ def profileDetails():
         returnData = {
             "userID": account[0],
             "username": account[2],
+            "tags": [],
             "isMentor": account[6],
             "awaitingApproval": account[7],
             "profilePicture": None,
             "profileBanner": None,
             "isMyAccount": isMyAccount
         }
+
+        # Get the tags from the database, then loop through and format them
+        tags = tagsRepository.getWithUserID(account[0])
+        for tag in tags:
+            returnData["tags"].append({
+                "tagID": tag[0],
+                "name": tag[1],
+                "colour": tag[2]
+            })
 
         # Get the profile picture and profile banner from the database
         imageFields = [("profilePicture", 8), ("profileBanner", 9)]
@@ -77,7 +90,7 @@ def profileDetails():
                 }
 
         # Return the JSON object
-        return {"data": returnData}, 200
+        return json.dumps(returnData), 200
     else:
         return "You need to be authenticated to preform this task.", 401
 

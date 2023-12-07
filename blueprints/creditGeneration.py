@@ -34,21 +34,17 @@ def listCommunities():
 
 @creditGeneration.route("/search", methods=["POST"])
 def search():
-    try:
-        search_term = request.json.get("searchTerm")
-        if search_term is not None:
-            entitiesRepository = EntitiesRepository()
-            response = entitiesRepository.getCommunitiesSimilarReturnName(search_term)
+    search_term = request.json.get("searchTerm")
+    if search_term is not None:
+        entitiesRepository = EntitiesRepository()
+        response = entitiesRepository.getCommunitiesSimilar(search_term)
 
-            if response is not None:
-                return jsonify(response)
+        if response is not None:
+            return jsonify(response)
 
-            return jsonify({"error": "No matching communities found"}), 404
+        return "No matching communities found", 404
 
-        return jsonify({"error": "Missing 'searchTerm' in the request"}), 400
-
-    except Exception as e:
-        return jsonify({"error": f"Internal Server Error: {str(e)}"}), 500
+    return "Missing 'searchTerm' in the request", 400
 
 @creditGeneration.route("/create", methods=["POST"])
 def create():

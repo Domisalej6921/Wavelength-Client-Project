@@ -136,6 +136,11 @@ class CreditGeneration {
 
     static search () { // function to search the database for communities
 
+        const temp = document.querySelectorAll(".temporary");
+        temp.forEach(temp => {
+            temp.remove();
+        });
+
         // console.log("here");
         const searchTerm = document.getElementById("searchBar").value;
         const chooseCommunitySearchedDiv = document.getElementById("chooseCommunitySearchedDiv");
@@ -155,7 +160,7 @@ class CreditGeneration {
                     console.log(response);
 
                     for (let i = 0; i < response.length; i++) {
-                        document.getElementById("chooseCommunitySearched").innerHTML += `<option value="${response[i]}"> ${response[i]} </option>`;
+                        document.getElementById("chooseCommunitySearched").innerHTML += `<option value="${response[i]}" class=temporary> ${response[i]} </option>`;
                     }
 
                     chooseCommunitySearchedDiv.style.display = "block";

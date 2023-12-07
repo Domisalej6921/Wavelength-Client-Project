@@ -29,26 +29,22 @@ class MainPage {
 }
 
 let originalContainer = document.getElementById("mentorList");
-let loadMoreBtn = document.getElementById("LoadMoreButton");
 let itemsPerPage = 3;
 let limit = 12;
 let totalItems = originalContainer.children.length;
 let currentItems = itemsPerPage;
 
 
-function loadMoreButton() {
-        loadMoreBtn.addEventListener("click", function () {
+function loadMoreButton(originalContainer) {
         let newItemsContainer = document.createElement("div");
         newItemsContainer.className = "card";
         newItemsContainer.textContent = "working";
             // Mentors.renderCard(data);
 
-        limit += 3
+        // limit += 3
 
         // MainPage.renderMentors(limit)
 
         originalContainer.appendChild(newItemsContainer);
-        currentItems += itemsPerPage;
-
-    })
+        // currentItems += itemsPerPage;
 }

@@ -136,6 +136,9 @@ class CreditGeneration {
 
     static search () { // function to search the database for communities
 
+        // removes the old search results
+        // Learnt via https://bobbyhadz.com/blog/javascript-remove-all-elements-with-class#:~:text=Use%20the%20document.querySelectorAll%20%28%29%20method%20to%20select%20the,each%20element%20to%20remove%20it%20from%20the%20DOM.
+        // 07/12/23
         const temp = document.querySelectorAll(".temporary");
         temp.forEach(temp => {
             temp.remove();

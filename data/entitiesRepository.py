@@ -14,7 +14,7 @@ class EntitiesRepository:
 
     def getCommunityReturnId(self, name: str):
         """Get a community id via the name."""
-        return self.db.selectWithParams(
+        return self.db.selectFirstWithParams(
             "SELECT EntityId FROM Entities WHERE Name = ?",
             (name,)
         )

@@ -11,10 +11,10 @@ creditGeneration = Blueprint("creditGeneration", __name__)
 def creditGenerationPage():
     return render_template("credits/credit-generation.html")
 
-def getTime(self):
+def getTime():
     return int(datetime.datetime.now().timestamp())
 
-def generateTokenId(self):
+def generateTokenId():
     cryptography = Cryptography()
     newTokenId = cryptography.createUUID()
     return newTokenId
@@ -59,12 +59,11 @@ def create():
         tokenIds.append(newTokenId)
 
         entitiesRepository = EntitiesRepository()
-        communityId = entitiesRepository.getCommunity(data["chosenCommunity"])[1]
-
+        communityId = entitiesRepository.getCommunityReturnId(data["chosenCommunity"])[0]
 
         tokensRepository = TokensRepository()
         tokensRepository.createTokens(newTokenId, communityId, 1, getTime())
 
-        numTokens = - 1
+        numTokens -= 1
 
     return jsonify(tokenIds)

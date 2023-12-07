@@ -37,7 +37,7 @@ class CreditGeneration {
                 // console.log(reasonInvalid)
             }
 
-            else if (numCredits < 0) { //Checks if the value is positive
+            else if (numCredits <= 0) { //Checks if the value is positive
                 reasonInvalid = "Please do not generate negative credits!"
                 // console.log(reasonInvalid)
             }
@@ -184,17 +184,17 @@ class CreditGeneration {
         console.log(Number.isInteger(numCredits))
         console.log(chosenCommunitySearched)
 
-        if (chosenCommunitySearched === ""){
+        if (chosenCommunitySearched.length === 0) {
             if (chosenCommunity === "Other") {
                 document.getElementById("formAlerts").innerHTML = Alerts.warningAlert("Please Choose A Community!", "Invalid Input!");
             }
 
             else {
-                if (!(Number.isInteger(numCredits))) {
+                if (!(Number.isInteger(numCredits)) || (numCredits === 0)) {
                     CreditGeneration.checkValid()
                     console.log("First Invalid")
                 }
-                else if (!(Number.isInteger(numGroups))) {
+                else if (!(Number.isInteger(numGroups)) || (numCredits === 0)) {
                     CreditGeneration.checkValid()
                     console.log("Second Invalid")
                 }
@@ -209,7 +209,7 @@ class CreditGeneration {
                     console.log(data)
 
                     const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
-                    xhttp.open("POST", "/create", true); //set method and the url and if it asynchornus
+                    xhttp.open("POST", "/create", false); //set method and the url and if it asynchornus
                     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                     xhttp.send(JSON.stringify(data));
 
@@ -226,11 +226,11 @@ class CreditGeneration {
         }
 
         else {
-            if (!(Number.isInteger(numCredits))) {
+            if (!(Number.isInteger(numCredits)) || (numCredits === 0)) {
                 CreditGeneration.checkValid()
                 console.log("First Invalid")
             }
-            else if (!(Number.isInteger(numGroups))) {
+            else if (!(Number.isInteger(numGroups)) || (numCredits === 0)) {
                 CreditGeneration.checkValid()
                 console.log("Second Invalid")
             }
@@ -245,7 +245,7 @@ class CreditGeneration {
                 console.log(data)
 
                 const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
-                xhttp.open("POST", "/create", true); //set method and the url and if it asynchornus
+                xhttp.open("POST", "/create", false); //set method and the url and if it asynchornus
                 xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                 xhttp.send(JSON.stringify(data));
 

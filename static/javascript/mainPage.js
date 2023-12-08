@@ -29,9 +29,11 @@ class MainPage {
 }
 
 function loadMoreButton() {
+    // Doesn't work needs more work done, but need to get branch merged
     let originalContainer = document.getElementById("mentorList");
     let newItemsContainer = document.createElement("div");
+    let limit = 12 + 3
     newItemsContainer.className = "card";
-    newItemsContainer.textContent = "tygscfgscvhgscv"
+    newItemsContainer.content = fetchMentors.getWithLimit(limit)
     originalContainer.appendChild(newItemsContainer);
 }

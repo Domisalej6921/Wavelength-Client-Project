@@ -1,3 +1,4 @@
+
 class Mentors {
     static renderCard(data) {
         return `
@@ -7,7 +8,9 @@ class Mentors {
                     <h5 class="card-title">${data.name}</h5>
                     <p class="card-text">${data.description}</p>
                     <p class="card-text">Tags Insert here....</p>
-                    <a href="#" class="btn btn-primary">Apply</a>
+<!--                    Used here to understand how to redirect flask pages in js/html-->
+<!--                    https://stackoverflow.com/questions/61625290/flask-make-a-button-direct-to-another-page-->
+                    <a href="/account/mentor_apply" class="btn btn-primary">Apply</a>
                 </div>
             </div>
         `;

@@ -16,6 +16,10 @@ def mainPage():
 def mentor_apply():
     return render_template('mentorApp.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
 
+@mentors.route('/account/become_mentor')
+def become_mentor():
+    return render_template('becomeMentor.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+
 @mentors.route('/api/mentors', methods=['POST'])
 def mentorSearch():
     if "UserID" in session:

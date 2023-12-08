@@ -1,3 +1,3 @@
-function submitForm() {
+function submitMentorApp() {
     console.log("form pending......")
 }

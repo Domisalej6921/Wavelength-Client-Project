@@ -8,7 +8,6 @@ class MainPage {
             // Get data from the response
             let data = await response.json()
 
-            console.log(data[0])
 
             // Render mentors onto the page
             let mentors = "";
@@ -18,6 +17,9 @@ class MainPage {
 
             // Render it onto the page
             document.getElementById('mentorList').innerHTML = mentors;
+            if (limit !== 12) {
+                document.getElementById('LoadMoreButton').remove();
+            }
         }
         else if (response.status === 401) {
             window.location.href = "/login"
@@ -26,14 +28,4 @@ class MainPage {
             document.getElementById('mentorList').innerHTML = Alerts.errorAlert("Error! Mentors failed to render. Please try again later!");
         }
     }
-}
-
-function loadMoreButton() {
-    // Doesn't work needs more work done, but need to get branch merged
-    let originalContainer = document.getElementById("mentorList");
-    let newItemsContainer = document.createElement("div");
-    let limit = 12 + 3
-    newItemsContainer.className = "card";
-    newItemsContainer.content = fetchMentors.getWithLimit(limit)
-    originalContainer.appendChild(newItemsContainer);
 }

@@ -1,5 +1,5 @@
 class fetchMentors {
-     static async getWithLimit(limit = 12) {
+     static async getWithLimit(limit) {
         // Define JSON payload for mentors
         const data = {
             "limit": limit

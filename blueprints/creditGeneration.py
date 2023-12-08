@@ -3,6 +3,7 @@ import datetime
 
 from data.entitiesRepository import EntitiesRepository
 from data.tokensRepository import TokensRepository
+from data.transactionsRepository import TransactionsRepository
 from logic.cryptography import Cryptography
 
 creditGeneration = Blueprint("creditGeneration", __name__)
@@ -57,12 +58,16 @@ def create():
 
         newTokenId = generateTokenId()
         tokenIds.append(newTokenId)
+        timeCreated = getTime()
 
         entitiesRepository = EntitiesRepository()
         communityId = entitiesRepository.getCommunityReturnId(data["chosenCommunity"])[0]
 
         tokensRepository = TokensRepository()
-        tokensRepository.createTokens(newTokenId, communityId, 1, getTime())
+        tokensRepository.createTokens(newTokenId, communityId, 1, timeCreated)
+
+        transactionRepository = TransactionsRepository()
+        transactionRepository.createTransactionLog(newTokenId, "null", communityId, True, timeCreated)
 
         numTokens -= 1
 

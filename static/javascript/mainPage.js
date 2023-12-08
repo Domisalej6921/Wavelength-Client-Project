@@ -28,23 +28,23 @@ class MainPage {
     }
 }
 
-let originalContainer = document.getElementById("mentorList");
-let itemsPerPage = 3;
-let limit = 12;
-let totalItems = originalContainer.children.length;
-let currentItems = itemsPerPage;
+
+// let itemsPerPage = 3;
+// let limit = 12;
+// let totalItems = originalContainer.children.length;
+// let currentItems = itemsPerPage;
 
 
-function loadMoreButton(originalContainer) {
-        let newItemsContainer = document.createElement("div");
-        newItemsContainer.className = "card";
-        newItemsContainer.textContent = "working";
-            // Mentors.renderCard(data);
+function loadMoreButton() {
+    let originalContainer = document.getElementById("mentorList");
+    let newItemsContainer = document.createElement("div");
+    newItemsContainer.className = "card";
+    newItemsContainer.textContent = "additional mentors"// Mentors.renderCard(data);
 
-        // limit += 3
+    // limit += 3
 
-        // MainPage.renderMentors(limit)
+    // MainPage.renderMentors(limit)
 
-        originalContainer.appendChild(newItemsContainer);
-        // currentItems += itemsPerPage;
+    originalContainer.appendChild(newItemsContainer);
+    // currentItems += itemsPerPage;
 }

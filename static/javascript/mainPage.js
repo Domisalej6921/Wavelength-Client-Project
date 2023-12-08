@@ -1,3 +1,5 @@
+import sqlite3 from sqlite3
+import node
 class MainPage {
     static async renderMentors(limit = 12){
         const response = await fetchMentors.getWithLimit(limit)
@@ -28,23 +30,13 @@ class MainPage {
     }
 }
 
-
-// let itemsPerPage = 3;
-// let limit = 12;
-// let totalItems = originalContainer.children.length;
-// let currentItems = itemsPerPage;
-
-
-function loadMoreButton() {
+let accounts =
+function loadMoreButton(accounts) {
     let originalContainer = document.getElementById("mentorList");
     let newItemsContainer = document.createElement("div");
     newItemsContainer.className = "card";
-    newItemsContainer.textContent = "additional mentors"// Mentors.renderCard(data);
+    newItemsContainer.textContent = "tygscfgscvhgscv"
 
-    // limit += 3
-
-    // MainPage.renderMentors(limit)
 
     originalContainer.appendChild(newItemsContainer);
-    // currentItems += itemsPerPage;
 }

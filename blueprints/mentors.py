@@ -12,6 +12,10 @@ mentors = Blueprint('mentors', __name__)
 def mainPage():
     return render_template('mainPage.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
 
+@mentors.route('/account/mentor_apply')
+def mentor_apply():
+    return render_template('mentorApp.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+
 @mentors.route('/api/mentors', methods=['POST'])
 def mentorSearch():
     if "UserID" in session:

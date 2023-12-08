@@ -45,5 +45,9 @@ app.register_blueprint(community)
 from blueprints.profile import profile
 app.register_blueprint(profile)
 
+# Import mentors blueprint
+from blueprints.mentors import mentors
+app.register_blueprint(mentors)
+
 if __name__ == '__main__':
     app.run(debug=True)

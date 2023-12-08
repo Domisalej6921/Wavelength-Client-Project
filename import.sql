@@ -13,6 +13,7 @@ CREATE TABLE Users (
     Email text,
     Password text,
     Salt text,
+    Description text,
     isMentor integer,
     awaitingApproval integer,
     ProfilePictureID text REFERENCES Files(FileID),

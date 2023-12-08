@@ -27,6 +27,7 @@
 # Add other files/directories to ignore here if needed
 **/Dockerfile
 **.DS_Store
+test.py
 
 *.pyc
 **/__pycache__/

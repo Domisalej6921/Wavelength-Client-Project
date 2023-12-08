@@ -13,7 +13,6 @@
         <script src="/static/javascript/logic/fetchMentors.js" type="text/javascript"></script>
         <script src="/static/javascript/components/alerts.js" type="text/javascript"></script>
         <script src="/static/javascript/components/mentors.js" type="text/javascript" defer></script>
-{#        <script src="/javascript/load_mentors.js"></script>#}
         <script src="/static/javascript/mainPage.js" type="text/javascript"></script>
     </head>
     <body onload="MainPage.renderMentors()">
@@ -43,7 +42,7 @@
         <div class="buttonContainer">
             <button id="LoadMoreButton" class="ViewMoreButton" onclick="loadMoreButton()"> Load More</button><br>
 
-            <button class="BecomeMentor" onclick="console.log('Your a mentor now yay')">Become a Mentor</button>
+            <a href="/account/become_mentor" class="BecomeMentor">Become a Mentor</a>
         </div>
 
         {{footer | safe}}

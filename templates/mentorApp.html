@@ -30,10 +30,51 @@
         <div class="mentorDesc">
             <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
         </div>
+
+        <div class="LinkedInLink">
+            <a href="https://uk.linkedin.com/">LinkedIN Profile</a>
+        </div>
     </div>
 
-    <div class="mentorApplication">
+    <div class="mentorApplicationContents">
         <h1 class="applicationHeading">Application</h1>
+
+        <div class="formContainer">
+            <form class="form-floating" id="mentorApplicationForm">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="firstName" placeholder="Your First Name" required>
+                  <label for="firstName"> Your First Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="lastName" placeholder="Your Last Name" required>
+                    <label for="lastName"> Your Last Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="email" placeholder="Email" required>
+                    <label for="email"> Email</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <textarea type="text" class="form-control" id="description" placeholder="Description of why you want this mentor" required></textarea>
+                  <label for="description">Description of why you want this mentor</label>
+                </div>
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="inlineFormCustomSelect">When do you want your lessons to start?</label>
+                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option selected>Choose...</option>
+                            <option value="1">One Week</option>
+                            <option value="2">Two Weeks</option>
+                            <option value="3">Three Weeks</option>
+                            <option value="4">Four Weeks</option>
+                            <option value="5">Longer....</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="submitButton" id="applicationSubmit">
+                <button class="btn btn-primary" onclick="console.log('Application pending......')">Apply</button>
+            </div>
+        </div>
     </div>
 
     {{ footer | safe }}

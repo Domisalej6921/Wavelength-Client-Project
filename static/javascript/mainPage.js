@@ -1,5 +1,3 @@
-import sqlite3 from sqlite3
-import node
 class MainPage {
     static async renderMentors(limit = 12){
         const response = await fetchMentors.getWithLimit(limit)

@@ -63,7 +63,18 @@ body {
     border: none;
 }
 
-.ViewMoreButton, .BecomeMentor {
+.BecomeMentor {
+    margin-bottom: 5%;
+    background-color: #b4a7d5;
+    border-color: white;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.ViewMoreButton {
     padding: 10px;
     margin-bottom: 5%;
     width: 300px;

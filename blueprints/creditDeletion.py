@@ -10,14 +10,15 @@ creditDeletion = Blueprint("creditDeletion", __name__)
 def creditDeletionPage():
     return render_template("credits/delete-credits.html")
 
-def getTime(self):
+def getTime():
     return int(datetime.datetime.now().timestamp())
 
 @creditDeletion.route("/getInactiveCredits", methods=["POST"])
 def getInacactiveCredits():
 
     tokensRepository = TokensRepository()
-    inactiveCredits = tokensRepository.getInactiveTokens(getTime())
+    inactiveCredits = tokensRepository.getInactiveTokens((getTime()-2592000))
+    print(inactiveCredits)
 
     return jsonify(inactiveCredits)
 

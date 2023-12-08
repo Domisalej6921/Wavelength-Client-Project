@@ -27,7 +27,7 @@ class TokensRepository:
         """Returns all the inactive tokens IDs and last date used"""
 
         return self.db.selectWithParams(
-            """SELECT TokenID FROM Tokens
+            """SELECT Tokens.TokenID, Transactions.Created FROM Tokens
             INNER JOIN Transactions on Tokens.TokenID = Transactions.TokenID
             WHERE Transactions.Created < ? """,
             (date,)

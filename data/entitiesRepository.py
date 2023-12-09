@@ -25,3 +25,13 @@ class EntitiesRepository():
             VALUES (?, ?, ?, ?, ?, ?, ?)""",
             (data["Name"], data["Description"], data["ProfilePictureID"], data["BackgroundID"], data["isCompany"], data["isApproved"], data["Created"])
         )
+
+    def DecisionAccept(self, specificEntity: int,) -> Union[list[tuple], None]:
+        """Updates isApproved if the request has been accepted"""
+        self.db.execute("UPDATE Entities SET isApproved = 1 WHERE EntityID = ?", (specificEntity, ))
+
+    def DecisionDecline(self, specificEntity: int,) -> Union[list[tuple], None]:
+        """Deletes community if the request has been declined"""
+        self.db.execute("DELETE FROM Entities WHERE EntityID = ?", (specificEntity, ))
+
+

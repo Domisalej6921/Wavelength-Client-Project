@@ -4,10 +4,6 @@ class AccountRepository:
     def __init__(self):
         # Inherit the DataHelper class
         self.db = DataHelper()
-    
-    def getWithID(self, id: int):
-        """Gets an account with a userID"""
-        return self.db.selectFirstWithParams("SELECT * FROM Users WHERE UserID= ?", (id,))
 
     def getWithID(self, userID: int):
         """Gets an account with the user's ID."""

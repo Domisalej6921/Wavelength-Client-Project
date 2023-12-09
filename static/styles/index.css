@@ -64,3 +64,15 @@ body{
     padding: 0;
     height: 100%;
 }
+
+.profilePicture {
+    width: 75%;
+    height: 75%;
+    border-radius: 10%
+}
+
+.profileBanner {
+    width: 75%;
+    height: 75%;
+    border-radius: 7.5%
+}

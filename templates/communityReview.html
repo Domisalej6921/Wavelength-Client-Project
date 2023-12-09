@@ -15,20 +15,23 @@
     <!-- The Bootstrap documentation site helped me understand how to implement bootstrap "https://getbootstrap.com/docs/5.2/forms/overview/"-->
     <body class="background" onload="CommunityReview.renderTable()">
     {{header | safe}}
+    <!-- This is the Form for the moderator to accept or reject community creation requests -->
+    <!-- The table headers are the set and will remain the same, the body of the form will be constructed in HTML within the JS file-->
     <div class="container-form">
         <div class="container-fluid container-light">
            <table class="table table-hover">
                  <thead>
                     <tr>
                       <th scope="col"><p class="h4">Community Name</p></th>
-                      <th scope="col"><p class="h4">Date</p></th>
+                      <th scope="col"><p class="h4">Date Created</p></th>
                       <th scope="col"><p class="h4">Review</p></th>
                     </tr>
                   </thead>
-                  <tbody id="communityTable"></tbody>
+                  <tbody id="communityTable"></tbody><!-- ID used to identify where the reviewal data should be dynamically loaded -->
            </table>
         </div>
     </div>
+    <!-- Here I have used modals to dynamically load data related to the entity chosen -->
     <!-- Used W3Schools to help with bootstrap modals: -->
     <!--"https://www.w3schools.com/bootstrap5/tryit.asp?filename=trybs_modal_centered"-->
     <div class="modal" id="reviewModal">
@@ -36,13 +39,12 @@
         <div class="modal-content">
           <div class="modal-header">
               <h5 class="modal-title">Community Reviewal</h5>
-            <button type="button" class="btn-close btn btn-pastel btn-lg" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close btn btn-pastel btn-lg" data-bs-dismiss="modal"></button><!-- close button -->
           </div>
+            <!-- This is Where the content will load -->
           <div class="modal-body" id="communityModal"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-pastel btn-lg" data-bs-dismiss="modal" onclick="">Accept</button>
-            <button type="button" class="btn btn-pastel btn-lg" data-bs-dismiss="modal" onclick="">Reject</button>
-          </div>
+            <!-- This is where the Accept and reject buttons load-->
+          <div class="modal-footer" id="communityDecisionModal"></div>
         </div>
       </div>
     </div>

@@ -2,21 +2,10 @@ class CreditDeletion {
     //set up the class for the js to be called from
 
     static onLoadFunctions() {
-        CreditDeletion.getInactiveCredits()
-            .then(response => {
-                console.log("Server Response:", response);
-                const allInactiveCredits = response.result; // Ensure you're extracting 'result'
-                console.log("Received allInactiveCredits:", allInactiveCredits);
-                if (Array.isArray(allInactiveCredits)) {
-                    CreditDeletion.createGraph(allInactiveCredits);
-                    CreditDeletion.totalCredits();
-                } else {
-                    console.error("Invalid response for inactive credits");
-                }
-            })
-            .catch(error => {
-                console.error("Error getting inactive credits:", error);
-            });
+        const allInactiveCredits = CreditDeletion.getInactiveCredits()
+        console.log(allInactiveCredits)
+        CreditDeletion.createGraph(allInactiveCredits);
+        CreditDeletion.totalCredits();
     }
 
     // function that generates the graph of all the inactive credits
@@ -84,29 +73,23 @@ class CreditDeletion {
 
     //Function that calls the database to get all credits that haven't been used in over 1 month(30 days) or more
     static getInactiveCredits() {
-        return new Promise((resolve, reject) => {
-            const xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/getInactiveCredits", true);
-            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/getInactiveCredits", false);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-            xhttp.onreadystatechange = function () {
-                if (this.readyState === 4) {
-                    if (this.status === 200) {
-                        try {
-                            const response = JSON.parse(this.responseText);
-                            console.log("Server Response:", response);
-                            resolve(response); // Resolve with the entire response
-                        } catch (error) {
-                            reject("Error parsing response JSON: " + error);
-                        }
-                    } else {
-                        reject("HTTP status: " + this.status);
-                    }
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    const response = JSON.parse(this.responseText); // passing back the server response
+                    console.log(response);
+
+                } else {
+                    console.log("HTTP status: " + this.status);
                 }
-            };
+            }
+        };
 
-            xhttp.send();
-        });
+        xhttp.send();
     }
 
     static totalCredits () { //Function to count the total credits being deleted

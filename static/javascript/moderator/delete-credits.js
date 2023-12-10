@@ -3,7 +3,9 @@ class CreditDeletion {
 
     static onLoadFunctions() {
         CreditDeletion.getInactiveCredits()
-            .then(allInactiveCredits => {
+            .then(response => {
+                console.log("Server Response:", response);
+                const allInactiveCredits = response.result; // Ensure you're extracting 'result'
                 console.log("Received allInactiveCredits:", allInactiveCredits);
                 if (Array.isArray(allInactiveCredits)) {
                     CreditDeletion.createGraph(allInactiveCredits);
@@ -92,7 +94,8 @@ class CreditDeletion {
                     if (this.status === 200) {
                         try {
                             const response = JSON.parse(this.responseText);
-                            resolve(response.result);
+                            console.log("Server Response:", response);
+                            resolve(response); // Resolve with the entire response
                         } catch (error) {
                             reject("Error parsing response JSON: " + error);
                         }

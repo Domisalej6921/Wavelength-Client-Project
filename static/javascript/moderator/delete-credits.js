@@ -1,5 +1,8 @@
+
+
 class CreditDeletion {
     //set up the class for the js to be called from
+
 
     static onLoadFunctions() {
         CreditDeletion.getInactiveCredits()
@@ -45,26 +48,31 @@ class CreditDeletion {
             // if it is an option just adds 1
             return acc;
         }, {});
+        console.log(optionCreditsCounts)
+        console.log(Object.values(optionCreditsCounts))
+        console.log(lastUsed)
+        const canvas = document.getElementById("inactiveCreditChart");
 
-        new Chart("inactiveCreditChart", {
-          type: "line",
-          data: {
-            labels: lastUsed,
-              datasets: [{
-                backgroundColor:"#C0B3DA",
-                borderColor: "#FFFFFF",
-                data: Object.values(optionCreditsCounts),
-            }]
-          },
-          options: {
-            legend: {display: false},
-            title: {
-              display: true,
-              text: "Credits Last Use:"
-            }
-          }
+        document.addEventListener("DOMContentLoaded", function() {
+            // Chart configuration
+            const chartConfig = {
+                type: "line",
+                data: {
+                    labels: lastUsed,
+                    datasets: [{
+                        label: "Credits Last Use:",
+                        data: Object.values(optionCreditsCounts),
+                        fill: false,
+                        backgroundColor: "#C0B3DA",
+                        borderColor: "#FFFFFF",
+                        tension: 0.1
+                    }]
+                }
+            };
+
+            new Chart("inactiveCreditChart", chartConfig);
         });
-        document.getElementById("creditGraphDiv").innerHTML += '<canvas id="inactiveCreditChart" style="width:100%;max-width:700px"></canvas>';
+        // document.getElementById("creditGraphDiv").innerHTML += '<canvas id="inactiveCreditChart" style="width:100%;max-width:700px"></canvas>';
 
     }
 

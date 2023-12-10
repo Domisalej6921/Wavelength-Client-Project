@@ -2,10 +2,7 @@ class CreditDeletion {
     //set up the class for the js to be called from
 
     static onLoadFunctions() {
-        const allInactiveCredits = CreditDeletion.getInactiveCredits()
-        console.log(allInactiveCredits)
-        CreditDeletion.createGraph(allInactiveCredits);
-        CreditDeletion.totalCredits();
+        CreditDeletion.getInactiveCredits()
     }
 
     // function that generates the graph of all the inactive credits
@@ -77,12 +74,13 @@ class CreditDeletion {
         xhttp.open("POST", "/getInactiveCredits", false);
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
+
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4) {
                 if (this.status === 200) {
                     const response = JSON.parse(this.responseText); // passing back the server response
                     console.log(response);
-
+                    CreditDeletion.createGraph(response)
                 } else {
                     console.log("HTTP status: " + this.status);
                 }

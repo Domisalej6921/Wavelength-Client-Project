@@ -9,6 +9,7 @@ class CreditDeletion {
     // function that generates the graph of all the inactive credits
     static createGraph() {
         const allInactiveCredits = CreditDeletion.getInactiveCredits()
+        console.log(allInactiveCredits)
         const lastUsedOptions = {"30+":2592000,"60+":5184000,"90+":7776000,"4M+":10368000,"5M+":12960000,"6M+":15552000,"7M+":18144000,"8M+":20736000,"9M+":23328000,"10M+":25920000,"11M+":28512000,"1Y+":31104000}
         const currentTime = ((new Date().getTime()) / 1000)
         const lastUsed = [];
@@ -73,10 +74,24 @@ class CreditDeletion {
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
         xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) { // 200 = server is okay
-                const response = JSON.parse(this.responseText); // passing back the server response
-                console.log(response.result);
-                return response.result;
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    try {
+                        const response = JSON.parse(this.responseText);
+                        const allInactiveCredits = response.result;
+
+                        // Ensure the response is an array before resolving
+                        if (Array.isArray(allInactiveCredits)) {
+                            resolve(allInactiveCredits);
+                        } else {
+                            reject("Invalid response format");
+                        }
+                    } catch (error) {
+                        reject("Error parsing response JSON");
+                    }
+                } else {
+                    reject("HTTP status: " + this.status);
+                }
             }
         };
         xhttp.send();

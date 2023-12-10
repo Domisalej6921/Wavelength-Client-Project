@@ -9,6 +9,11 @@ class CreditDeletion {
     // function that generates the graph of all the inactive credits
     static createGraph() {
         const allInactiveCredits = CreditDeletion.getInactiveCredits()
+        if (!Array.isArray(allInactiveCredits)) {
+            console.error("Invalid response for inactive credits");
+            return;
+        }
+
         console.log(allInactiveCredits)
         const lastUsedOptions = {"30+":2592000,"60+":5184000,"90+":7776000,"4M+":10368000,"5M+":12960000,"6M+":15552000,"7M+":18144000,"8M+":20736000,"9M+":23328000,"10M+":25920000,"11M+":28512000,"1Y+":31104000}
         const currentTime = ((new Date().getTime()) / 1000)
@@ -51,7 +56,7 @@ class CreditDeletion {
               datasets: [{
                 backgroundColor:"#C0B3DA",
                 borderColor: "#FFFFFF",
-                data: optionCreditsCounts,
+                data: Object.values(optionCreditsCounts),
             }]
           },
           options: {
@@ -68,33 +73,40 @@ class CreditDeletion {
 
     //Function that calls the database to get all credits that haven't been used in over 1 month(30 days) or more
     static getInactiveCredits() {
+        return new Promise((resolve, reject) => {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/getInactiveCredits", true);
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
-        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
-        xhttp.open("POST", "/getInactiveCredits", true); //set method and the url and if it asynchornus
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        try {
+                            const response = JSON.parse(this.responseText);
+                            const allInactiveCredits = response.result;
 
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    try {
-                        const response = JSON.parse(this.responseText);
-                        const allInactiveCredits = response.result;
+                            // Log the response for debugging
+                            console.log("Response:", response);
 
-                        // Ensure the response is an array before resolving
-                        if (Array.isArray(allInactiveCredits)) {
-                            resolve(allInactiveCredits);
-                        } else {
-                            reject("Invalid response format");
+                            // Ensure the response is an array before resolving
+                            if (Array.isArray(allInactiveCredits)) {
+                                resolve(allInactiveCredits);
+                            } else {
+                                reject("Invalid response format");
+                            }
+                        } catch (error) {
+                            console.error("Error parsing response JSON:", error);
+                            reject("Error parsing response JSON");
                         }
-                    } catch (error) {
-                        reject("Error parsing response JSON");
+                    } else {
+                        console.error("HTTP status:", this.status);
+                        reject("HTTP status: " + this.status);
                     }
-                } else {
-                    reject("HTTP status: " + this.status);
                 }
-            }
-        };
-        xhttp.send();
+            };
+
+            xhttp.send();
+        });
     }
 
     static totalCredits () { //Function to count the total credits being deleted

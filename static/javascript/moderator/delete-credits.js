@@ -9,25 +9,41 @@ class CreditDeletion {
     static createGraph() {
         const allInactiveCredits = CreditDeletion.getInactiveCredits()
         const lastUsedOptions = {"30+":2592000,"60+":5184000,"90+":7776000,"4M+":10368000,"5M+":12960000,"6M+":15552000,"7M+":18144000,"8M+":20736000,"9M+":23328000,"10M+":25920000,"11M+":28512000,"1Y+":31104000}
+        const currentTime = ((new Date().getTime()) / 1000)
+        const lastUsed = [];
 
-        for (let j = 0; j < lastUsedOptions.length; j++){
-            for (let i = 0; i < allInactiveCredits.length; i++) {
-                while (allInactiveCredits[i][1] < lastUsedOptions[j])
-                allInactiveCredits[i][1]
+        for (const option in lastUsedOptions) {
+            if (allInactiveCredits[option][1] - lastUsedOptions["30+"] < currentTime - lastUsedOptions[option]) {
+                lastUsed.push(option);
+                break;
             }
         }
 
-        const lastUsed = ["January","Febuary","March", "April", "May", "June", "July","August","September","October","November","December"];
-        const numCredits = [1, 13, 3, 5, 5, 23, 11, 2, 9, 10, 2, 1];
+        if (lastUsed.length === 0) {
+            console.log("Passed token recently used");
+        } else {
+            console.log(lastUsed);
+        }
+
+        // Count occurrences of each option
+        // Learnt From:
+        // https://stackoverflow.com/questions/6120931/how-to-count-certain-elements-in-array#:~:text=I%20would%20consider%20this%20an%20optimal%202017%20solution%3A,instances%20of%20crazyValue%20in%20the%20array%20of%20objects.
+        // 10/12/2023
+        const optionCreditsCounts = lastUsed.reduce((acc, option) => {
+            acc[option] = (acc[option] || 0) + 1;
+            // initializes as 0 if not already an option.
+            // if it is an option just adds 1
+            return acc;
+        }, {});
 
         new Chart("inactiveCreditChart", {
           type: "line",
           data: {
             labels: lastUsed,
               datasets: [{
-                backgroundColor:"#c0b3da",
+                backgroundColor:"#C0B3DA",
                 borderColor: "#FFFFFF",
-                data: numCredits
+                data: optionCreditsCounts,
             }]
           },
           options: {

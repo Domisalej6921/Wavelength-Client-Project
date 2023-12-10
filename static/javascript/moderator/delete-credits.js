@@ -1,14 +1,24 @@
 class CreditDeletion {
     //set up the class for the js to be called from
 
-    static onLoadFunctions() { //Function that calls the functions to run when the page loads
-        CreditDeletion.createGraph()
-        CreditDeletion.totalCredits()
+    static onLoadFunctions() {
+        CreditDeletion.getInactiveCredits()
+            .then(allInactiveCredits => {
+                console.log("Received allInactiveCredits:", allInactiveCredits);
+                if (Array.isArray(allInactiveCredits)) {
+                    CreditDeletion.createGraph(allInactiveCredits);
+                    CreditDeletion.totalCredits();
+                } else {
+                    console.error("Invalid response for inactive credits");
+                }
+            })
+            .catch(error => {
+                console.error("Error getting inactive credits:", error);
+            });
     }
 
     // function that generates the graph of all the inactive credits
-    static createGraph() {
-        const allInactiveCredits = CreditDeletion.getInactiveCredits()
+    static createGraph(allInactiveCredits) {
         if (!Array.isArray(allInactiveCredits)) {
             console.error("Invalid response for inactive credits");
             return;
@@ -16,9 +26,8 @@ class CreditDeletion {
 
         console.log(allInactiveCredits)
         const lastUsedOptions = {"30+":2592000,"60+":5184000,"90+":7776000,"4M+":10368000,"5M+":12960000,"6M+":15552000,"7M+":18144000,"8M+":20736000,"9M+":23328000,"10M+":25920000,"11M+":28512000,"1Y+":31104000}
-        const currentTime = ((new Date().getTime()) / 1000)
+        const currentTime = new Date().getTime() / 1000;
         const lastUsed = [];
-        let option;
 
         for (const credit of allInactiveCredits) {
             if (Array.isArray(credit) && credit.length === 2) {
@@ -83,24 +92,11 @@ class CreditDeletion {
                     if (this.status === 200) {
                         try {
                             const response = JSON.parse(this.responseText);
-                            const allInactiveCredits = response.result;
-
-                            // Log the entire response for detailed inspection
-                            console.log("Server Response:", response);
-
-                            // Ensure the response is an array of arrays before resolving
-                            if (Array.isArray(allInactiveCredits) && allInactiveCredits.every(Array.isArray)) {
-                                resolve(allInactiveCredits);
-                            } else {
-                                console.error("Invalid response format:", allInactiveCredits);
-                                reject("Invalid response format");
-                            }
+                            resolve(response.result);
                         } catch (error) {
-                            console.error("Error parsing response JSON:", error);
-                            reject("Error parsing response JSON");
+                            reject("Error parsing response JSON: " + error);
                         }
                     } else {
-                        console.error("HTTP status:", this.status);
                         reject("HTTP status: " + this.status);
                     }
                 }

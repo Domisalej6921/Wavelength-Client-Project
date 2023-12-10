@@ -6,16 +6,23 @@ class CreditDeletion {
         CreditDeletion.totalCredits()
     }
 
+    // function that generates the graph of all the inactive credits
     static createGraph() {
         const allInactiveCredits = CreditDeletion.getInactiveCredits()
         const lastUsedOptions = {"30+":2592000,"60+":5184000,"90+":7776000,"4M+":10368000,"5M+":12960000,"6M+":15552000,"7M+":18144000,"8M+":20736000,"9M+":23328000,"10M+":25920000,"11M+":28512000,"1Y+":31104000}
         const currentTime = ((new Date().getTime()) / 1000)
         const lastUsed = [];
+        let option;
 
-        for (const option in lastUsedOptions) {
-            if (allInactiveCredits[option][1] - lastUsedOptions["30+"] < currentTime - lastUsedOptions[option]) {
-                lastUsed.push(option);
-                break;
+        for (const credit of allInactiveCredits) {
+            if (credit && credit.length > 1) {
+                option = Object.keys(lastUsedOptions).find(
+                    option => (credit[1] - lastUsedOptions[option]) < (currentTime - lastUsedOptions[option])
+                );
+                if (option) {
+                    lastUsed.push(option);
+                    break;
+                }
             }
         }
 
@@ -69,6 +76,7 @@ class CreditDeletion {
             if (this.readyState === 4 && this.status === 200) { // 200 = server is okay
                 const response = JSON.parse(this.responseText); // passing back the server response
                 console.log(response.result);
+                return response.result;
             }
         };
         xhttp.send();

@@ -21,13 +21,12 @@ class CreditDeletion {
         let option;
 
         for (const credit of allInactiveCredits) {
-            if (credit && credit.length > 1) {
-                option = Object.keys(lastUsedOptions).find(
-                    option => (credit[1] - lastUsedOptions[option]) < (currentTime - lastUsedOptions[option])
+            if (Array.isArray(credit) && credit.length === 2) {
+                const option = Object.keys(lastUsedOptions).find(
+                    option => credit[1] - lastUsedOptions[option] < currentTime - lastUsedOptions[option]
                 );
                 if (option) {
                     lastUsed.push(option);
-                    break;
                 }
             }
         }
@@ -37,6 +36,7 @@ class CreditDeletion {
         } else {
             console.log(lastUsed);
         }
+
 
         // Count occurrences of each option
         // Learnt From:
@@ -85,13 +85,14 @@ class CreditDeletion {
                             const response = JSON.parse(this.responseText);
                             const allInactiveCredits = response.result;
 
-                            // Log the response for debugging
-                            console.log("Response:", response);
+                            // Log the entire response for detailed inspection
+                            console.log("Server Response:", response);
 
-                            // Ensure the response is an array before resolving
-                            if (Array.isArray(allInactiveCredits)) {
+                            // Ensure the response is an array of arrays before resolving
+                            if (Array.isArray(allInactiveCredits) && allInactiveCredits.every(Array.isArray)) {
                                 resolve(allInactiveCredits);
                             } else {
+                                console.error("Invalid response format:", allInactiveCredits);
                                 reject("Invalid response format");
                             }
                         } catch (error) {

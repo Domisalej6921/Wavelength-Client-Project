@@ -5,7 +5,7 @@ class CreditDeletion {
 
 
     static onLoadFunctions() {
-        CreditDeletion.getInactiveCredits()
+        CreditDeletion.getInactiveCredits();
     }
 
     // function that generates the graph of all the inactive credits
@@ -87,6 +87,7 @@ class CreditDeletion {
 
     //Function that calls the database to get all credits that haven't been used in over 1 month(30 days) or more
     static getInactiveCredits() {
+
         const xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/getInactiveCredits", false);
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -111,6 +112,26 @@ class CreditDeletion {
     static getChosenInactiveCredits() {
         const creditAge = document.getElementById("chooseAge").value;
         console.log(creditAge)
+        const creditAgeOptions = {"1 Year or more!": 31104000, "11 Months": 28512000, "10 Months": 25920000, "9 Months": 23328000, "8 Months": 20736000, "7 Months": 18144000, "6 Months": 15552000, "5 Months": 12960000, "4 Months": 10368000, "90 Days": 7776000, "60 Days": 5184000, "30 Days": 2592000}
+        const creditAgeValue = creditAgeOptions[creditAge]
+        console.log(creditAgeValue)
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/getChosenInactiveCredits", true);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify(creditAgeValue));
+
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    const response = JSON.parse(this.responseText); // passing back the server response
+                    console.log(response);
+                } else {
+                    console.log("HTTP status: " + this.status);
+                }
+            }
+        };
     }
 
     //Function to delete the credits

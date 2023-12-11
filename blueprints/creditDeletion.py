@@ -22,10 +22,22 @@ def getInacactiveCredits():
 
     return jsonify(inactiveCredits)
 
-@creditDeletion.route("/getSelectedInactiveCredits", methods=["POST"])
+@creditDeletion.route("/getChosenInactiveCredits", methods=["POST"])
 def getSelectedInactiveCredits():
 
-    return jsonify(selectedCredits)
+    timeInactive = request.json.get("creditAgeValue")
+    if timeInactive is not None:
+
+        tokensRepository = TokensRepository()
+        selectedCredits = tokensRepository.getInactiveTokens((getTime() - timeInactive))
+        print(selectedCredits)
+
+        if selectedCredits is not None:
+            return jsonify(selectedCredits)
+
+        return "No matching communities found", 404
+
+    return "Missing 'searchTerm' in the request", 400
 
 @creditDeletion.route("/deleteInactiveCredits", methods=["POST"])
 def deleteInacactiveCredits():

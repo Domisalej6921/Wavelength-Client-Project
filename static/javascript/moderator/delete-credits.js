@@ -55,14 +55,15 @@ class CreditDeletion {
         document.getElementById("creditGraphDiv").innerHTML += '<canvas id="inactiveCreditChart" style="width:100%;max-width:700px"></canvas>';
         const canvas = document.getElementById("inactiveCreditChart");
 
-        // Check if the canvas element exists
+        // checking if the canvas element exists
         if (!canvas) {
             console.error("Canvas element not found.");
             return;
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            // Chart configuration
+            console.log("loaded");
+            // setting up the chart configuration
             const chartConfig = {
                 type: "line",
                 data: {
@@ -79,7 +80,7 @@ class CreditDeletion {
             };
 
             new Chart(canvas, chartConfig);
-            console.log("here2")
+            console.log("chart created successfully");
         });
 
     }

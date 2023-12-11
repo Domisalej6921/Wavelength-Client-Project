@@ -107,34 +107,16 @@ class CreditDeletion {
         xhttp.send();
     }
 
-    static totalCredits () { //Function to count the total credits being deleted
-
-    }
-
     //Function which sorts the inactive credits by the time the mod wants
-    static sortInactiveCredits() {
-
-        CreditDeletion.totalCredits()
-    }
-
-    static getSelectedInactiveCredits() {
-
-        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
-            xhttp.open("POST", "/getSelectedInactiveCredits", true); //set method and the url and if it asynchornus
-            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-            xhttp.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) { //200 = server is okay
-                    const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response.result);
-                }
-            };
+    static getChosenInactiveCredits() {
+        const creditAge = document.getElementById("chooseAge").value;
+        console.log(creditAge)
     }
 
     //Function to delete the credits
     static deleteCredits() {
 
-        let tokensToDelete = CreditDeletion.getSelectedInactiveCredits()
+        let tokensToDelete = CreditDeletion.getChosenInactiveCredits()
 
         const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
             xhttp.open("POST", "/deleteInactiveCredits", true); //set method and the url and if it asynchornus

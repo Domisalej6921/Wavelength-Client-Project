@@ -30,8 +30,21 @@
             </div>
 
             <div class="form-floating mb-3" id="timeInactiveDiv">
-                <input type="range" class="form-range" min="0" max="365" step="1" id="timeInactive" onchange="CreditDeletion.sortInactiveCredits()">
-                <label for="timeInactive" class="form-label">How long the credit has been inactive</label>
+                <select class="form-select" id="chooseAge" onchange="CreditDeletion.getChosenInactiveCredits()" aria-label="Floating label select example">
+                    <option>30 Days</option>
+                    <option>60 Days</option>
+                    <option>90 Days</option>
+                    <option>4 Months</option>
+                    <option>5 Months</option>
+                    <option>6 Months</option>
+                    <option>7 Months</option>
+                    <option>8 Months</option>
+                    <option>9 Months</option>
+                    <option>10 Months</option>
+                    <option>11 Months</option>
+                    <option>1 Year or more!</option>
+                </select>
+                <label for="chooseAge">How old should the last transaction be?</label>
             </div>
 
             <div id="displayCreditsDeletedDiv">

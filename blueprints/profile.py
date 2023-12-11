@@ -197,3 +197,40 @@ def get_not_approved_account_Review():
     else:
         # Return an error message if user is not logged in
         return "You need to be authenticated to preform this task.", 401
+
+@profile.route('/api/account/listNotApproved/selected/decision', methods=['PUT'])
+def get_not_approved_account_Review_descition():
+    # Ensures the user is logged in
+    if 'UserID' in session:
+
+        # Gets the JSON payload from the request and inherits classes
+        data = request.get_json()
+        CurrentAccount = data["userID"]
+        decision = data["decision"]
+
+        accountRepository = AccountRepository()
+        sitePermissionsRepository = SitePermissionsRepository()
+        email = Email()
+
+        # Gets the Current Users Permissions so further checks can be done to ensure they have permissions
+        perms = sitePermissionsRepository.getWithID(int(session['UserID']))
+
+        if perms is not None:
+            if perms[1] == 1:
+                account = accountRepository.getWithID(int(CurrentAccount))
+                if account is not None:
+                    userEmail = account[3]
+                    # Depending on if the account was accepted or rejected and an email is sent to the user to notify them
+                    if decision == 1:
+                        accountRepository.DecisionAccept(CurrentAccount)
+                        email.send("Request Accepted","We are pleased to inform you that, your request to create an account accepted. For inquiries contact us at example@example.co.uk.", userEmail)
+                    else:
+                        accountRepository.DecisionDecline(CurrentAccount)
+                        email.send("Request Denied", "We regret to inform you that, your request to create an account was denied. For further information or inquiries contact us at example@example.co.uk.", userEmail)
+                    # Return a success message
+                    return "Community created successfully", 200
+            # Return a error message if user is not a moderator
+            return "You do not have the permissions to execute that command", 403
+    else:
+        # Return an error message if user is not logged in
+        return "You need to be authenticated to preform this task.", 401

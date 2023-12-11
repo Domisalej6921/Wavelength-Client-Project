@@ -48,7 +48,7 @@ class AccountReview {
             data.map(function (account, userID) {
                 document.getElementById("accountModal").innerHTML += `
                     <h4>Name: ${account.name}</h4>
-                    <h6>User Name: ${account.userName}</h6>
+                    <h6>Username: ${account.userName}</h6>
                     <h6>User Email: ${account.userEmail}</h6>
                     <h6>Is this user a mentor?: ${account.isMentor}</h6>
                     <p>Profile Picture: <img src="/static/uploads/${account.ProfilePictureID}.jpeg" alt="Profile Picture" class="profilePicture"></p>
@@ -72,7 +72,7 @@ class AccountReview {
     static async reviewDecision(userID, decision){
         // Appends the UserID and moderator decision into JSON format
         let decisionData = {
-            entityID: userID,
+            userID: userID,
             decision: decision
         }
         // Passes the data into the backend so that the decision can be processed and the correct result returned to the user

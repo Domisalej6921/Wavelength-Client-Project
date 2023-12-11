@@ -17,7 +17,7 @@ class AccountReview {
                 <tr>
                     <td>${account.name}</td>
                     <td>${account.created}</td>
-                    <td id="tableButton${account.userID}"><button class="btn btn-pastel btn-lg" onclick="accountReview.renderDetails(${account.userID})">Select</button></td>
+                    <td id="tableButton${account.userID}"><button class="btn btn-pastel btn-lg" onclick="AccountReview.renderDetails(${account.userID})">Select</button></td>
                 </tr>
                 `;
             })
@@ -55,7 +55,7 @@ class AccountReview {
                     <p>Profile Banner: <img src="/static/uploads/${account.BackgroundID}.jpeg" alt="Profile Background" class="profileBanner"></p>
                 `;
 
-                document.getElementById("communityDecisionModal").innerHTML += `
+                document.getElementById("accountDecisionModal").innerHTML += `
                 <button type="button" class="btn btn-pastel btn-lg" data-bs-dismiss="modal" onClick="AccountReview.reviewDecision(${account.userID}, 1)">Accept</button>
                 <button type="button" class="btn btn-pastel btn-lg" data-bs-dismiss="modal" onClick="AccountReview.reviewDecision(${account.userID}, 0)">Reject</button>
                 `;

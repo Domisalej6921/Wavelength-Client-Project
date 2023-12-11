@@ -38,3 +38,8 @@ class AccountRepository:
             (?, ?, ?, ?, ?, ?, ?, ?)""",
             (data["name"], data["username"], data["email"], data["password"], data["salt"], data["isMentor"], data["awaitingApproval"], data["created"])
         )
+
+    def getReviewPageData(self):
+        return self.db.select(
+            """SELECT * FROM Users Where awaitingApproval = 1"""
+        )

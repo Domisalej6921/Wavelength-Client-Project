@@ -15,26 +15,28 @@ class CreditDeletion {
             return;
         }
 
-        console.log(allInactiveCredits)
-        const lastUsedOptions = {"30+":2592000,"60+":5184000,"90+":7776000,"4M+":10368000,"5M+":12960000,"6M+":15552000,"7M+":18144000,"8M+":20736000,"9M+":23328000,"10M+":25920000,"11M+":28512000,"1Y+":31104000}
+        // console.log(allInactiveCredits)
+        const lastUsedOptions = {"1Y+": 31104000, "11M+": 28512000, "10M+": 25920000, "9M+": 23328000, "8M+": 20736000, "7M+": 18144000, "6M+": 15552000, "5M+": 12960000, "4M+": 10368000, "90+": 7776000, "60+": 5184000, "30+": 2592000}
         const currentTime = new Date().getTime() / 1000;
         const lastUsed = [];
 
         for (const credit of allInactiveCredits) {
-            if (Array.isArray(credit) && credit.length === 2) {
-                const option = Object.keys(lastUsedOptions).find(
-                    option => credit[1] - lastUsedOptions[option] < currentTime - lastUsedOptions[option]
-                );
-                if (option) {
-                    lastUsed.push(option);
-                }
+            // console.log(credit[1])
+            // console.log(Object.keys(lastUsedOptions))
+            const option = Object.keys(lastUsedOptions).find(
+                option => credit[1] < currentTime - lastUsedOptions[option]
+            );
+            // console.log(credit[1] - lastUsedOptions[option] < currentTime - lastUsedOptions[option])
+            // console.log(option)
+            if (option) {
+                lastUsed.push(option);
             }
         }
 
         if (lastUsed.length === 0) {
             console.log("Passed token recently used");
         } else {
-            console.log(lastUsed);
+            // console.log(lastUsed);
         }
 
 
@@ -48,13 +50,13 @@ class CreditDeletion {
             // if it is an option just adds 1
             return acc;
         }, {});
-        console.log(optionCreditsCounts)
-        console.log(Object.values(optionCreditsCounts))
-        console.log(Object.keys(optionCreditsCounts))
+        // console.log(optionCreditsCounts)
+        // console.log(Object.values(optionCreditsCounts))
+        // console.log(Object.keys(optionCreditsCounts))
 
         document.getElementById("creditGraphDiv").innerHTML += '<canvas id="inactiveCreditChart" style="width:100%;max-width:700px"></canvas>';
         const canvas = document.getElementById("inactiveCreditChart");
-        console.log("Canvas element:", canvas);
+        // console.log("Canvas element:", canvas);
 
         // checking if the canvas element exists
         if (!canvas) {
@@ -72,14 +74,14 @@ class CreditDeletion {
                     data: Object.values(optionCreditsCounts),
                     fill: false,
                     backgroundColor: "#C0B3DA",
-                    borderColor: "#FFFFFF",
+                    borderColor: "#B095D7",
                     tension: 0.1
                 }]
             }
         };
 
         new Chart(canvas, chartConfig);
-        console.log("chart created successfully");
+        // console.log("chart created successfully");
 
     }
 
@@ -94,7 +96,7 @@ class CreditDeletion {
             if (this.readyState === 4) {
                 if (this.status === 200) {
                     const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response);
+                    // console.log(response);
                     CreditDeletion.createGraph(response)
                 } else {
                     console.log("HTTP status: " + this.status);

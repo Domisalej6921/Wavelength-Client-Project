@@ -109,58 +109,57 @@ class CreditDeletion {
 
     //Function which sorts the inactive credits by the time the mod wants
     static getChosenInactiveCredits() {
-        const creditAge = document.getElementById("chooseAge").value;
-        console.log(creditAge)
-        const creditAgeOptions = {"1 Year or more!": 31104000, "11 Months": 28512000, "10 Months": 25920000, "9 Months": 23328000, "8 Months": 20736000, "7 Months": 18144000, "6 Months": 15552000, "5 Months": 12960000, "4 Months": 10368000, "90 Days": 7776000, "60 Days": 5184000, "30 Days": 2592000}
-        const creditAgeValue = creditAgeOptions[creditAge]
-        console.log(creditAgeValue)
+        return new Promise((resolve, reject) => {
+            const creditAge = document.getElementById("chooseAge").value;
+            const creditAgeOptions = {"1 Year or more!": 31104000, "11 Months": 28512000, "10 Months": 25920000, "9 Months": 23328000, "8 Months": 20736000, "7 Months": 18144000, "6 Months": 15552000, "5 Months": 12960000, "4 Months": 10368000, "90 Days": 7776000, "60 Days": 5184000, "30 Days": 2592000};
+            const creditAgeValue = creditAgeOptions[creditAge];
 
-        const xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/getChosenInactiveCredits", true);
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.send(JSON.stringify(creditAgeValue));
-
-
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response);
-                    document.getElementById("creditTotal").innerHTML = response.length;
-                    return response
-                } else {
-                    console.log("HTTP status: " + this.status);
-                }
-            }
-        };
-
-
-    }
-
-    //Function to delete the credits
-    static deleteCredits() {
-
-        const tokensToDelete = CreditDeletion.getChosenInactiveCredits()
-        console.log(tokensToDelete)
-
-        let tokensToDeleteIds = []
-        for (const tokens of tokensToDelete) {
-            const tokenId = tokens[0];
-            tokensToDeleteIds.push(tokenId);
-        }
-        console.log(tokensToDeleteIds)
-
-        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
-            xhttp.open("POST", "/deleteInactiveCredits", true); //set method and the url and if it asynchornus
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/getChosenInactiveCredits", true);
             xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhttp.send(JSON.stringify(tokensToDeleteIds));
 
             xhttp.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) { //200 = server is okay
-                    const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response);
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                        const response = JSON.parse(this.responseText);
+                        console.log(response);
+                        document.getElementById("creditTotal").innerHTML = response.length;
+                        resolve(response); // Resolve the promise with the server response
+                    } else {
+                        console.log("HTTP status: " + this.status);
+                        reject("Failed to fetch chosen inactive credits");
+                    }
                 }
             };
 
+            xhttp.send(JSON.stringify(creditAgeValue));
+        });
     }
+
+    // Function to delete the credits
+    static deleteCredits() {
+        CreditDeletion.getChosenInactiveCredits()
+            .then(tokensToDelete => {
+                console.log(tokensToDelete);
+                const tokensToDeleteIds = tokensToDelete.map(tokens => tokens[0]);
+
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("POST", "/deleteInactiveCredits", true);
+                xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        const response = JSON.parse(this.responseText);
+                        console.log(response);
+                    }
+                };
+
+                xhttp.send(JSON.stringify(tokensToDeleteIds));
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
 }
+

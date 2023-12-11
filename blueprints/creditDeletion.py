@@ -42,6 +42,8 @@ def getSelectedInactiveCredits():
 @creditDeletion.route("/deleteInactiveCredits", methods=["POST"])
 def deleteInacactiveCredits():
 
+    tokensToDelete = request.json.get("tokensToDeleteIds")
+
     for token in tokensToDelete:
         tokensRepository = TokensRepository()
         tokensRepository.deleteTokens(token)

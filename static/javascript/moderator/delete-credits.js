@@ -3,7 +3,6 @@
 class CreditDeletion {
     //set up the class for the js to be called from
 
-
     static onLoadFunctions() {
         CreditDeletion.getInactiveCredits();
     }
@@ -128,6 +127,7 @@ class CreditDeletion {
                     const response = JSON.parse(this.responseText); // passing back the server response
                     console.log(response);
                     document.getElementById("creditTotal").innerHTML = response.length;
+                    return response
                 } else {
                     console.log("HTTP status: " + this.status);
                 }
@@ -140,17 +140,25 @@ class CreditDeletion {
     //Function to delete the credits
     static deleteCredits() {
 
-        let tokensToDelete = CreditDeletion.getChosenInactiveCredits()
+        const tokensToDelete = CreditDeletion.getChosenInactiveCredits()
+        console.log(tokensToDelete)
+
+        let tokensToDeleteIds = []
+        for (const tokens of tokensToDelete) {
+            const tokenId = tokens[0];
+            tokensToDeleteIds.push(tokenId);
+        }
+        console.log(tokensToDeleteIds)
 
         const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
             xhttp.open("POST", "/deleteInactiveCredits", true); //set method and the url and if it asynchornus
             xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhttp.send(JSON.stringify(tokensToDelete));
+            xhttp.send(JSON.stringify(tokensToDeleteIds));
 
             xhttp.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) { //200 = server is okay
                     const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response.result);
+                    console.log(response);
                 }
             };
 

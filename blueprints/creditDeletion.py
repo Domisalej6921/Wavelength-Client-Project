@@ -25,7 +25,7 @@ def getInacactiveCredits():
 @creditDeletion.route("/getChosenInactiveCredits", methods=["POST"])
 def getSelectedInactiveCredits():
 
-    timeInactive = request.json.get("creditAgeValue")
+    timeInactive = request.json
     if timeInactive is not None:
 
         tokensRepository = TokensRepository()

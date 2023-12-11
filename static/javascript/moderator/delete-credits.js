@@ -51,9 +51,10 @@ class CreditDeletion {
         console.log(optionCreditsCounts)
         console.log(Object.values(optionCreditsCounts))
         console.log(Object.keys(optionCreditsCounts))
-        console.log("here")
+
         document.getElementById("creditGraphDiv").innerHTML += '<canvas id="inactiveCreditChart" style="width:100%;max-width:700px"></canvas>';
         const canvas = document.getElementById("inactiveCreditChart");
+        console.log("Canvas element:", canvas);
 
         // checking if the canvas element exists
         if (!canvas) {
@@ -61,27 +62,24 @@ class CreditDeletion {
             return;
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            console.log("loaded");
-            // setting up the chart configuration
-            const chartConfig = {
-                type: "line",
-                data: {
-                    labels: Object.keys(optionCreditsCounts),
-                    datasets: [{
-                        label: "Credits Last Use:",
-                        data: Object.values(optionCreditsCounts),
-                        fill: false,
-                        backgroundColor: "#C0B3DA",
-                        borderColor: "#FFFFFF",
-                        tension: 0.1
-                    }]
-                }
-            };
+        // setting up the chart configuration
+        const chartConfig = {
+            type: "line",
+            data: {
+                labels: Object.keys(optionCreditsCounts),
+                datasets: [{
+                    label: "Credits Last Use:",
+                    data: Object.values(optionCreditsCounts),
+                    fill: false,
+                    backgroundColor: "#C0B3DA",
+                    borderColor: "#FFFFFF",
+                    tension: 0.1
+                }]
+            }
+        };
 
-            new Chart(canvas, chartConfig);
-            console.log("chart created successfully");
-        });
+        new Chart(canvas, chartConfig);
+        console.log("chart created successfully");
 
     }
 

@@ -51,28 +51,3 @@ https://codepen.io/sosuke/pen/Pjoqqp*/
 .pastel-svg {
     filter: invert(77%) sepia(28%) saturate(368%) hue-rotate(170deg) brightness(94%) contrast(93%);
 }
-
-.left{
-    align-content: flex-start;
-}
-
-.right{
-        align-content: flex-end;
-}
-body{
-    margin: 0;
-    padding: 0;
-    height: 100%;
-}
-
-.profilePicture {
-    width: 75%;
-    height: 75%;
-    border-radius: 10%
-}
-
-.profileBanner {
-    width: 75%;
-    height: 75%;
-    border-radius: 7.5%
-}

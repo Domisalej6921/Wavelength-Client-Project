@@ -127,13 +127,14 @@ class CreditDeletion {
                 if (this.status === 200) {
                     const response = JSON.parse(this.responseText); // passing back the server response
                     console.log(response);
+                    document.getElementById("creditTotal").innerHTML = response.length;
                 } else {
                     console.log("HTTP status: " + this.status);
                 }
             }
         };
 
-        
+
     }
 
     //Function to delete the credits

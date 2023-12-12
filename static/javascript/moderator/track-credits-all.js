@@ -6,7 +6,7 @@ class CreditTracking {
         CreditTracking.getCredits();
     }
 
-    //Function that calls the database to get all credits that haven't been used in over 1 month(30 days) or more
+    //Function that calls the database to get all credits
     static getCredits() {
 
         const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
@@ -17,47 +17,27 @@ class CreditTracking {
             if (this.readyState === 4 && this.status === 200) { //200 = server is okay
                 const response = JSON.parse(this.responseText); // passing back the server response
                 console.log(response)
-            }
-        };
-        xhttp.send()
-    }
-
-    //Function which sorts the inactive credits by the time the mod wants
-    static getChosenCredit() {
-
-        const xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/getChosenCredit", false);
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
-                    const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response);
-                } else {
-                    console.log("HTTP status: " + this.status);
+                for (let i = 0; i < response.length; i++) {
+                    document.getElementById("chooseCredit").innerHTML += `<option value="${response[i]}"> ${response[i]} </option>`;
                 }
             }
         };
-
         xhttp.send();
     }
 
     static getChosenCreditTransaction() {
+        const chosenCredit = document.getElementById("chooseCredit").value;
 
-        const xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/getChosenCreditTransactions", false);
+        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+        xhttp.open("POST", "/getChosenCreditTransactions", false); //set method and the url and if it asynchornus
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
+        xhttp.send(JSON.stringify(chosenCredit));
 
         xhttp.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                if (this.status === 200) {
+            if (this.readyState === 4) { // checks its ready
+                if (this.status === 200) { //200 = server is okay
                     const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response);
-                } else {
-                    console.log("HTTP status: " + this.status);
+                    console.log(response.result);
                 }
             }
         };

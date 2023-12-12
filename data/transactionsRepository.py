@@ -19,3 +19,8 @@ class TransactionsRepository:
             VALUES (?, ?, ?, ?, ?)""",
             (tokenId, senderId, receiverId, isDonation, timeCreated)
         )
+
+    def getAllTransactions(self, tokenId:int):
+        """Returns all the data for one token transactions in the current transaction table!"""
+
+        return self.db.selectWithParams("SELECT * FROM Tokens WHERE TokenID = ?", (tokenId,))

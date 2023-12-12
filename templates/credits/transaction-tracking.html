@@ -25,13 +25,13 @@
             <div id="formAlerts"></div>
 
             <div class="form-floating mb-3" id="chooseCreditDiv">
-                <select class="form-select" id="chooseCredit" onchange="CreditTracking.getChosenCredit()" aria-label="Floating label select example">
+                <select class="form-select" id="chooseCredit" onchange="CreditTracking.getChosenCreditTransaction()" aria-label="Floating label select example">
                 </select>
                 <label for="chooseCredit">Which Credit Do You Want To Track?</label>
             </div>
 
             <div id="displayCreditUsesDiv">
-                <p>This Credit got used <strong id="creditTotalUses"> 0 </strong>.</p>
+                <p>This Credit has been used<strong id="creditTotalUses"> 0 </strong>times.</p>
             </div>
 
         </form>

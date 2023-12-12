@@ -53,5 +53,9 @@ app.register_blueprint(community)
 from blueprints.profile import profile
 app.register_blueprint(profile)
 
+# Import transaction tracking blueprint
+from blueprints.creditTracking import creditTracking
+app.register_blueprint(creditTracking)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -38,11 +38,11 @@ class TokensRepository:
         By Id if True is passed.
         By OwnerId if False is Passed."""
 
-        if whatId == 0:
-            return self.db.selectWithParams(
+        if whatId:
+            return self.db.select(
                 "SELECT TokenID FROM Tokens"
             )
         else:
-            return self.db.selectWithParams(
+            return self.db.select(
                 "SELECT OwnerID FROM Tokens"
             )

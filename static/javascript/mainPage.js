@@ -3,12 +3,10 @@ class MainPage {
         const response = await fetchMentors.getWithLimit(limit)
 
         if (response.status === 200) {
-            console.log("F*** OFF AKSHAY")
 
             // Get data from the response
             let data = await response.json()
 
-            console.log(data[0])
 
             // Render mentors onto the page
             let mentors = "";
@@ -18,6 +16,9 @@ class MainPage {
 
             // Render it onto the page
             document.getElementById('mentorList').innerHTML = mentors;
+            if (limit !== 12) {
+                document.getElementById('LoadMoreButton').remove();
+            }
         }
         else if (response.status === 401) {
             window.location.href = "/login"

@@ -5,10 +5,6 @@ class AccountRepository:
     def __init__(self):
         # Inherit the DataHelper class
         self.db = DataHelper()
-    
-    def getWithID(self, id: int):
-        """Gets an account with a userID"""
-        return self.db.selectFirstWithParams("SELECT * FROM Users WHERE UserID= ?", (id,))
 
     def getWithID(self, userID: int):
         """Gets an account with the user's ID."""
@@ -51,3 +47,16 @@ class AccountRepository:
             (?, ?, ?, ?, ?, ?, ?, ?)""",
             (data["name"], data["username"], data["email"], data["password"], data["salt"], data["isMentor"], data["awaitingApproval"], data["created"])
         )
+
+    def getReviewPageData(self):
+        return self.db.select(
+            """SELECT * FROM Users Where awaitingApproval = 1"""
+        )
+
+    def DecisionAccept(self, CurrentAccount: int,):
+        """Updates isApproved if the request has been accepted"""
+        self.db.execute("UPDATE Users SET awaitingApproval = 0 WHERE UserID = ?", (CurrentAccount, ))
+
+    def DecisionDecline(self, CurrentAccount: int,):
+        """Deletes community if the request has been declined"""
+        self.db.execute("DELETE FROM Users WHERE UserID = ?", (CurrentAccount, ))

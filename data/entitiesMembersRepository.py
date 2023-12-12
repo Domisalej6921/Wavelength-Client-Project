@@ -11,3 +11,7 @@ class EntitiesMembersRepository():
             VALUES (?, ?, ?, ?, ?)""",
             (data["EntityID"], data["UserID"], data["Role"], data["isAdmin"], data["Created"])
         )
+
+    def GetWithEntity(self, entityId):
+        """Gets data with EntityID"""
+        return self.db.selectFirstWithParams("SELECT UserID FROM EntityMembers WHERE EntityID= ?", (entityId,))

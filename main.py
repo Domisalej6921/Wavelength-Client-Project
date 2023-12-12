@@ -37,6 +37,14 @@ app.register_blueprint(register)
 from blueprints.login import login
 app.register_blueprint(login)
 
+# Import credit generation blueprint
+from blueprints.creditGeneration import creditGeneration
+app.register_blueprint(creditGeneration)
+
+# Import credit deletion blueprint
+from blueprints.creditDeletion import creditDeletion
+app.register_blueprint(creditDeletion)
+
 # Add community Blueprint
 from blueprints.community import community
 app.register_blueprint(community)

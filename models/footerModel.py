@@ -3,7 +3,7 @@ class FooterModel:
     @staticmethod
     def standardFooter() -> str:
         return f"""
-        <div class="fixed-bottom bg-primary" style="--bs-bg-opacity: .175;">
+        <div class="bg-primary footer" style="--bs-bg-opacity: .175;">
 
             <div class="container text-center">
               <div class="row align-items-center">

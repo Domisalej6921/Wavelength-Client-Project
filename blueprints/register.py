@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, render_template, request, redirect, session
 import datetime
 import os
 
+from models.footerModel import FooterModel
+from models.headerModel import HeaderModel
 from data.accountRepository import AccountRepository
 from data.verificationCodesRepository import VerificationCodesRepository
 from logic.cryptography import Cryptography
@@ -12,7 +14,7 @@ register = Blueprint('register', __name__)
 @register.route('/register')
 def registerPage():
     if not ("UserID" in session):
-        return render_template('auth/register.html')
+        return render_template('auth/register.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
     else:
         return redirect("/account/dashboard")
 
@@ -32,7 +34,7 @@ def verifyAuth():
                 verificationCodesRepository.delete(code)
                 return redirect("/login?verified=true")
 
-        return render_template('auth/verify.html')
+        return render_template('auth/verify.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
     else:
         return redirect("/account/dashboard")
 

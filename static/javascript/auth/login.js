@@ -24,7 +24,7 @@ class Login {
         // Get the form data
         const data = {
             email: document.getElementById("email").value,
-            password: document.getElementById("password").value,
+            password: document.getElementById("password").value
         }
 
         let issue = "";

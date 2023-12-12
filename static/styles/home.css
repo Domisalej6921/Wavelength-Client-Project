@@ -1,5 +1,4 @@
 .home-body {
-    margin: 1%;
     background-image: url("/static/images/background-image.png");
     background-attachment: scroll;
     z-index: 0;
@@ -84,6 +83,7 @@
     z-index: 1;
 }
 
+
 .info-title {
     font-size: 3vw;
     color: black;
@@ -108,9 +108,14 @@
     z-index: 1;
 }
 
+.footer {
+    position: absolute;
+    width: 100%;
+}
+
 @media (min-width: 1200px) {
     .info-paragraph {
-        font-size: 1vw;
+        font-size: 0.75vw;
     }
 }
 
@@ -118,4 +123,80 @@
     color: inherit;
     text-decoration: None;
     cursor: default;
+}
+
+body {
+  margin: 0;
+}
+
+.navbar bg-light {
+    text-align: center;
+}
+
+.header-logo {
+    padding: 15%;
+    border: None;
+}
+
+.options-btn {
+    padding: 15%;
+    border: None;
+}
+
+.options-list {
+    font-family: sans-serif;
+    font-size: inherit;
+    list-style-type: None;
+}
+
+.menu-links {
+    font-size: inherit;
+    color: White;
+    text-decoration: None;
+}
+
+.menu-links:hover {
+    font-size: larger;
+    color: #bfffff;
+    text-decoration: None;
+}
+
+.offcanvas-title {
+    color: White;
+}
+
+.contacts-list {
+    font-family: sans-serif;
+    font-size: inherit;
+    list-style-type: None;
+    text-align: right;
+}
+
+.copyright-text {
+    font-family: sans-serif;
+    color: Black;
+    text-align: center;
+    align-content: center;
+}
+
+.title-contacts-text {
+    padding-top: 3%;
+    color: Black;
+    text-decoration: None;
+    text-align: right;
+}
+
+.contacts-links ,.contacts-text {
+    padding: 0.5%;
+    font-size: inherit;
+    color: Black;
+    text-decoration: None;
+    text-align: right;
+}
+
+.contacts-links:hover {
+    font-size: inherit;
+    color: #000080;
+    text-decoration: None;
+    text-align: inherit;
 }

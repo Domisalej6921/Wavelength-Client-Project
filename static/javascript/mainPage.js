@@ -27,11 +27,3 @@ class MainPage {
         }
     }
 }
-
-function loadMoreButton() {
-    let originalContainer = document.getElementById("mentorList");
-    let newItemsContainer = document.createElement("div");
-    newItemsContainer.className = "card";
-    newItemsContainer.textContent = "tygscfgscvhgscv"
-    originalContainer.appendChild(newItemsContainer);
-}

@@ -9,38 +9,25 @@
     {#Link to JS Bootstrap#}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" type="text/javascript" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="/static/javascript/mentorApplication.js"></script>
+    <script src="/static/javascript/mainPage.js"></script>
+    <script src="/static/javascript/logic/fetchMentors.js"></script>
+    <script src="/static/javascript/components/mentors.js"></script>
     <title>Apply for a mentor</title>
 </head>
-<body>
+<body onload="Mentors.renderMentor(data)">
 
     {{ header | safe }}
 
-    <div class="mentorHeading">
-        <h1>Mentor Name</h1>
+    <div id="pageContent" class="page-contents">
+            <div class="linked-in-link">
+                <a href="https://uk.linkedin.com/">LinkedIN Profile</a>
+            </div>
     </div>
 
-    <div class="tagsContainer">
-        <p>Tags go here...........</p>
-    </div>
+    <div class="mentor-application-contents">
+        <h1 class="application-heading">Application</h1>
 
-    <div class="mentorPageContents">
-        <div class="mentorImage">
-            <p>Image</p>
-        </div>
-
-        <div class="mentorDesc">
-            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
-        </div>
-
-        <div class="LinkedInLink">
-            <a href="https://uk.linkedin.com/">LinkedIN Profile</a>
-        </div>
-    </div>
-
-    <div class="mentorApplicationContents">
-        <h1 class="applicationHeading">Application</h1>
-
-        <div class="formContainer">
+        <div class="form-container">
             <form class="form-floating" id="mentorApplicationForm">
                 <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="firstName" placeholder="Your First Name" required>
@@ -72,7 +59,7 @@
                     </div>
                 </div>
             </form>
-            <div class="submitButton" id="applicationSubmit">
+            <div class="submit-button" id="applicationSubmit">
                 <button class="btn btn-primary" onclick="submitMentorApp()">Apply</button>
             </div>
         </div>

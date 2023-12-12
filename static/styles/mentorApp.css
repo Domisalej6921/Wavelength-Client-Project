@@ -3,14 +3,14 @@ body {
     background-color: #eeeeee;
 }
 
-.mentorHeading {
+.mentor-heading {
     margin-top: 3%;
     margin-bottom: 3%;
     padding-bottom: 15px;
     border-bottom: solid;
 }
 
-.mentorPageContents {
+.mentor-page-text {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -18,21 +18,20 @@ body {
     padding: 50px;
 }
 
-.mentorImage {
+.mentor-image {
     padding: 50px;
-    background-color: #8f8fcd;
-    width: 500px;
-    height: 300px;
+    /*width: 500px;*/
+    /*height: 300px;*/
     margin-bottom: 4%;
 }
 
-.applicationHeading {
+.application-heading {
     border-top: solid;
     margin-bottom: 3%;
     padding-top: 3%;
 }
 
-.mentorApplicationContents {
+.mentor-application-contents {
     padding: 30px;
     margin-bottom: 5%;
 }

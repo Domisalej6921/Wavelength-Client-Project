@@ -53,5 +53,9 @@ app.register_blueprint(community)
 from blueprints.profile import profile
 app.register_blueprint(profile)
 
+#Import mentorDonation blueprint
+from blueprints.tokenDonation import mentorDonation
+app.register_blueprint(mentorDonation)
+
 if __name__ == '__main__':
     app.run(debug=True)

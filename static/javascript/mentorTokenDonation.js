@@ -7,7 +7,6 @@ class MentorTokenDonation {
         if (response.ok) {
             let renderData = "";
             const data = await response.json();
-
             // Clear the table
             document.getElementById("mentorDonateTable").innerHTML = "";
 
@@ -25,10 +24,10 @@ class MentorTokenDonation {
         }
     }
 
+
     static async renderDetails(entityID) {
         const url = new URL("/api/community/approved/donate/selected", window.location.origin);
-        url.searchParams.append("userID", JSON.stringify(entityID)); //Learnt from "https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams"
-
+        url.searchParams.append("entityID", JSON.stringify(entityID)); //Learnt from "https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams"
         const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -46,7 +45,7 @@ class MentorTokenDonation {
 
             // Maps the data needed from the database so that it can be pasted into the modal body and buttons for modal footer
             data.map(function (community, entityID) {
-                document.getElementById("accountModal").innerHTML += `
+                document.getElementById("CommunityDataModal").innerHTML += `
                     <h3>Name: ${community.name}</h3>
                     <h5>Description: ${community.description}</h5>
                     <p>Profile Picture: <img src="/static/uploads/${community.profilePicture}.jpeg" alt="Profile Picture" class="profilePicture"></p>
@@ -54,21 +53,26 @@ class MentorTokenDonation {
                     <h6>Is this a Company?: ${community.isCompany}</h6>
                 `;
 
-                document.getElementById("accountDecisionModal").innerHTML += `
-                <input type="number" data-bs-dismiss="modal" id="amount">
-                <button type="button" class="btn btn-pastel btn-lg" data-bs-dismiss="modal" onClick="MentorTokenDonation.donateAmount(${account.entityID},amount)">Donate</button>
+                document.getElementById("tokenDonationModal").innerHTML += `
+                <label for="amount" ><h7>Enter Amount:</h7></label>
+                <input type="number" id="amount">
+                <script>
+                
+                </script>
+                <button type="button" class="btn btn-pastel btn-lg" data-bs-dismiss="modal" onClick="MentorTokenDonation.donateAmount(${community.entityID}, amount.value)">Donate</button>
                 `;
             })
 
             // Display modal
             // Learnt from "https://getbootstrap.com/docs/5.2/components/modal/"
-            const reviewModal = new bootstrap.Modal(document.getElementById("reviewModal"));
-            reviewModal.show();
+            const mentorDonateModal = new bootstrap.Modal(document.getElementById("mentorDonateModal"));
+            mentorDonateModal.show();
         }
     }
 
 
     static async donateAmount(entityID, amount){
+        console.log(entityID, amount)
         // Appends the UserID and moderator decision into JSON format
         let donateData = {
             community: entityID,

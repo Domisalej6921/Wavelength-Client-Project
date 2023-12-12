@@ -3,7 +3,6 @@ class MainPage {
         const response = await fetchMentors.getWithLimit(limit)
 
         if (response.status === 200) {
-            console.log("F*** OFF AKSHAY")
 
             // Get data from the response
             let data = await response.json()

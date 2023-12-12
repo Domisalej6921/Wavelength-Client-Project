@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, session
 from datetime import datetime
+import json
 import os
 from data.entitiesRepository import EntitiesRepository
 from data.entitiesMembersRepository import EntitiesMembersRepository
@@ -7,9 +8,11 @@ from data.accountRepository import AccountRepository
 from logic.uploads import Uploads
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
+from data.sitePermissionsRepository import SitePermissionsRepository
+from logic.email import Email
+
 
 community = Blueprint("community", __name__)
-
 
 @community.route('/community/create')
 def create_community():
@@ -68,7 +71,7 @@ def create_community_form():
             "BackgroundID": "",
             "isCompany": data["isCompany"],
             "isApproved": 0,
-            "Created": datetime.now().timestamp()
+            "Created": int(datetime.now().timestamp())
         }
 
         # Check if the profile picture is being changed
@@ -105,10 +108,157 @@ def create_community_form():
             "UserID": userID,
             "Role": "Founder",
             "isAdmin": 1,
-            "Created": datetime.now().timestamp()
+            "Created": int(datetime.now().timestamp())
         })
 
         # Return a success message
         return "Community created successfully", 200
     else:
+        # Return an error message if user is not logged in
+        return "You need to be authenticated to preform this task.", 401
+
+
+@community.route('/community/review')
+def review_community():
+    # Ensures the user is logged in
+    if "UserID" in session:
+        # Inherits classes
+        sitePermissionsRepository = SitePermissionsRepository()
+
+        # Gets the Current Users Permissions so further checks can be done to ensure they have permissions
+        perms = sitePermissionsRepository.getWithID(int(session['UserID']))
+
+        # Loads the page if the user has the permissions a moderator would have
+        if perms is not None:
+            if perms[1] == 1:
+                return render_template('communityReview.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+
+        # If the user is not a moderator they are sent vack to the account dashboard
+        return redirect('/account/dashboard')
+    else:
+        # If the user is not logged in they are sent to the login page
+        return redirect('/login')
+
+@community.route('/api/community/listNotApproved', methods=['GET'])
+def get_not_approved_community():
+    # Ensures the user is logged in
+    if 'UserID' in session:
+        # Inherits classes
+        sitePermissionsRepository = SitePermissionsRepository()
+        entitiesRepository = EntitiesRepository()
+
+        # Gets the Current Users Permissions so further checks can be done to ensure they have permissions
+        perms = sitePermissionsRepository.getWithID(int(session['UserID']))
+
+        if perms is not None:
+            if perms[1] == 1:
+                # Using the EntityID to get the UserID so that we can get the user email
+                entities = entitiesRepository.getReviewPageData()
+                returnData = []
+                if entities is not None:
+                    for entity in entities:
+                        # Learnt about the datetime and ctime methods from:
+                        # "https://docs.python.org/3/library/datetime.html"
+                        dataTimeStamp = entity[7]
+                        dataDateTime = datetime.fromtimestamp(dataTimeStamp)
+                        #Appends the data in the correct format to the empty list
+                        returnData.append({
+                            "entityID": entity[0],
+                            "name": entity[1],
+                            "created": dataDateTime.ctime()
+                        })
+                # Returns the array as a JSON
+                return json.dumps(returnData)
+        # Return a error message if user is not a moderator
+        return "You do not have the permissions to execute that command", 403
+    else:
+        # Return an error message if user is not logged in
+        return "You need to be authenticated to preform this task.", 401
+
+
+@community.route('/api/community/listNotApproved/selected', methods=['GET'])
+def get_not_approved_community_Review():
+    # Ensures the user is logged in
+    if 'UserID' in session:
+        # Learnt how to get parameters from URLs from:
+        # "https://stackoverflow.com/questions/24892035/how-can-i-get-the-named-parameters-from-a-url-using-flask/24892131#24892131"
+        CurrentEntity = request.args.get("entityID")
+        # Inherits classes
+        sitePermissionsRepository = SitePermissionsRepository()
+        entitiesRepository = EntitiesRepository()
+
+        # Gets the Current Users Permissions so further checks can be done to ensure they have permissions
+        perms = sitePermissionsRepository.getWithID(int(session['UserID']))
+
+        if perms is not None:
+            if perms[1] == 1:
+                # Gets data about the Current Entity from the database
+                entities = entitiesRepository.getWithEntityID(int(CurrentEntity))
+                returnData = []
+                if entities is not None:
+                    for entity in entities:
+                        isCompany = entity[5]
+                        # Returns true and false in a more readable format for the moderator
+                        if isCompany == 1:
+                            isCompany = "Yes"
+                        else:
+                            isCompany = "No"
+                        # Appends the data from the database to the empty list
+                        returnData.append({
+                            "entityID": entity[0],
+                            "name": entity[1],
+                            "description": entity[2],
+                            "profilePicture": entity[3],
+                            "profileBanner": entity[4],
+                            "isCompany": isCompany,
+                            "isApproved": entity[6]
+                        })
+                # Returns the array as a JSON
+                return json.dumps(returnData)
+        # Return a error message if user is not a moderator
+        return "You do not have the permissions to execute that command", 403
+    else:
+        # Return an error message if user is not logged in
+        return "You need to be authenticated to preform this task.", 401
+
+@community.route('/api/community/listNotApproved/selected/decision', methods=['PUT'])
+def get_not_approved_community_Review_descition():
+    # Ensures the user is logged in
+    if 'UserID' in session:
+
+        # Gets the JSON payload from the request and inherits classes
+        data = request.get_json()
+        CurrentEntity = data["entityID"]
+        decision = data["decision"]
+
+        accountRepository = AccountRepository()
+        sitePermissionsRepository = SitePermissionsRepository()
+        entitiesRepository = EntitiesRepository()
+        entitiesMembersRepository = EntitiesMembersRepository()
+        email = Email()
+
+        # Gets the Current Users Permissions so further checks can be done to ensure they have permissions
+        perms = sitePermissionsRepository.getWithID(int(session['UserID']))
+
+        if perms is not None:
+            if perms[1] == 1:
+                # Using the EntityID to get the UserID so that we can get the user email
+                entities = entitiesRepository.getWithEntityID(CurrentEntity)
+                if entities is not None:
+                    communityPostUserID = entitiesMembersRepository.GetWithEntity(CurrentEntity)[0]
+                    userData = accountRepository.getWithID(int(communityPostUserID))
+                    userEmail = userData[3]
+                    # Depending on if the community was accepted or rejected, the Sql statment is called and ranusing the EntityID and an email is sent to the user
+                    if decision == 1:
+                        entitiesRepository.DecisionAccept(CurrentEntity)
+                        email.send("Request Accepted","We are pleased to inform you that, your request to create a community was accepted. For inquiries contact us at example@example.co.uk.", userEmail)
+                    else:
+                        entitiesRepository.DecisionDecline(CurrentEntity)
+                        email.send("Request Denied", "We regret to inform you that, your request to create a community was denied. For further information or inquiries contact us at example@example.co.uk.", userEmail)
+                    # Return a success message
+                    return "Community created successfully", 200
+            # Return a error message if user is not a moderator
+            return "You do not have the permissions to execute that command", 403
+    else:
+        # Return an error message if user is not logged in
         return "You need to be authenticated to preform this task.", 401

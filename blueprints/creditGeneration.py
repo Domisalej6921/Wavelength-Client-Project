@@ -67,7 +67,7 @@ def create():
         tokensRepository.createTokens(newTokenId, communityId, 1, timeCreated)
 
         transactionRepository = TransactionsRepository()
-        transactionRepository.createTransactionLog(newTokenId, None, communityId, True, timeCreated)
+        transactionRepository.createTransactionLog(newTokenId, None, None, communityId, True, True, timeCreated)
 
         numTokens -= 1
 

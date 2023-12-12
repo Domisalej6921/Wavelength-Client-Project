@@ -15,7 +15,7 @@ class TransactionsRepository:
 
 
         return self.db.execute(
-            """INSERT INTO Transactions (TokenID, SenderID, ReceiverID, isDonation, Created) 
-            VALUES (?, ?, ?, ?, ?)""",
-            (tokenId, senderId, receiverId, isDonation, timeCreated)
+            """INSERT INTO Transactions (TokenID, SenderID, isSenderEntity, ReceiverID, isReceiverEntity, isDonation, Created) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (tokenId, senderId, None, receiverId, 1, isDonation, timeCreated)
         )

@@ -80,9 +80,9 @@ CREATE TABLE Tokens (
 CREATE TABLE Transactions (
     TransactionID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     TokenID text REFERENCES Tokens(TokenID),
-    SenderID integer REFERENCES Entities(EntityID),
+    SenderID integer,
     isSenderEntity integer,
-    ReceiverID integer REFERENCES Entities(EntityID),
+    ReceiverID integer,
     isReceiverEntity integer,
     isDonation integer,
     Created integer

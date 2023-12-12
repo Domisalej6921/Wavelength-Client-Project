@@ -1,51 +1,23 @@
 from flask import Flask, Blueprint, render_template, request, jsonify
-import datetime
 
-from data.entitiesRepository import EntitiesRepository
+from data.transactionsRepository import TransactionsRepository
 from data.tokensRepository import TokensRepository
 
-creditDeletion = Blueprint("creditDeletion", __name__)
+creditTracking = Blueprint("creditTracking", __name__)
 
-@creditDeletion.route("/credit-deletion")
-def creditDeletionPage():
-    return render_template("credits/delete-credits.html")
+@creditTracking.route("/credit-tracking")
+def creditTrackingPage():
+    return render_template("credits/transaction-tracking.html")
 
-def getTime():
-    return int(datetime.datetime.now().timestamp())
-
-@creditDeletion.route("/getInactiveCredits", methods=["POST"])
-def getInacactiveCredits():
+@creditTracking.route("/getCredits", methods=["GET"])
+def getCredits():
 
     tokensRepository = TokensRepository()
-    inactiveCredits = tokensRepository.getInactiveTokens((getTime()-2592000))
-    print(inactiveCredits)
+    credits = tokensRepository.getAllTokens(True)
 
-    return jsonify(inactiveCredits)
+    returndata = []
 
-@creditDeletion.route("/getChosenInactiveCredits", methods=["POST"])
-def getSelectedInactiveCredits():
+    for credit in credits:
+        returndata.append(credit)
 
-    timeInactive = request.json
-    if timeInactive is not None:
-
-        tokensRepository = TokensRepository()
-        selectedCredits = tokensRepository.getInactiveTokens((getTime() - timeInactive))
-        print(selectedCredits)
-
-        if selectedCredits is not None:
-            return jsonify(selectedCredits)
-
-        return "No matching communities found", 404
-
-    return "Missing 'searchTerm' in the request", 400
-
-@creditDeletion.route("/deleteInactiveCredits", methods=["POST"])
-def deleteInacactiveCredits():
-
-    tokensToDelete = request.json
-
-    for token in tokensToDelete:
-        tokensRepository = TokensRepository()
-        tokensRepository.deleteTokens(token)
-
-    return jsonify("Tokens Deleted")
+    return jsonify(returndata)

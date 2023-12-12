@@ -73,7 +73,7 @@ CREATE TABLE EntityMembers (
 CREATE TABLE Tokens (
     TokenID text NOT NULL PRIMARY KEY,
     OwnerID integer REFERENCES Entities(EntityID),
-    OwnerType integer,
+    isEntity integer,
     Created integer
 );
 
@@ -81,7 +81,9 @@ CREATE TABLE Transactions (
     TransactionID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     TokenID text REFERENCES Tokens(TokenID),
     SenderID integer REFERENCES Entities(EntityID),
+    isSenderEntity integer,
     ReceiverID integer REFERENCES Entities(EntityID),
+    isReceiverEntity integer,
     isDonation integer,
     Created integer
 );

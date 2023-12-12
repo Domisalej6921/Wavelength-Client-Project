@@ -1,9 +1,38 @@
-from typing import Union
 from data.dataHelper import DataHelper
+class EntitiesRepository:
 
-class EntitiesRepository():
     def __init__(self):
+        # Inherit the DataHelper class
         self.db = DataHelper()
+
+    def getCommunitiesOrdered(self, count: int):
+        """Gets the first X communities to display."""
+        return self.db.selectWithParams(
+            "SELECT Name FROM Entities LIMIT ?",
+            (count,)
+        )
+
+    def getCommunityReturnId(self, name: str):
+        """Get a community id via the name."""
+        return self.db.selectFirstWithParams(
+            "SELECT EntityId FROM Entities WHERE Name = ?",
+            (name,)
+        )
+
+    def getCommunityReturnName(self, name: str):
+        """Get a community name via the name."""
+        return self.db.selectFirstWithParams(
+            "SELECT Name FROM Entities WHERE Name = ?",
+            (name,)
+        )
+
+
+    def getCommunitiesSimilar(self, searchTerm: str):
+        """Gets communities that have names like the search term."""
+        return self.db.selectWithParams(
+            "SELECT Name FROM Entities WHERE Name LIKE ?",
+            ("%" + searchTerm + "%",)
+        )
 
     def getIDWithProfilePictureID(self, profilePictureID: str) -> Union[tuple, None]:
         """Gets a community's ID with a profile picture ID."""
@@ -33,5 +62,3 @@ class EntitiesRepository():
     def DecisionDecline(self, specificEntity: int,) -> Union[list[tuple], None]:
         """Deletes community if the request has been declined"""
         self.db.execute("DELETE FROM Entities WHERE EntityID = ?", (specificEntity, ))
-
-

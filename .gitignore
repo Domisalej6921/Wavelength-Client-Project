@@ -30,3 +30,6 @@
 
 *.pyc
 **/__pycache__/
+
+#Ignore chart.js node modules
+node_modules/

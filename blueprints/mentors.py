@@ -12,15 +12,15 @@ mentors = Blueprint('mentors', __name__)
 def mainPage():
     return render_template('mainPage.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
 
-@mentors.route('/account/mentor_apply', methods=["POST", "GET"])
+@mentors.route('/account/mentor_apply')
 def mentor_apply():
-    if request.method == 'POST':
-        firstName = request.form.get('firstName')
-        lastName = request.form.get('lastName')
-        email = request.form.get('email')
-        desc = request.form.get('description')
-        print(firstName, lastName, email, desc)
     return render_template('mentorApp.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+
+@mentors.route('/api/account/mentor_apply', methods=["POST", "GET"])
+def mentor_apply_form():
+    # Gets JSON payload from request
+    formData = request.get_json()
+    
 
 @mentors.route('/account/become_mentor')
 def become_mentor():

@@ -63,3 +63,7 @@ class EntitiesRepository:
     def DecisionDecline(self, specificEntity: int,) -> Union[list[tuple], None]:
         """Deletes community if the request has been declined"""
         self.db.execute("DELETE FROM Entities WHERE EntityID = ?", (specificEntity, ))
+
+    def getApprovedEntities(self) -> Union[list[tuple], None]:
+        """Returns entities which have been approved"""
+        return self.db.select("""SELECT * FROM Entities Where isApproved = 1""")

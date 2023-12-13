@@ -26,6 +26,7 @@ class CommunityReview {
 
 
     static async renderDetails(entityID) {
+        console.log(entityID)
         const url = new URL("/api/community/listNotApproved/selected", window.location.origin);
         url.searchParams.append("entityID", JSON.stringify(entityID)); //Learnt from "https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams"
 

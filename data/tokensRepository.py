@@ -33,6 +33,21 @@ class TokensRepository:
             (date,)
         )
 
+
+    def getWithUserID(self, UserId: int):
+        """Gets Tokens associated with the current user"""
+        return self.db.selectWithParams(
+            """SELECT * FROM Tokens WHERE Tokens.OwnerID = ? AND Tokens.isEntity = 0""",
+            (UserId,)
+        )
+
+    def updateOwnerID(self, newOwner: int, tokenId: str):
+        """Updating OwnerID following transactions"""
+        return self.db.execute(
+            """UPDATE Tokens SET OwnerID = ?, isEntity = 1 WHERE TokenID = ?""", (newOwner, tokenId)
+        )
+
+
     def getAllTokens(self, whatId:bool):
         """Returns all the credits in the current credit table!
         By Id if True is passed.
@@ -46,3 +61,4 @@ class TokensRepository:
             return self.db.select(
                 "SELECT OwnerID FROM Tokens"
             )
+

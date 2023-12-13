@@ -17,6 +17,7 @@ class Login {
             );
         }
     }
+
     static submitForm() {
         // Set the form button to a loading state
         document.getElementById("loginFormSubmit").innerHTML = Buttons.getPastelButtonLoading('Authenticating...', 'lg');

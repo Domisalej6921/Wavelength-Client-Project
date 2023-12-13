@@ -1,14 +1,26 @@
 class EditProfile {
     static renderEditForm () {
-        document.getElementById("formModalHeader").innerHTML = Modals.header("Edit your profile");
-        document.getElementById("formModalBody").innerHTML = Modals.editProfile();
+        document.getElementById("modals").innerHTML += `<div class="modal fade" id="editProfileFormModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
 
-        document.getElementById("root").innerHTML = `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Open modal</button>`;
+                    <div class="modal-header" id="editProfileFormModalHeader">
+                        ${Modals.header("Edit your profile")}
+                    </div>
+
+                    <div class="modal-body" id="editProfileFormModalBody">
+                        ${Modals.editProfile()}
+                    </div>
+
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>`;
     }
 
     static async formSubmit() {
         // Make the submit button a loading state
-        document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButtonLoading("Editing...", "lg");
+        document.getElementById("editProfileFormModalSubmit").innerHTML = Buttons.getPastelButtonLoading("Editing...", "lg");
 
         let data = {
             username: null,
@@ -17,14 +29,14 @@ class EditProfile {
         };
 
         // Get the form data
-        data.username = document.getElementById("modalUsername").value;
+        data.username = document.getElementById("editProfileFormModalUsername").value;
         try {
-            data.profilePicture = await FileUploads.format(document.getElementById("modalProfilePicture").files[0]);
+            data.profilePicture = await FileUploads.format(document.getElementById("editProfileFormModalProfilePicture").files[0]);
         } catch {
             data.profilePicture = null;
         }
         try {
-            data.profileBanner = await FileUploads.format(document.getElementById("modalProfileBanner").files[0]);
+            data.profileBanner = await FileUploads.format(document.getElementById("editProfileFormModalProfileBanner").files[0]);
         } catch {
             data.profileBanner = null;
         }
@@ -56,8 +68,8 @@ class EditProfile {
         // Check if there is an issue, if so, display it and reset the submit button
         if (issue.length > 0) {
             // Set the form button to a default state and display an error alert
-            document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "EditProfile.formSubmit()", "lg");
-            document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.warningAlert(issue, "Invalid Input!");
+            document.getElementById("editProfileFormModalSubmit").innerHTML = Buttons.getPastelButton("Edit", "EditProfile.formSubmit()", "lg");
+            document.getElementById("editProfileFormModalAlerts").innerHTML = Alerts.warningAlert(issue, "Invalid Input!");
 
             return
         }
@@ -75,15 +87,15 @@ class EditProfile {
         // Check if the response was successful
         if (response.ok) {
             // Clear the form and display a success message
-            document.getElementById("modalEditProfileForm").reset();
-            document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.successAlert(
+            document.getElementById("editProfileModalForm").reset();
+            document.getElementById("editProfileFormModalAlerts").innerHTML = Alerts.successAlert(
                 "Your profile has been updated.",
                 "Success!"
             );
         } else {
             // If the response was not successful, display an error alert
             if (response.status === 403 || response.status === 406) {
-                document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.warningAlert(await response.text(), "Invalid Input!");
+                document.getElementById("editProfileFormModalAlerts").innerHTML = Alerts.warningAlert(await response.text(), "Invalid Input!");
             }
             // If the response is due to an unauthorized request, redirect to the login page
             else if (response.status === 401) {
@@ -91,14 +103,14 @@ class EditProfile {
             }
             // If the response is due to a bad request, display an error alert
             else if (response.status === 400) {
-                document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.errorAlert("An unknown error occurred. Please try again later.", "Invalid Input!");
+                document.getElementById("editProfileFormModalAlerts").innerHTML = Alerts.errorAlert("An unknown error occurred. Please try again later.", "Invalid Input!");
             }
             // Any other response is due to a system error
             else {
-                document.getElementById("modalEditProfileFormAlerts").innerHTML = Alerts.errorAlert("An internal server error occurred. Please try again later.", "System Error!");
+                document.getElementById("editProfileFormModalAlerts").innerHTML = Alerts.errorAlert("An internal server error occurred. Please try again later.", "System Error!");
             }
         }
         // Reset the form button
-        document.getElementById("modalEditProfileSubmit").innerHTML = Buttons.getPastelButton("Edit", "EditProfile.formSubmit()", "lg");
+        document.getElementById("editProfileFormModalSubmit").innerHTML = Buttons.getPastelButton("Edit", "EditProfile.formSubmit()", "lg");
     }
 }

@@ -3,6 +3,7 @@ import datetime
 import json
 
 from data.tagsRepository import TagsRepository
+from data.assignedTagsRepository import AssignedTagsRepository
 
 tags = Blueprint('tags', __name__)
 
@@ -46,6 +47,54 @@ def tagsSearch():
 
         # Return the JSON object
         return json.dumps(returnData), 200
+    else:
+        return "You need to be authenticated to preform this task.", 401
+
+@tags.route('/api/tags-assign', methods=['PUT'])
+def tagsAssign():
+    if 'UserID' in session:
+        # Get the JSON payload from the request and inherit classes
+        data = request.get_json()
+
+        tagsRepository = TagsRepository()
+        assignedTagsRepository = AssignedTagsRepository()
+
+        # Check if the JSON exists
+        if data is None:
+            return "No JSON payload was uploaded with the request!", 400
+
+        # Check if the JSON has the required fields
+        if "tagID" not in data:
+            return "The JSON payload is missing required fields!", 400
+
+        # Check if the JSON has the correct field types
+        if type(data["tagID"]) is not int:
+            return "The JSON payload has incorrect field types!", 400
+
+        # Check if the tag exists
+        tag = tagsRepository.getWithID(data["tagID"])
+        if tag is None:
+            return "The tag does not exist!", 406
+
+        # Check if the tag is already assigned to the user
+        assignedTag = assignedTagsRepository.getWithUserIDAndTagID(session["UserID"], data["tagID"])
+        if assignedTag is not None:
+            return "The tag is already assigned to the user!", 406
+
+        # Check if the user has more than 10 tags assigned to them
+        assignedTags = assignedTagsRepository.getWithUserID(session["UserID"])
+        if len(assignedTags) >= 10:
+            return "Maximum number of tags assigned to user account.", 406
+
+        # Assign the tag to the user
+        assignedTagsRepository.insert({
+            "TagID": data["tagID"],
+            "UserID": int(session["UserID"]),
+            "Created": int(datetime.datetime.now().timestamp())
+        })
+
+        # Return a success message
+        return "The tag was successfully assigned!", 200
     else:
         return "You need to be authenticated to preform this task.", 401
 

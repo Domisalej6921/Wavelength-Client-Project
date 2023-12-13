@@ -11,6 +11,10 @@ class TagsRepository:
         """Gets all tags from the database."""
         return self.db.select("SELECT * FROM Tags")
 
+    def getWithID(self, tagID: int) -> Union[tuple, None]:
+        """Gets a tag from the database with a tagID."""
+        return self.db.selectFirstWithParams("SELECT * FROM Tags WHERE TagID = ?", (tagID,))
+
     def getWithUserID(self, userID: int) -> Union[list[tuple], None]:
         """Gets a tag from the database with a tagID."""
         return self.db.selectWithParams(

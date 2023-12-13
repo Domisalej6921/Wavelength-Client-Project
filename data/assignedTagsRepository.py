@@ -15,3 +15,17 @@ class AssignedTagsRepository:
             WHERE AT.UserID = ?""",
             (userID,)
         )
+
+    def getWithUserIDAndTagID(self, userID: int, tagID: int) -> Union[tuple, None]:
+        """Gets an assigned tag with a userID and tagID."""
+        return self.db.selectFirstWithParams(
+            """SELECT * FROM AssignedTags WHERE UserID = ? AND TagID = ?""",
+            (userID, tagID)
+        )
+
+    def insert(self, data: dict) -> None:
+        """Inserts an assigned tag into the database."""
+        self.db.execute(
+            """INSERT INTO AssignedTags (TagID, UserID, Created) VALUES (?, ?, ?)""",
+            (data["TagID"], data["UserID"], data["Created"])
+        )

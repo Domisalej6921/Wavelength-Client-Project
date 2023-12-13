@@ -74,6 +74,9 @@ def loginAuth():
         # All checks have passed so proceed with login
         session["UserID"] = account[0]
 
+        # Update the lastLogin field on the database
+        accountRepository.putNewLogin(account[0], int(datetime.datetime.now().timestamp()))
+
         # Return a success message
         return "Successfully logged in!", 200
     else:

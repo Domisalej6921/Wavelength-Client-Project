@@ -1,21 +1,28 @@
 class EditProfile {
     static renderEditForm () {
-        document.getElementById("modals").innerHTML += `<div class="modal fade" id="editProfileFormModal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-
-                    <div class="modal-header" id="editProfileFormModalHeader">
-                        ${Modals.header("Edit your profile")}
+        const content = `<div class="modal fade" id="editProfileFormModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+    
+                        <div class="modal-header" id="editProfileFormModalHeader">
+                            ${Modals.header("Edit your profile")}
+                        </div>
+    
+                        <div class="modal-body" id="editProfileFormModalBody">
+                            ${Modals.editProfile()}
+                        </div>
+    
+                        <div class="modal-footer"></div>
                     </div>
-
-                    <div class="modal-body" id="editProfileFormModalBody">
-                        ${Modals.editProfile()}
-                    </div>
-
-                    <div class="modal-footer"></div>
                 </div>
-            </div>
-        </div>`;
+            </div>`
+
+        if (document.getElementById("modals") !== null) {
+            document.getElementById("modals").innerHTML += content
+        }
+        else {
+            document.getElementById("modals").innerHTML = content
+        }
     }
 
     static async formSubmit() {

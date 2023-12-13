@@ -2,7 +2,7 @@ class Profile {
     static async renderPage() {
         // Get the requested user ID from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const userID = urlParams.get('id');
+        const userID = parseInt(urlParams.get('id'));
 
         // Send the form data to the server using the fetch API
         const response = await fetch('/api/profile', {
@@ -28,9 +28,27 @@ class Profile {
             ManageTags.renderEditForm();
 
             // Add tags to the select element
-            await ManageTags.searchTags(true);
+            await ManageTags.searchTags();
+
+            // Check images and set to defaults if they do not exist
+            if (data.profilePicture === null) {
+                data.profilePicture = {
+                    "path": "/static/images/blank-pfp.png",
+                    "description": "Default Profile Picture"
+                };
+            }
+
+            if (data.profileBanner === null) {
+                data.profileBanner = {
+                    "path": "/static/images/background-image.png",
+                    "description": "Default Profile banner"
+                };
+            }
 
             // Load the profile into the page
+            document.getElementById('root').innerHTML += `
+            <img src="${data.profilePicture.path}" class="rounded-circle" style="width: 150px;" alt="${data.profilePicture.description}" />
+            `;
         }
         // If the response is due to a not found error, display an error alert
         else if (response.status === 404) {

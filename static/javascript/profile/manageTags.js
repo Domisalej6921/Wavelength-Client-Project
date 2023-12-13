@@ -1,6 +1,6 @@
 class ManageTags {
     static renderEditForm() {
-        document.getElementById("modals").innerHTML += `<div class="modal fade" id="editTagsFormModal">
+        const content = `<div class="modal fade" id="editTagsFormModal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
@@ -16,15 +16,27 @@ class ManageTags {
                 </div>
             </div>
         </div>`;
+
+        if (document.getElementById("modals") !== null) {
+            document.getElementById("modals").innerHTML += content
+        }
+        else {
+            document.getElementById("modals").innerHTML = content
+        }
     }
 
     static async searchTags() {
         // Get the data from the search box
+        let search;
         try {
-            const search = document.getElementById("editTagsFormModalSearch").value.toString();
+            search = document.getElementById("editTagsFormModalSearch").value;
+
+            if (search === null) {
+                search = "";
+            }
         }
         catch {
-            const search = "";
+            search = "";
         }
 
         // Send the form data to the server using the fetch API
@@ -137,7 +149,7 @@ class ManageTags {
         // Get the form data
         try {
             const data = {
-                tagID: document.getElementById("editTagsFormModalTags").value,
+                tagID: document.getElementById("editTagsFormModalSelect").value,
             }
         }
         catch {
@@ -167,7 +179,7 @@ class ManageTags {
         }
         // If the response is due to a not acceptable request, display an error alert
         else if (response.status === 406) {
-            document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.warningAlert('You already have this tag assigned.', 'Invalid Input!');
+            document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.warningAlert(await response.text, 'Invalid Input!');
         }
         // If the response is due to an unauthorised request, redirect to the login page
         else if (response.status === 401) {

@@ -18,7 +18,7 @@ def profilePage():
     else:
         return redirect("/login")
 
-@profile.route('/api/profile')
+@profile.route('/api/profile', methods=['POST'])
 def profileDetails():
     if 'UserID' in session:
         # Get the JSON payload from the request and inherit classes
@@ -85,7 +85,7 @@ def profileDetails():
             # Check if the profile picture exists
             if picture is not None:
                 returnData[image] = {
-                    "file": picture[1] + picture[2],
+                    "path": "/static/uploads/" + picture[1] + picture[2],
                     "description": picture[3]
                 }
 

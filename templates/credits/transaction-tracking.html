@@ -34,9 +34,25 @@
                 <p>This Credit has been used <strong id="creditTotalUses">0</strong> times.</p>
             </div>
 
-            <div id="displayTransactionsDiv">
 
+            <div class="container-fluid container-light">
+                <table class="table table-hover">
+                   <thead>
+                   <tr>
+                       <th scope="col"><p class="h6">Transaction Number</p></th>
+                       <th scope="col"><p class="h6">Transaction Id</p></th>
+                       <th scope="col"><p class="h6">Receiver Id</p></th>
+                       <th scope="col"><p class="h6">Receiver Name</p></th>
+                       <th scope="col"><p class="h6">Sender Id</p></th>
+                       <th scope="col"><p class="h6">Sender Name</p></th>
+                       <th scope="col"><p class="h6">When It Happened</p></th>
+                       <th scope="col"><p class="h6">Was It A Donation</p></th>
+                   </tr>
+                   </thead>
+                   <tbody id="displayTransactionsTable"></tbody>
+               </table>
             </div>
+
 
         </form>
     </div>

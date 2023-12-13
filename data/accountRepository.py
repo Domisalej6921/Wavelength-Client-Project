@@ -60,3 +60,8 @@ class AccountRepository:
     def DecisionDecline(self, CurrentAccount: int,):
         """Deletes community if the request has been declined"""
         self.db.execute("DELETE FROM Users WHERE UserID = ?", (CurrentAccount, ))
+
+
+    def getUsernameViaID(self, userID: int):
+        """Gets an accounts username with the user's ID."""
+        return self.db.selectFirstWithParams("SELECT Username FROM Users WHERE UserID = ?", (userID,))

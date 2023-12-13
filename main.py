@@ -53,10 +53,13 @@ app.register_blueprint(community)
 from blueprints.profile import profile
 app.register_blueprint(profile)
 
-
 #Import mentorDonation blueprint
 from blueprints.tokenDonation import mentorDonation
 app.register_blueprint(mentorDonation)
+
+# Import transaction tracking blueprint
+from blueprints.creditTracking import creditTracking
+app.register_blueprint(creditTracking)
 
 # Import mentors blueprint
 from blueprints.mentors import mentors

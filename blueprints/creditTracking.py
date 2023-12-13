@@ -21,6 +21,35 @@ def getCredits():
 
     return jsonify(returndata)
 
+@creditTracking.route("/getReceiverName", methods=["GET"])
+def getReceiverName():
+
+    receiverId = request.json[0]
+    isEntity = request.json[1]
+
+    if isEntity == 1:
+
+        return jsonify(entityName)
+
+    else:
+
+        return jsonify(usersName)
+
+
+@creditTracking.route("/getSenderName", methods=["GET"])
+def getSenderName():
+
+    senderId = request.json[0]
+    isEntity = request.json[1]
+
+    if isEntity == 1:
+
+        return jsonify(entityName)
+
+    else:
+
+        return jsonify(usersName)
+
 @creditTracking.route("/getChosenCreditTransactions", methods=["POST"])
 def getChosenCreditTransactions():
 

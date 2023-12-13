@@ -25,6 +25,38 @@ class CreditTracking {
         xhttp.send();
     }
 
+    static getReceiverName(receiverId, isEntity) {
+
+        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+        xhttp.open("GET", "/getReceiverName", true); //set method and the url and if it asynchornus
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify(receiverId, isEntity));
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) { //200 = server is okay
+                const response = JSON.parse(this.responseText); // passing back the server response
+                console.log(response)
+                return(response)
+            }
+        };
+    }
+
+    static getSenderName(senderId, isEntity) {
+
+        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+        xhttp.open("GET", "/getSenderName", true); //set method and the url and if it asynchornus
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify(senderId, isEntity));
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) { //200 = server is okay
+                const response = JSON.parse(this.responseText); // passing back the server response
+                console.log(response)
+                return(response)
+            }
+        };
+    }
+
     static getChosenCreditTransaction() {
         console.log("Running")
         const chosenCredit = document.getElementById("chooseCredit").value;
@@ -49,25 +81,29 @@ class CreditTracking {
                     console.log(response);
 
                     for (let i = 0; i < response.length; i++) {
-                        console.log(i)
+                        // console.log(i)
+
+                        const receiver = CreditTracking.getReceiverName(response[i][4], response[i][5])
+                        const sender = CreditTracking.getSenderName(response[i][2], response[i][3])
+
                         if (i === 0) {
                             if (response[i][6] === 1) {
                                 document.getElementById("displayTransactionsDiv").innerHTML +=
-                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Reciever Id: ${response[i][4]} Was Transfered: ${response[i][7]} This Was A Donation!</p>`;
+                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Receiver Id: ${response[i][4]} Receiver Name: ${receiver} Was Transfered: ${response[i][7]} This Was A Donation!</p>`;
                             }
                             else {
                                 document.getElementById("displayTransactionsDiv").innerHTML +=
-                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Reciever Id: ${response[i][4]} Was Transfered: ${response[i][7]}</p>`;
+                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Receiver Id: ${response[i][4]} Receiver Name: ${receiver} Was Transfered: ${response[i][7]}</p>`;
                             }
                         }
                         else {
                             if (response[i][6] === 1) {
                                 document.getElementById("displayTransactionsDiv").innerHTML +=
-                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Sender Id:${response[i][2]} Reciever Id: ${response[i][4]} Was Transfered: ${response[i][7]} This Was A Donation!</p>`;
+                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Sender Id:${response[i][2]} Sender Name: ${sender} Receiver Id: ${response[i][4]} Receiver Name: ${receiver} Was Transfered: ${response[i][7]} This Was A Donation!</p>`;
                             }
                             else {
                                 document.getElementById("displayTransactionsDiv").innerHTML +=
-                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Sender Id:${response[i][2]} Reciever Id: ${response[i][4]} Was Transfered: ${response[i][7]}</p>`;
+                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Sender Id:${response[i][2]} Sender Name: ${sender} Receiver Id: ${response[i][4]} Receiver Name: ${receiver} Was Transfered: ${response[i][7]}</p>`;
                             }
                         }
                         document.getElementById("creditTotalUses").innerHTML = i+1;

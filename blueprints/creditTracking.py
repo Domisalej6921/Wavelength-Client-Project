@@ -23,7 +23,7 @@ def getCredits():
 
 @creditTracking.route("/getChosenCreditTransactions", methods=["POST"])
 def getChosenCreditTransactions():
-    
+
     tokenId = request.json
     transactionsRepository = TransactionsRepository()
     transactions = transactionsRepository.getAllTransactions(tokenId)

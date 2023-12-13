@@ -51,12 +51,24 @@ class CreditTracking {
                     for (let i = 0; i < response.length; i++) {
                         console.log(i)
                         if (i === 0) {
-                            document.getElementById("displayTransactionsDiv").innerHTML +=
-                                `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Reciever Id: ${response[i][1]} Was Transfered: ${response[i][3]}</p>`;
+                            if (response[i][6] === 1) {
+                                document.getElementById("displayTransactionsDiv").innerHTML +=
+                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Reciever Id: ${response[i][4]} Was Transfered: ${response[i][7]} This Was A Donation!</p>`;
+                            }
+                            else {
+                                document.getElementById("displayTransactionsDiv").innerHTML +=
+                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Reciever Id: ${response[i][4]} Was Transfered: ${response[i][7]}</p>`;
+                            }
                         }
                         else {
-                            document.getElementById("displayTransactionsDiv").innerHTML +=
-                                `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Sender Id:${response[i][1]} Reciever Id: ${response[i][3]} Was Transfered: ${response[i][5]}</p>`;
+                            if (response[i][6] === 1) {
+                                document.getElementById("displayTransactionsDiv").innerHTML +=
+                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Sender Id:${response[i][2]} Reciever Id: ${response[i][4]} Was Transfered: ${response[i][7]} This Was A Donation!</p>`;
+                            }
+                            else {
+                                document.getElementById("displayTransactionsDiv").innerHTML +=
+                                    `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Sender Id:${response[i][2]} Reciever Id: ${response[i][4]} Was Transfered: ${response[i][7]}</p>`;
+                            }
                         }
                         document.getElementById("creditTotalUses").innerHTML = i+1;
                     }

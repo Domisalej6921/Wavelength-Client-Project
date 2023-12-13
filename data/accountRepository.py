@@ -51,3 +51,10 @@ class AccountRepository:
             (?, ?, ?, ?, ?, ?, ?, ?)""",
             (data["name"], data["username"], data["email"], data["password"], data["salt"], data["isMentor"], data["awaitingApproval"], data["created"])
         )
+
+    def updateMentee(self, username, desc):
+        """Updates a user's mentee account to become a mentor"""
+        self.db.execute(
+            "UPDATE Users SET isMentor = 1, awaitingApproval = 0, Description = ? WHERE Username = ?",
+            (desc, username)
+        )

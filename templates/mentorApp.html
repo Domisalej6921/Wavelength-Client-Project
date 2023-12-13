@@ -14,7 +14,7 @@
     <script src="/static/javascript/components/mentors.js"></script>
     <title>Apply for a mentor</title>
 </head>
-<body onload="Mentors.renderMentor(data)">
+<body onload="Mentor.displayMentor()">
 
     {{ header | safe }}
 
@@ -28,21 +28,21 @@
         <h1 class="application-heading">Application</h1>
 
         <div class="form-container">
-            <form class="form-floating" id="mentorApplicationForm">
+            <form class="form-floating" action="#" id="mentorApplicationForm" method="post">
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="firstName" placeholder="Your First Name" required>
+                  <input type="text" class="form-control" id="firstName" placeholder="Your First Name" name="firstName" required>
                   <label for="firstName"> Your First Name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="lastName" placeholder="Your Last Name" required>
+                    <input type="text" class="form-control" id="lastName" placeholder="Your Last Name" name="lastName" required>
                     <label for="lastName"> Your Last Name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="email" placeholder="Email" required>
+                    <input type="text" class="form-control" id="email" placeholder="Email" name="email" required>
                     <label for="email"> Email</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <textarea type="text" class="form-control" id="description" placeholder="Description of why you want this mentor" required></textarea>
+                  <textarea type="text" class="form-control" id="description" placeholder="Description of why you want this mentor" name="desc" required></textarea>
                   <label for="description">Description of why you want this mentor</label>
                 </div>
                 <div class="form-row align-items-center">
@@ -58,10 +58,11 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="submit-button" id="applicationSubmit">
+                    <button class="btn btn-primary" onclick=".....">Apply</button>
+                </div>
             </form>
-            <div class="submit-button" id="applicationSubmit">
-                <button class="btn btn-primary" onclick="submitMentorApp()">Apply</button>
-            </div>
         </div>
     </div>
 

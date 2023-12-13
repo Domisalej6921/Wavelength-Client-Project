@@ -16,7 +16,7 @@ class CreditTracking {
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) { //200 = server is okay
                 const response = JSON.parse(this.responseText); // passing back the server response
-                console.log(response)
+                // console.log(response)
                 for (let i = 0; i < response.length; i++) {
                     document.getElementById("chooseCredit").innerHTML += `<option value="${response[i]}"> ${response[i]} </option>`;
                 }
@@ -40,7 +40,7 @@ class CreditTracking {
                 if (this.readyState === 4){
                     if (this.status === 200) { //200 = server is okay
                         const response = JSON.parse(this.responseText); // passing back the server response
-                        console.log(response)
+                        // console.log(response)
                         resolve(response);
                     }
                     else {
@@ -67,7 +67,7 @@ class CreditTracking {
                 if (this.readyState === 4) {
                     if (this.status === 200) { //200 = server is okay
                         const response = JSON.parse(this.responseText); // passing back the server response
-                        console.log(response)
+                        // console.log(response)
                         resolve(response);
                     }
                     else {
@@ -80,7 +80,7 @@ class CreditTracking {
     }
 
     static getChosenCreditTransaction() {
-        console.log("Running")
+        // console.log("Running")
         const chosenCredit = document.getElementById("chooseCredit").value;
 
         // removes the old search results
@@ -100,26 +100,26 @@ class CreditTracking {
             if (this.readyState === 4) { // checks its ready
                 if (this.status === 200) { //200 = server is okay
                     const response = JSON.parse(this.responseText); // passing back the server response
-                    console.log(response);
+                    // console.log(response);
 
                     for (let i = 0; i < response.length; i++) {
                         // console.log(i)
 
                         const receiver = await CreditTracking.getReceiverName(response[i][4], response[i][5])
-                        console.log(receiver)
+                        // console.log(receiver)
                         const sender = await CreditTracking.getSenderName(response[i][2], response[i][3])
-                        console.log(sender)
+                        // console.log(sender)
 
                         document.getElementById("displayTransactionsTable").innerHTML +=
                             `<tr value="${response[i]}" class="temporary">
-                            <td>${i+1}</td>
-                            <td>${response[i][0]}</td>
-                            <td>${response[i][2]}</td>
-                            <td>${sender}</td>
-                            <td>${response[i][4]}</td>
-                            <td>${receiver}</td>
-                            <td>${response[i][7]}</td>
-                            <td>${response[i][6]}</td>
+                            <td class="table-text">${i+1}</td>
+                            <td class="table-text">${response[i][0]}</td>
+                            <td class="table-text">${response[i][2]}</td>
+                            <td class="table-text">${sender}</td>
+                            <td class="table-text">${response[i][4]}</td>
+                            <td class="table-text">${receiver}</td>
+                            <td class="table-text">${response[i][7]}</td>
+                            <td class="table-text">${response[i][6]}</td>
                             </tr>`;
 
                         document.getElementById("creditTotalUses").innerHTML = i+1;

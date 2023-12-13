@@ -1,0 +1,55 @@
+body {
+    text-align: center;
+    background-color: #eeeeee;
+}
+
+.mentorHeading {
+    margin-top: 3%;
+    margin-bottom: 3%;
+    padding-bottom: 15px;
+    border-bottom: solid;
+}
+
+.mentorPageContents {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px;
+    padding: 50px;
+}
+
+.mentorImage {
+    padding: 50px;
+    background-color: #8f8fcd;
+    width: 500px;
+    height: 300px;
+    margin-bottom: 4%;
+}
+
+.applicationHeading {
+    border-top: solid;
+    margin-bottom: 3%;
+    padding-top: 3%;
+}
+
+.mentorApplicationContents {
+    padding: 30px;
+    margin-bottom: 5%;
+}
+
+.btn-primary {
+    margin-top: 3%;
+    background-color: #b4a7d5;
+    border: none;
+    width: 110px;
+    height: 50px;
+}
+
+.btn-primary:hover {
+    background-color: #b4a7d5;
+    opacity: 0.8;
+    cursor: pointer;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.225);
+    transition: 0.5s;
+    border: none;
+}

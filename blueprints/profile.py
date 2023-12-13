@@ -137,7 +137,7 @@ def get_not_approved_account():
                     for account in accounts:
                         # Learnt about the datetime and ctime methods from:
                         # "https://docs.python.org/3/library/datetime.html"
-                        dataTimeStamp = account[11]
+                        dataTimeStamp = account[12]
                         dataDateTime = datetime.fromtimestamp(dataTimeStamp)
                         #Appends the data in the correct format to the empty list
                         returnData.append({

@@ -32,3 +32,8 @@ class TokensRepository:
             WHERE Transactions.Created < ? """,
             (date,)
         )
+    def getWithUserID(self, UserId: int):
+        """"""
+        return self.db.selectWithParams(
+            """SELECT * FROM Tokens WHERE Tokens.OwnerID = ? """,
+            (UserId,))

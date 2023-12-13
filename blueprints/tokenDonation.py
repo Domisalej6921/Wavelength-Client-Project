@@ -26,7 +26,7 @@ def mentor_Donation():
 
         # Ensuring the user is a mentor before loading the community donate section
         userData = accountRepository.getWithID(userID)
-        isMentor = userData[6]
+        isMentor = userData[7]
         if isMentor is not None:
             if isMentor == 1:
                 # Renders page
@@ -49,7 +49,7 @@ def mentor_Donation_view():
 
         # Ensuring the user is a mentor before loading the select section
         userData = accountRepository.getWithID(userID)
-        isMentor = userData[6]
+        isMentor = userData[7]
         if isMentor is not None:
             if isMentor == 1:
                 communities = entitiesRepository.getApprovedEntities()
@@ -87,7 +87,7 @@ def mentor_Donation_view_selected():
 
         # Ensuring the user is a mentor before loading information into the modal
         userData = accountRepository.getWithID(userID)
-        isMentor = userData[6]
+        isMentor = userData[7]
         if isMentor is not None:
             if isMentor == 1:
                 communities = entitiesRepository.getWithEntityID(int(selectedEntity))
@@ -126,8 +126,8 @@ def get_not_approved_community_Review_descition():
 
         # Gets the JSON payload from the request
         data = request.get_json()
-        CurrentEntity = data["community"]
-        numOfTokens = data["amount"]
+        communityChosen = data["community"]
+        tokensToDonate = int(data["amount"])
 
         # Inheriting classes
         accountRepository = AccountRepository()
@@ -135,25 +135,38 @@ def get_not_approved_community_Review_descition():
         tokensRepository = TokensRepository()
         transactionsRepository = TransactionsRepository()
         uploads = Uploads()
+        email = Email()
 
-        # Ensuring the user is a mentor before loading information into the modal
+        # Get the userID from the session cookie
+        userID = int(session["UserID"])
+
+        # Ensuring the user is a mentor before loading information into the modal and getting their email
         userData = accountRepository.getWithID(userID)
-        isMentor = userData[6]
+        isMentor = userData[7]
         if isMentor is not None:
             if isMentor == 1:
-                # Using the EntityID to get the UserID so that we can get the user email
-                entities = entitiesRepository.getWithEntityID(CurrentEntity)
+                userEmail = userData[3]
+                # Ensures community exists
+                entities = entitiesRepository.getWithEntityID(communityChosen)
                 if entities is not None:
-                    communityPostUserID = entitiesMembersRepository.GetWithEntity(CurrentEntity)[0]
-                    userData = accountRepository.getWithID(int(communityPostUserID))
-                    userEmail = userData[3]
-                    # Depending on if the community was accepted or rejected, the Sql statment is called and ranusing the EntityID and an email is sent to the user
-                    if decision == 1:
-                        entitiesRepository.DecisionAccept(CurrentEntity)
-                        email.send("Request Accepted","We are pleased to inform you that, your request to create a community was accepted. For inquiries contact us at example@example.co.uk.", userEmail)
-                    else:
-                        entitiesRepository.DecisionDecline(CurrentEntity)
-                        email.send("Request Denied", "We regret to inform you that, your request to create a community was denied. For further information or inquiries contact us at example@example.co.uk.", userEmail)
+                    # Gets all the data about tokens that are related to the current user
+                    tokensData = tokensRepository.getWithUserID(userID)
+                    # Gets the number of tokens the user currently has
+                    tokenCounter = 0
+                    for _ in tokensData:
+                        tokenCounter += 1
+
+                    # Ensures the user has enough tokens before carrying out the transaction
+                    if tokensToDonate > tokenCounter:
+                        tokenCounter = 0
+                    for token in range(tokensToDonate):
+                        if tokenCounter > 0:
+                            currentTokenID = tokensData[token][0]
+                            print("hello", currentTokenID)
+                            # transactionsRepository.createTransactionLog()
+                            tokenCounter -= 1
+
+
                     # Return a success message
                     return "Community created successfully", 200
             # Return a error message if user is not a moderator

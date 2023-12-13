@@ -72,7 +72,6 @@ class MentorTokenDonation {
 
 
     static async donateAmount(entityID, amount) {
-        console.log(entityID, amount)
         // Appends the UserID and moderator decision into JSON format
         let donateData = {
             community: entityID,

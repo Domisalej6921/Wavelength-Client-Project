@@ -96,7 +96,7 @@ CREATE TABLE Sessions (
     isComplete integer,
     Notes text,
     Created integer
-);
+);.p
 
 CREATE TABLE Reviews (
     ReviewID integer NOT NULL PRIMARY KEY AUTOINCREMENT,

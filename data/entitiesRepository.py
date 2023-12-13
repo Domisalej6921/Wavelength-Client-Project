@@ -22,11 +22,11 @@ class EntitiesRepository:
             (name,)
         )
 
-    def getCommunityReturnName(self, name: str):
+    def getCommunityReturnName(self, id: int):
         """Get a community name via the name."""
         return self.db.selectFirstWithParams(
-            "SELECT Name FROM Entities WHERE Name = ?",
-            (name,)
+            "SELECT Name FROM Entities WHERE EntityID = ?",
+            (id,)
         )
 
 
@@ -65,3 +65,7 @@ class EntitiesRepository:
     def DecisionDecline(self, specificEntity: int,) -> Union[list[tuple], None]:
         """Deletes community if the request has been declined"""
         self.db.execute("DELETE FROM Entities WHERE EntityID = ?", (specificEntity, ))
+
+    def getApprovedEntities(self) -> Union[list[tuple], None]:
+        """Returns entities which have been approved"""
+        return self.db.select("""SELECT * FROM Entities Where isApproved = 1""")

@@ -22,5 +22,6 @@ class TransactionsRepository:
 
     def getAllTransactions(self, tokenId:int):
         """Returns all the data for one token transactions in the current transaction table!"""
+        print(self.db.selectWithParams("SELECT * FROM Transactions WHERE TokenID = ?", (tokenId,)))
 
-        return self.db.selectWithParams("SELECT * FROM Tokens WHERE TokenID = ?", (tokenId,))
+        return self.db.selectWithParams("SELECT * FROM Transactions WHERE TokenID = ?", (tokenId,))

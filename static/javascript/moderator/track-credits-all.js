@@ -29,6 +29,14 @@ class CreditTracking {
         console.log("Running")
         const chosenCredit = document.getElementById("chooseCredit").value;
 
+        // removes the old search results
+        // Learnt via https://bobbyhadz.com/blog/javascript-remove-all-elements-with-class#:~:text=Use%20the%20document.querySelectorAll%20%28%29%20method%20to%20select%20the,each%20element%20to%20remove%20it%20from%20the%20DOM.
+        // 07/12/23
+        const temp = document.querySelectorAll(".temporary");
+        temp.forEach(temp => {
+            temp.remove();
+        });
+
         const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
         xhttp.open("POST", "/getChosenCreditTransactions", true); //set method and the url and if it asynchornus
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -41,8 +49,9 @@ class CreditTracking {
                     console.log(response);
 
                     for (let i = 0; i < response.length; i++) {
-                    document.getElementById("displayTransactionsDiv").innerHTML += `<p value="${response[i]}"> Transaction ${i} ${response[i]} </p>`;
-                }
+                        document.getElementById("displayTransactionsDiv").innerHTML += `<p value="${response[i]}" class="temporary"> Transaction ${i+1} ${response[i]} </p>`;
+                        document.getElementById("creditTotalUses").innerHTML = i+1;
+                    }
                 }
             }
         };

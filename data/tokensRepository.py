@@ -32,3 +32,17 @@ class TokensRepository:
             WHERE Transactions.Created < ? """,
             (date,)
         )
+
+    def getAllTokens(self, whatId:bool):
+        """Returns all the credits in the current credit table!
+        By Id if True is passed.
+        By OwnerId if False is Passed."""
+
+        if whatId:
+            return self.db.select(
+                "SELECT TokenID FROM Tokens"
+            )
+        else:
+            return self.db.select(
+                "SELECT OwnerID FROM Tokens"
+            )

@@ -71,7 +71,7 @@ class MentorTokenDonation {
     }
 
 
-    static async donateAmount(entityID, amount){
+    static async donateAmount(entityID, amount) {
         console.log(entityID, amount)
         // Appends the UserID and moderator decision into JSON format
         let donateData = {
@@ -86,9 +86,37 @@ class MentorTokenDonation {
             },
             body: JSON.stringify(donateData)
         })
-        // Once the backend data-handling has been done, the table is reloaded, so it can show the most updated state of the database
-        if (response.ok) {
-            MentorTokenDonation.renderTable()
+
+        // Reloading the table to show most updated list of entities to donate to, with an alert of the sever status message
+        await MentorTokenDonation.renderTable();
+        let issue = "";
+        // If the server returns a 401 status code (Unauthorized) or a 403 status code (Forbidden)
+        if (response.status === 401 || response.status === 403) {
+            issue = await response.text;
+        }
+        // If the server returns a 400 status code (Bad Request)
+        else if (response.status === 400) {
+            issue = "An unknown error occurred. Please try again later.";
+        }
+        // If the server returns a 406 status code (Not Acceptable)
+        else if (response.status === 406) {
+            issue = "Token Balance is insufficient.";
+        }
+        // If the server returns a 500 status code (System Error)
+        else if (response.status === 500) {
+            issue = "An unknown error occurred. Please try again later.";
+        }
+        else {
+            issue = ""
+        }
+        // Setting alerts according to the status code
+        if (response.status === 401 || response.status === 403 || response.status === 406 || response.status === 500) {
+            document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(issue, "Invalid Input!");
+        } else if (response.ok) {
+            document.getElementById("formAlerts").innerHTML = Alerts.successAlert(issue, "Success!");
+        }
+        else {
+            document.getElementById("formAlerts").innerHTML = Alerts.errorAlert(issue, "System Error!");
         }
     }
 }

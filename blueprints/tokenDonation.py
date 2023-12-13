@@ -160,7 +160,7 @@ def get_not_approved_community_Review_descition():
                     if tokensToDonate > tokenCounter:
                         email.send(
                         "Transaction Faliure",f"You have attempted to donate more tokens than you own, your our Token balance is {tokenCounter}.", userEmail)
-                        return "Invalid input from user", 403
+                        return "Invalid input from user", 406
 
                     # Carries out the transaction for each token for as many tokens as they want to donate
                     for token in range(tokensToDonate):
@@ -174,15 +174,12 @@ def get_not_approved_community_Review_descition():
                             tokensRepository.updateOwnerID(communityChosen, currentTokenID)
 
                             tokenCounter -= 1
+
                     # Sends email to user following the transaction
                     email.send("Transaction Transcript", f"You have successfully donated {tokensToDonate} Tokens to {entityName}. Your Token balance is {tokenCounter}.", userEmail)
 
-
-
-
-
                     # Return a success message
-                    return "Community created successfully", 200
+                    return "Token(s) Donated successfully", 200
             # Return a error message if user is not a moderator
             return "You do not have the permissions to execute that command", 403
     else:

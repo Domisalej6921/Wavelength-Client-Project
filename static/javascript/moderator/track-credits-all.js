@@ -25,36 +25,58 @@ class CreditTracking {
         xhttp.send();
     }
 
-    static getReceiverName(receiverId, isEntity) {
+    static async getReceiverName(receiverId, isEntity) {
 
-        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
-        xhttp.open("GET", "/getReceiverName", true); //set method and the url and if it asynchornus
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.send(JSON.stringify(receiverId, isEntity));
+        return new Promise((resolve, reject) => {
 
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) { //200 = server is okay
-                const response = JSON.parse(this.responseText); // passing back the server response
-                console.log(response)
-                return(response)
-            }
-        };
+            const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+            xhttp.open("POST", "/getReceiverName", true); //set method and the url and if it asynchornus
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.send(JSON.stringify({
+                "receiverId": receiverId, "isEntity": isEntity
+            }));
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4){
+                    if (this.status === 200) { //200 = server is okay
+                        const response = JSON.parse(this.responseText); // passing back the server response
+                        console.log(response)
+                        resolve(response);
+                    }
+                    else {
+                        console.log("HTTP status: " + this.status);
+                        reject("Failed to fetch Receivers Name");
+                    }
+                }
+            };
+        });
     }
 
-    static getSenderName(senderId, isEntity) {
+    static async getSenderName(senderId, isEntity) {
 
-        const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
-        xhttp.open("GET", "/getSenderName", true); //set method and the url and if it asynchornus
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.send(JSON.stringify(senderId, isEntity));
+        return new Promise((resolve, reject) => {
 
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) { //200 = server is okay
-                const response = JSON.parse(this.responseText); // passing back the server response
-                console.log(response)
-                return(response)
-            }
-        };
+            const xhttp = new XMLHttpRequest(); // creates new XMLHttp request
+            xhttp.open("POST", "/getSenderName", true); //set method and the url and if it asynchornus
+            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhttp.send(JSON.stringify({
+                "senderId": senderId, "isEntity": isEntity
+            }));
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) { //200 = server is okay
+                        const response = JSON.parse(this.responseText); // passing back the server response
+                        console.log(response)
+                        resolve(response);
+                    }
+                    else {
+                        console.log("HTTP status: " + this.status);
+                        reject("Failed to fetch Senders Name");
+                    }
+                }
+            };
+        });
     }
 
     static getChosenCreditTransaction() {
@@ -74,7 +96,7 @@ class CreditTracking {
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp.send(JSON.stringify(chosenCredit));
 
-        xhttp.onreadystatechange = function () {
+        xhttp.onreadystatechange = async function () {
             if (this.readyState === 4) { // checks its ready
                 if (this.status === 200) { //200 = server is okay
                     const response = JSON.parse(this.responseText); // passing back the server response
@@ -84,7 +106,9 @@ class CreditTracking {
                         // console.log(i)
 
                         const receiver = CreditTracking.getReceiverName(response[i][4], response[i][5])
+                        console.log(receiver)
                         const sender = CreditTracking.getSenderName(response[i][2], response[i][3])
+                        console.log(sender)
 
                         if (i === 0) {
                             if (response[i][6] === 1) {

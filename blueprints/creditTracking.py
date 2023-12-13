@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, render_template, request, jsonify
 
 from data.transactionsRepository import TransactionsRepository
 from data.tokensRepository import TokensRepository
+from data.entitiesRepository import EntitiesRepository
+from data.accountRepository import AccountRepository
 
 creditTracking = Blueprint("creditTracking", __name__)
 
@@ -21,34 +23,42 @@ def getCredits():
 
     return jsonify(returndata)
 
-@creditTracking.route("/getReceiverName", methods=["GET"])
+@creditTracking.route("/getReceiverName", methods=["POST"])
 def getReceiverName():
 
-    receiverId = request.json[0]
-    isEntity = request.json[1]
+    receiverId = request.json.get("receiverId")
+    isEntity = request.json.get("isEntity")
 
     if isEntity == 1:
+        entitiesRepository = EntitiesRepository()
+        entityName = entitiesRepository.getCommunityReturnName(receiverId)
 
         return jsonify(entityName)
 
     else:
+        accountRepository = AccountRepository()
+        usersUsername = accountRepository.getUsernameViaID(receiverId)
 
-        return jsonify(usersName)
+        return jsonify(usersUsername)
 
 
-@creditTracking.route("/getSenderName", methods=["GET"])
+@creditTracking.route("/getSenderName", methods=["POST"])
 def getSenderName():
 
-    senderId = request.json[0]
-    isEntity = request.json[1]
+    senderId = request.json.get("senderId")
+    isEntity = request.json.get("isEntity")
 
     if isEntity == 1:
+        entitiesRepository = EntitiesRepository()
+        entityName = entitiesRepository.getCommunityReturnName(senderId)
 
         return jsonify(entityName)
 
     else:
+        accountRepository = AccountRepository()
+        usersUsername = accountRepository.getUsernameViaID(senderId)
 
-        return jsonify(usersName)
+        return jsonify(usersUsername)
 
 @creditTracking.route("/getChosenCreditTransactions", methods=["POST"])
 def getChosenCreditTransactions():

@@ -20,11 +20,11 @@ class EntitiesRepository:
             (name,)
         )
 
-    def getCommunityReturnName(self, name: str):
+    def getCommunityReturnName(self, id: int):
         """Get a community name via the name."""
         return self.db.selectFirstWithParams(
-            "SELECT Name FROM Entities WHERE Name = ?",
-            (name,)
+            "SELECT Name FROM Entities WHERE EntityID = ?",
+            (id,)
         )
 
 

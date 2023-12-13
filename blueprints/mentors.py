@@ -26,6 +26,25 @@ def mentor_apply():
 def become_mentor():
     return render_template('becomeMentor.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
 
+@mentors.route('/api/account/become_mentor', methods=['POST', 'GET'])
+def become_mentor_form():
+    # Gets the JSON payload from the request
+    formData = request.get_json()
+
+    accountRepository = AccountRepository()
+
+    # Gets the data from the HTML form
+    username = formData["username"]
+    desc = formData["desc"]
+
+    # Retrieves account from the database using their username
+    account = accountRepository.getWithUsername(username)
+    # If account does not exist, returns this error, otherwise updates the user account to be a mentee
+    if account[6] == 0:
+        return "We are having trouble finding your account, Please try again later!", 403
+    else:
+        accountRepository.updateMentee(account, desc)
+
 @mentors.route('/api/mentors', methods=['POST'])
 def mentorSearch():
     if "UserID" in session:

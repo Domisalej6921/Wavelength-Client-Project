@@ -32,8 +32,17 @@ class TokensRepository:
             WHERE Transactions.Created < ? """,
             (date,)
         )
+
     def getWithUserID(self, UserId: int):
-        """"""
+        """Gets Tokens associated with the current user"""
         return self.db.selectWithParams(
-            """SELECT * FROM Tokens WHERE Tokens.OwnerID = ? """,
-            (UserId,))
+            """SELECT * FROM Tokens WHERE Tokens.OwnerID = ? AND Tokens.isEntity = 0""",
+            (UserId,)
+        )
+
+    def updateOwnerID(self, newOwner: int, tokenId: str):
+        """Updating OwnerID following transactions"""
+        return self.db.execute(
+            """UPDATE Tokens SET OwnerID = ?, isEntity = 1 WHERE TokenID = ?""", (newOwner, tokenId)
+        )
+

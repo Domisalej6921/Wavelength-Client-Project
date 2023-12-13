@@ -77,7 +77,6 @@ def mentor_Donation_view():
 def mentor_Donation_view_selected():
     if "UserID" in session:
         selectedEntity = request.args.get("entityID")
-        print(selectedEntity)
         # Inheriting classes
         accountRepository = AccountRepository()
         entitiesRepository = EntitiesRepository()
@@ -148,6 +147,7 @@ def get_not_approved_community_Review_descition():
                 userEmail = userData[3]
                 # Ensures community exists
                 entities = entitiesRepository.getWithEntityID(communityChosen)
+                entityName = entities[0][1]
                 if entities is not None:
                     # Gets all the data about tokens that are related to the current user
                     tokensData = tokensRepository.getWithUserID(userID)
@@ -156,15 +156,29 @@ def get_not_approved_community_Review_descition():
                     for _ in tokensData:
                         tokenCounter += 1
 
-                    # Ensures the user has enough tokens before carrying out the transaction
+                    # Ensures the user has enough tokens
                     if tokensToDonate > tokenCounter:
-                        tokenCounter = 0
+                        email.send(
+                        "Transaction Faliure",f"You have attempted to donate more tokens than you own, your our Token balance is {tokenCounter}.", userEmail)
+                        return "Invalid input from user", 403
+
+                    # Carries out the transaction for each token for as many tokens as they want to donate
                     for token in range(tokensToDonate):
                         if tokenCounter > 0:
                             currentTokenID = tokensData[token][0]
-                            print("hello", currentTokenID)
-                            # transactionsRepository.createTransactionLog()
+                            currentTokenCreated = tokensData[token][3]
+                            # Carrying out the transaction for the Token
+                            transactionsRepository.createTransactionLog(currentTokenID, userID, False, communityChosen, True, True, currentTokenCreated)
+
+                            # Updating the Tokens OwnerID
+                            tokensRepository.updateOwnerID(communityChosen, currentTokenID)
+
                             tokenCounter -= 1
+                    # Sends email to user following the transaction
+                    email.send("Transaction Transcript", f"You have successfully donated {tokensToDonate} Tokens to {entityName}. Your Token balance is {tokenCounter}.", userEmail)
+
+
+
 
 
                     # Return a success message

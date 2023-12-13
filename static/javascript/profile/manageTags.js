@@ -71,10 +71,114 @@ class ManageTags {
     }
 
     static async createTagFormSubmit() {
+        // Set the form button to a loading state
+        document.getElementById("createTagFormModalSubmit").innerHTML = Buttons.getPastelButtonLoading('Creating...', 'lg');
 
+        // Get the form data
+        try {
+            const data = {
+                name: document.getElementById("createTagFormModalName").value,
+                colour: document.getElementById("createTagFormModalDescription").value,
+            }
+        }
+        catch {
+            // Display an error alert
+            document.getElementById("createTagFormModalAlerts").innerHTML = Alerts.errorAlert('Failed to create tag. Please try again later...', 'System Error!');
+
+            // Reset the button to a default state
+            document.getElementById("createTagFormModalSubmit").innerHTML = Buttons.getPastelButton('Create Tag', 'ManageTags.createTagFormSubmit()', 'lg');
+
+            return;
+        }
+
+        // Local input validation - check if the HEX colour code is valid
+        if (!/^#[0-9A-F]{6}$/i.test(data.colour)) {
+            // Display an error alert
+            document.getElementById("createTagFormModalAlerts").innerHTML = Alerts.warningAlert('Invalid HEX colour code. Please try again...', 'Invalid Input!');
+
+            // Reset the button to a default state
+            document.getElementById("createTagFormModalSubmit").innerHTML = Buttons.getPastelButton('Create Tag', 'ManageTags.createTagFormSubmit()', 'lg');
+
+            return;
+        }
+
+        // Send the form data to the server using the fetch API
+        const response = await fetch('/api/tags-add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        // If the server returns a 200 status code (OK)
+        if (response.ok) {
+            // Reset the form and display a success alert
+            document.getElementById("createTagFormModal").reset();
+            document.getElementById("createTagFormModalAlerts").innerHTML = Alerts.successAlert('Tag created successfully.', 'Success!');
+        }
+        // If the response is due to an unauthorised request, redirect to the login page
+        else if (response.status === 401) {
+            window.location.href = '/login';
+        }
+        // If it is any other status code, display an error alert
+        else {
+            document.getElementById("createTagFormModalAlerts").innerHTML = Alerts.errorAlert('Failed to create tag. Please try again later...', 'System Error!');
+        }
+
+        // Reset the button to a default state
+            document.getElementById("createTagFormModalSubmit").innerHTML = Buttons.getPastelButton('Create Tag', 'ManageTags.createTagFormSubmit()', 'lg');
     }
 
     static async assignTagFormSubmit() {
+        // Set the form button to a loading state
+        document.getElementById("editTagsFormModalSubmit").innerHTML = Buttons.getPastelButtonLoading('Assigning...', 'lg');
 
+        // Get the form data
+        try {
+            const data = {
+                tagID: document.getElementById("editTagsFormModalTags").value,
+            }
+        }
+        catch {
+            // Display an error alert
+            document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.errorAlert('Failed to assign tag. Please try again later...', 'System Error!');
+
+            // Reset the button to a default state
+            document.getElementById("editTagsFormModalSubmit").innerHTML = Buttons.getPastelButton('Assign Tag', 'ManageTags.assignTagFormSubmit()', 'lg');
+
+            return;
+        }
+
+        // Send the form data to the server using the fetch API
+        const response = await fetch('/api/tags-assign', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        // If the server returns a 200 status code (OK)
+        if (response.ok) {
+            // Reset the form and display a success alert
+            document.getElementById("editTagsFormModal").reset();
+            document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.successAlert('Tag assigned successfully.', 'Success!');
+        }
+        // If the response is due to a not acceptable request, display an error alert
+        else if (response.status === 406) {
+            document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.warningAlert('You already have this tag assigned.', 'Invalid Input!');
+        }
+        // If the response is due to an unauthorised request, redirect to the login page
+        else if (response.status === 401) {
+            window.location.href = '/login';
+        }
+        // If it is any other status code, display an error alert
+        else {
+            document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.errorAlert('Failed to assign tag. Please try again later...', 'System Error!');
+        }
+
+        // Reset the button to a default state
+        document.getElementById("editTagsFormModalSubmit").innerHTML = Buttons.getPastelButton('Assign Tag', 'ManageTags.assignTagFormSubmit()', 'lg');
     }
 }

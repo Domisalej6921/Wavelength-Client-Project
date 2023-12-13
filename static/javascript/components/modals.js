@@ -43,7 +43,7 @@ class Modals {
             </div>
         </form>
         <div class="align-content" id="editTagsModalFormSubmit">
-            <button class="btn btn-pastel btn-lg" onClick="ManageTags.formSubmit()">Assign</button>
+            <button class="btn btn-pastel btn-lg" onClick="ManageTags.assignTagFormSubmit()">Assign</button>
         </div>`;
     }
 
@@ -60,7 +60,7 @@ class Modals {
             </div>
         </form>
         <div class="align-content" id="createTagFormModalSubmit">
-            <button class="btn btn-pastel btn-lg" onClick="EditProfile.formSubmit()">Create Tag</button>
+            <button class="btn btn-pastel btn-lg" onClick="ManageTags.createTagFormSubmit()">Create Tag</button>
         </div>`;
     }
 }

@@ -17,5 +17,15 @@ class BecomeMentor {
                 "Content-Type": "application/json;charset=UTF-8"
             },
             body: JSON.stringify(formData))
+        }
+
+        // Check if the response was successful
+        if (response.status === 200) {
+            // Display a success alert
+            document.getElementById("formAlerts").innerHTML = Alerts.successAlert("Congrats, You have signed up to be a mentor!");
+        }
+        else {
+            document.getElementById("formAlerts").innerHTML = Alerts.warningAlert(await response.text(), "We are unable to carry out the is request now. Try again later!");
+        }
     }
 }

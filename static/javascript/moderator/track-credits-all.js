@@ -49,7 +49,15 @@ class CreditTracking {
                     console.log(response);
 
                     for (let i = 0; i < response.length; i++) {
-                        document.getElementById("displayTransactionsDiv").innerHTML += `<p value="${response[i]}" class="temporary"> Transaction ${i+1} ${response[i]} </p>`;
+                        console.log(i)
+                        if (i === 0) {
+                            document.getElementById("displayTransactionsDiv").innerHTML +=
+                                `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Reciever Id: ${response[i][1]} Was Transfered: ${response[i][3]}</p>`;
+                        }
+                        else {
+                            document.getElementById("displayTransactionsDiv").innerHTML +=
+                                `<p value="${response[i]}" class="temporary"> Transaction ${i+1}: Transaction Id: ${response[i][0]} Sender Id:${response[i][1]} Reciever Id: ${response[i][3]} Was Transfered: ${response[i][5]}</p>`;
+                        }
                         document.getElementById("creditTotalUses").innerHTML = i+1;
                     }
                 }

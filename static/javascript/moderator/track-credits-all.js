@@ -105,9 +105,9 @@ class CreditTracking {
                     for (let i = 0; i < response.length; i++) {
                         // console.log(i)
 
-                        const receiver = CreditTracking.getReceiverName(response[i][4], response[i][5])
+                        const receiver = await CreditTracking.getReceiverName(response[i][4], response[i][5])
                         console.log(receiver)
-                        const sender = CreditTracking.getSenderName(response[i][2], response[i][3])
+                        const sender = await CreditTracking.getSenderName(response[i][2], response[i][3])
                         console.log(sender)
 
                         if (i === 0) {

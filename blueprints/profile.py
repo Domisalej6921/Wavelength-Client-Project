@@ -53,7 +53,7 @@ def profileDetails():
 
         # Check if the account is the same as the one requesting the data
         isMyAccount = False
-        if account[0] != session["UserID"]:
+        if account[0] == int(session["UserID"]):
             isMyAccount = True
 
         # Create a JSON object to return
@@ -85,7 +85,7 @@ def profileDetails():
             # Check if the profile picture exists
             if picture is not None:
                 returnData[image] = {
-                    "path": "/static/uploads/" + picture[1] + picture[2],
+                    "path": "/static/uploads/" + picture[1] + "." + picture[2],
                     "description": picture[3]
                 }
 

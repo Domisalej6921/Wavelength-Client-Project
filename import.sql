@@ -13,6 +13,7 @@ CREATE TABLE Users (
     Email text,
     Password text,
     Salt text,
+    Description text,
     isMentor integer,
     awaitingApproval integer,
     ProfilePictureID text REFERENCES Files(FileID),
@@ -62,6 +63,7 @@ CREATE TABLE Entities (
     Created integer
 );
 
+
 CREATE TABLE EntityMembers (
     EntityID integer NOT NULL REFERENCES Entities(EntityID),
     UserID integer NOT NULL REFERENCES Users(UserID),
@@ -73,15 +75,17 @@ CREATE TABLE EntityMembers (
 CREATE TABLE Tokens (
     TokenID text NOT NULL PRIMARY KEY,
     OwnerID integer REFERENCES Entities(EntityID),
-    OwnerType integer,
+    isEntity integer,
     Created integer
 );
 
 CREATE TABLE Transactions (
     TransactionID integer NOT NULL PRIMARY KEY AUTOINCREMENT,
     TokenID text REFERENCES Tokens(TokenID),
-    SenderID integer REFERENCES Entities(EntityID),
-    ReceiverID integer REFERENCES Entities(EntityID),
+    SenderID integer,
+    isSenderEntity integer,
+    ReceiverID integer,
+    isReceiverEntity integer,
     isDonation integer,
     Created integer
 );
@@ -93,7 +97,7 @@ CREATE TABLE Sessions (
     isComplete integer,
     Notes text,
     Created integer
-);
+);.p
 
 CREATE TABLE Reviews (
     ReviewID integer NOT NULL PRIMARY KEY AUTOINCREMENT,

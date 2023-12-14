@@ -1,3 +1,4 @@
+from typing import Union
 from data.dataHelper import DataHelper
 
 class AccountRepository:
@@ -16,6 +17,14 @@ class AccountRepository:
     def getWithUsername(self, username: str):
         """Gets an account with a username."""
         return self.db.selectFirstWithParams("SELECT * FROM Users WHERE Username = ?", (username,))
+
+    def getMentorWithLimit(self, limit: int) -> Union[list[tuple], None]:
+        """Gets x number of accounts that are mentors"""
+        # Used Stackoverflow to help with Orderby
+        # Source: https://stackoverflow.com/questions/2051162/sql-multiple-column-ordering
+        return self.db.selectWithParams(
+            "SELECT * FROM Users WHERE isMentor=1 AND awaitingApproval=0 ORDER BY Created ASC, LastLogin DESC LIMIT ?",
+            (limit,))
 
     def putEditForm(self, data: dict):
         """Updates a user's username, profile picture and background."""
@@ -45,3 +54,21 @@ class AccountRepository:
             (?, ?, ?, ?, ?, ?, ?, ?)""",
             (data["name"], data["username"], data["email"], data["password"], data["salt"], data["isMentor"], data["awaitingApproval"], data["created"])
         )
+
+    def getReviewPageData(self):
+        return self.db.select(
+            """SELECT * FROM Users Where awaitingApproval = 1"""
+        )
+
+    def DecisionAccept(self, CurrentAccount: int,):
+        """Updates isApproved if the request has been accepted"""
+        self.db.execute("UPDATE Users SET awaitingApproval = 0 WHERE UserID = ?", (CurrentAccount, ))
+
+    def DecisionDecline(self, CurrentAccount: int,):
+        """Deletes community if the request has been declined"""
+        self.db.execute("DELETE FROM Users WHERE UserID = ?", (CurrentAccount, ))
+
+
+    def getUsernameViaID(self, userID: int):
+        """Gets an accounts username with the user's ID."""
+        return self.db.selectFirstWithParams("SELECT Username FROM Users WHERE UserID = ?", (userID,))

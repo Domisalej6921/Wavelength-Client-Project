@@ -37,6 +37,18 @@ app.register_blueprint(register)
 from blueprints.login import login
 app.register_blueprint(login)
 
+# Import credit generation blueprint
+from blueprints.creditGeneration import creditGeneration
+app.register_blueprint(creditGeneration)
+
+# Import credit deletion blueprint
+from blueprints.creditDeletion import creditDeletion
+app.register_blueprint(creditDeletion)
+
+# Add community Blueprint
+from blueprints.community import community
+app.register_blueprint(community)
+
 # Import profile blueprint
 from blueprints.profile import profile
 app.register_blueprint(profile)
@@ -44,6 +56,18 @@ app.register_blueprint(profile)
 # Import tags blueprint
 from blueprints.tags import tags
 app.register_blueprint(tags)
+
+#Import mentorDonation blueprint
+from blueprints.tokenDonation import mentorDonation
+app.register_blueprint(mentorDonation)
+
+# Import transaction tracking blueprint
+from blueprints.creditTracking import creditTracking
+app.register_blueprint(creditTracking)
+
+# Import mentors blueprint
+from blueprints.mentors import mentors
+app.register_blueprint(mentors)
 
 if __name__ == '__main__':
     app.run(debug=True)

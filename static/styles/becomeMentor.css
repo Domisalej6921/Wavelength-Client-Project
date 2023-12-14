@@ -1,0 +1,43 @@
+.welcome-message {
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    border-bottom: solid;
+    padding-bottom: 5%;
+}
+
+.form-container {
+    text-align: center;
+}
+
+.form-floating {
+    margin: 20px;
+}
+
+.instructions {
+    margin: 40px;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: center;
+    margin: 5%;
+}
+
+.btn-primary {
+    background-color: #b4a7d5;
+    border: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.btn-primary:hover {
+    background-color: #b4a7d5;
+    opacity: 0.8;
+    cursor: pointer;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.225);
+    transition: 0.5s;
+    border: none;
+}

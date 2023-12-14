@@ -2,7 +2,7 @@ from typing import Union
 from data.dataHelper import DataHelper
 
 class AssignedTagsRepository:
-    def init(self):
+    def __init__(self):
         # Inherit the DataHelper class
         self.db = DataHelper()
 

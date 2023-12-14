@@ -48,11 +48,11 @@ class Profile {
             // Load the profile into the page
             document.getElementById('root').innerHTML += `
             <div class="d-flex flex-wrap bg-light">
-                <div class="d-flex flex-wrap" style="max-height: 20vh; max-width: 20%">
-                    <img src="${data.profilePicture.path}" class="img-fluid" style="width: 100%; height: 20vh" alt="${data.profilePicture.description}" />
+                <div class="d-flex flex-wrap" style="max-height: 30vh; max-width: 20%">
+                    <img src="${data.profilePicture.path}" class="img-fluid" style="width: 100%; height: 30vh" alt="${data.profilePicture.description}" />
                 </div>
-                <div class="d-flex flex-wrap" style="width: 80%; max-height: 20vh;">
-                    <img src="${data.profileBanner.path}" class="img-fluid w-100" style="height: 20vh" alt="${data.profileBanner.description}" />
+                <div class="d-flex flex-wrap" style="width: 80%; max-height: 30vh;">
+                    <img src="${data.profileBanner.path}" class="img-fluid w-100" style="height: 30vh" alt="${data.profileBanner.description}" />
                 </div>
             </div>
             `;
@@ -78,9 +78,16 @@ class Profile {
             document.getElementById('root').innerHTML += `
             <div class="profile-container align-content" id="profileContent">
                 <h1 class="display-4">#${data.username}</h1>
+                <div id="profileTags"></div>
+                <br>
                 <p class="h6">${data.description}</p>
             </div>
             `;
+
+            // Load the tags into the page
+            for (let i = 0; i < data.tags.length; i++) {
+                document.getElementById('profileTags').innerHTML += Tags.render(data.tags[i].name, data.tags[i].colour);
+            }
 
             // Load a button for a user to enquire about the profile being their mentor
             if (!data.isMyAccount && data.isMentor && data.awaitingApproval) {

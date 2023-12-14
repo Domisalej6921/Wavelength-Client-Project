@@ -60,6 +60,7 @@ def profileDetails():
         returnData = {
             "userID": account[0],
             "username": account[2],
+            "description": account[12],
             "tags": [],
             "isMentor": bool(account[6]),
             "awaitingApproval": bool(account[7]),
@@ -111,11 +112,11 @@ def profileEditApi():
             return "No JSON payload was uploaded with the request!", 400
 
         # Check if there is at least one valid field in the JSON payload
-        if "username" not in data or "profilePicture" not in data or "profileBanner" not in data:
+        if "username" not in data or "description" not in data or "profilePicture" not in data or "profileBanner" not in data:
             return "The JSON payload is missing required fields!", 400
 
         # Check the types of the fields, if they exist
-        for item in [('username', str), ('profilePicture', str), ('profileBanner', str)]:
+        for item in [('username', str), ('description', str), ('profilePicture', str), ('profileBanner', str)]:
             if item[0] in data:
                 if not (type(data[item[0]]) == item[1] or data[item[0]] is None):
                     return "The JSON payload has invalid types!", 400
@@ -125,6 +126,7 @@ def profileEditApi():
         accountData = {
             "UserID": userID,
             "Username": account[2],
+            "Description": account[12],
             "ProfilePictureID": account[8],
             "BackgroundID": account[9]
         }
@@ -139,6 +141,14 @@ def profileEditApi():
                 return "The username is already taken!", 406
             # Otherwise override the username in the dictionary
             accountData["Username"] = data["username"]
+
+        # Check if the description is being changed
+        if data["description"] is not None:
+            # Check if the description is valid
+            if len(data["description"]) >= 2000:
+                return "The description is too long! It must be less than or equal to 2000 characters.", 406
+            # Otherwise override the description in the dictionary
+            accountData["Description"] = data["description"]
 
         # Check if the profile picture is being changed
         # imageFields = list of tuples: (JSON payload field name, database field name, max size in MB)

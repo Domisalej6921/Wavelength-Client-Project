@@ -116,7 +116,7 @@ def tagsAdd():
             return "The JSON payload is missing required fields!", 400
 
         # Check if the JSON has the correct field types
-        if type(data["search"]) is not str or type(data["colour"]) is not str:
+        if type(data["name"]) is not str or type(data["colour"]) is not str:
             return "The JSON payload has incorrect field types!", 400
 
         # Insert the tag into the database

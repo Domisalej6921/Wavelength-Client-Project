@@ -31,12 +31,14 @@ class EditProfile {
 
         let data = {
             username: null,
+            description: null,
             profilePicture: null,
             profileBanner: null
         };
 
         // Get the form data
         data.username = document.getElementById("editProfileFormModalUsername").value;
+        data.description = document.getElementById("editProfileFormModalDescription").value;
         try {
             data.profilePicture = await FileUploads.format(document.getElementById("editProfileFormModalProfilePicture").files[0]);
         } catch {
@@ -68,7 +70,7 @@ class EditProfile {
         }
 
         // Check if anything is being uploaded
-        if (data.username === null && data.profilePicture === null && data.profileBanner === null) {
+        if (data.username === null && data.description === null && data.profilePicture === null && data.profileBanner === null) {
             issue = "You must change at least one field.";
         }
 

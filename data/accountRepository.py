@@ -20,8 +20,8 @@ class AccountRepository:
     def putEditForm(self, data: dict):
         """Updates a user's username, profile picture and background."""
         self.db.execute(
-            "UPDATE Users SET Username = ?, ProfilePictureID = ?, BackgroundID = ? WHERE UserID = ?",
-            (data["Username"], data["ProfilePictureID"], data["BackgroundID"], data["UserID"])
+            "UPDATE Users SET Username = ?, Description = ?, ProfilePictureID = ?, BackgroundID = ? WHERE UserID = ?",
+            (data["Username"], data["Description"], data["ProfilePictureID"], data["BackgroundID"], data["UserID"])
         )
 
     def putNewLogin(self, userID: int, timestamp: int):

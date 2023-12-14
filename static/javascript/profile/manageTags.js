@@ -64,8 +64,8 @@ class ManageTags {
                 return
             }
 
-            // Add the default option to the select element
-            document.getElementById("editTagsFormModalSelect").innerHTML = `<option selected>Select a Tag</option>`;
+            // Clear the select element
+            document.getElementById("editTagsFormModalSelect").innerHTML = "";
 
             // Loop through the tags and add them to the select element
             for (let i = 0; i < data.length; i++) {
@@ -86,11 +86,14 @@ class ManageTags {
         // Set the form button to a loading state
         document.getElementById("createTagFormModalSubmit").innerHTML = Buttons.getPastelButtonLoading('Creating...', 'lg');
 
+        // Create data variable
+        let data = {};
+
         // Get the form data
         try {
-            const data = {
+            data = {
                 name: document.getElementById("createTagFormModalName").value,
-                colour: document.getElementById("createTagFormModalDescription").value,
+                colour: document.getElementById("createTagFormModalColour").value,
             }
         }
         catch {
@@ -126,7 +129,8 @@ class ManageTags {
         // If the server returns a 200 status code (OK)
         if (response.ok) {
             // Reset the form and display a success alert
-            document.getElementById("createTagFormModal").reset();
+            document.getElementById("editTagsModalForm").innerHTML = Modals.editTags();
+            manageTags.searchTags();
             document.getElementById("createTagFormModalAlerts").innerHTML = Alerts.successAlert('Tag created successfully.', 'Success!');
         }
         // If the response is due to an unauthorised request, redirect to the login page
@@ -144,12 +148,15 @@ class ManageTags {
 
     static async assignTagFormSubmit() {
         // Set the form button to a loading state
-        document.getElementById("editTagsFormModalSubmit").innerHTML = Buttons.getPastelButtonLoading('Assigning...', 'lg');
+        document.getElementById("editTagsModalFormSubmit").innerHTML = Buttons.getPastelButtonLoading('Assigning...', 'lg');
+
+        // Create data variable
+        let data = {};
 
         // Get the form data
         try {
-            const data = {
-                tagID: document.getElementById("editTagsFormModalSelect").value,
+            data = {
+                tagID: parseInt(document.getElementById("editTagsFormModalSelect").value, 10),
             }
         }
         catch {
@@ -157,14 +164,14 @@ class ManageTags {
             document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.errorAlert('Failed to assign tag. Please try again later...', 'System Error!');
 
             // Reset the button to a default state
-            document.getElementById("editTagsFormModalSubmit").innerHTML = Buttons.getPastelButton('Assign Tag', 'ManageTags.assignTagFormSubmit()', 'lg');
+            document.getElementById("editTagsModalFormSubmit").innerHTML = Buttons.getPastelButton('Assign Tag', 'ManageTags.assignTagFormSubmit()', 'lg');
 
             return;
         }
 
         // Send the form data to the server using the fetch API
         const response = await fetch('/api/tags-assign', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -174,12 +181,12 @@ class ManageTags {
         // If the server returns a 200 status code (OK)
         if (response.ok) {
             // Reset the form and display a success alert
-            document.getElementById("editTagsFormModal").reset();
+            document.getElementById("editTagsModalForm").reset();
             document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.successAlert('Tag assigned successfully.', 'Success!');
         }
         // If the response is due to a not acceptable request, display an error alert
         else if (response.status === 406) {
-            document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.warningAlert(await response.text, 'Invalid Input!');
+            document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.warningAlert(await response.text(), 'Invalid Input!');
         }
         // If the response is due to an unauthorised request, redirect to the login page
         else if (response.status === 401) {
@@ -191,6 +198,6 @@ class ManageTags {
         }
 
         // Reset the button to a default state
-        document.getElementById("editTagsFormModalSubmit").innerHTML = Buttons.getPastelButton('Assign Tag', 'ManageTags.assignTagFormSubmit()', 'lg');
+        document.getElementById("editTagsModalFormSubmit").innerHTML = Buttons.getPastelButton('Assign Tag', 'ManageTags.assignTagFormSubmit()', 'lg');
     }
 }

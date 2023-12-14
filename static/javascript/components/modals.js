@@ -16,6 +16,10 @@ class Modals {
                 <input type="text" class="form-control" id="editProfileFormModalUsername" placeholder="Username">
                 <label class="text" >Username</label>
             </div>
+            <div class="form-floating mb-3">
+                  <textarea type="text" class="form-control" id="editProfileFormModalDescription"></textarea>
+                  <label for="editProfileFormModalDescription">Description</label>
+               </div>
             <div class="mb-3">
                 <label for="editProfileFormModalProfilePicture" class="FormText">Profile Picture</label>
                 <input type="file" class="form-control" id="editProfileFormModalProfilePicture">
@@ -30,7 +34,19 @@ class Modals {
         </div>`
     }
 
+    static clearTagSubmit() {
+        try {
+            document.getElementById("editTagsModalFormSubmit").remove();
+        }
+        catch {}
+        try {
+            document.getElementById("createTagFormModalSubmit").remove();
+        }
+        catch {}
+    }
+
     static editTags() {
+        Modals.clearTagSubmit()
         return `<div id="editTagsFormModalAlerts"></div>
         <form class="form-floating" id="editTagsModalForm">
             <div class="form-floating mb-3">
@@ -38,9 +54,9 @@ class Modals {
                 <label class="text" >Tag Name</label>
             </div>
             <div class="form-floating mb-3">
-                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="editTagsFormModalSelect">
-                    <option selected>Select a Tag</option>
+                <select class="form-select mb-3" aria-label=".form-select example" id="editTagsFormModalSelect">
                 </select>
+                <label for="editTagsFormModalSelect">Choose a Tag</label>
             </div>
         </form>
         <div class="align-content" id="editTagsModalFormSubmit">
@@ -49,10 +65,11 @@ class Modals {
     }
 
     static createTag() {
+        Modals.clearTagSubmit()
         return `<div id="createTagFormModalAlerts"></div>
         <form class="form-floating" id="createTagModalForm">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="createTagFormModalUsername" placeholder="Name">
+                <input type="text" class="form-control" id="createTagFormModalName" placeholder="Name">
                 <label class="text" >Tag Name</label>
             </div>
             <div class="form-floating mb-3">

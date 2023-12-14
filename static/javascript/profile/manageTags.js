@@ -132,6 +132,12 @@ class ManageTags {
             document.getElementById("editTagsModalForm").innerHTML = Modals.editTags();
             manageTags.searchTags();
             document.getElementById("createTagFormModalAlerts").innerHTML = Alerts.successAlert('Tag created successfully.', 'Success!');
+
+            // Close the modal
+            $('#editTagsFormModal').modal('hide');
+
+            // Reload profile content
+            await Profile.renderPage(false);
         }
         // If the response is due to an unauthorised request, redirect to the login page
         else if (response.status === 401) {
@@ -183,6 +189,12 @@ class ManageTags {
             // Reset the form and display a success alert
             document.getElementById("editTagsModalForm").reset();
             document.getElementById("editTagsFormModalAlerts").innerHTML = Alerts.successAlert('Tag assigned successfully.', 'Success!');
+
+            // Close the modal
+            $('#editTagsFormModal').modal('hide');
+
+            // Reload profile content
+            await Profile.renderPage(false);
         }
         // If the response is due to a not acceptable request, display an error alert
         else if (response.status === 406) {

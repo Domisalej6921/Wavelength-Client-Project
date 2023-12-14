@@ -1,5 +1,5 @@
 class Profile {
-    static async renderPage() {
+    static async renderPage(modal = true) {
         // Get the requested user ID from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const userID = parseInt(urlParams.get('id'));
@@ -22,7 +22,6 @@ class Profile {
             document.getElementById('root').innerHTML = `
                 <div id="modals"></div>
             `;
-
             // Load the modals into the page
             EditProfile.renderEditForm();
             ManageTags.renderEditForm();

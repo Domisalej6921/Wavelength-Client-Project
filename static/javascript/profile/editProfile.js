@@ -101,6 +101,12 @@ class EditProfile {
                 "Your profile has been updated.",
                 "Success!"
             );
+
+            // Close the modal
+            $("#editProfileFormModal").modal("hide");
+
+            // Reload profile content
+            await Profile.renderPage(false);
         } else {
             // If the response was not successful, display an error alert
             if (response.status === 403 || response.status === 406) {

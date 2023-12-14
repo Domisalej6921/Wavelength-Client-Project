@@ -67,8 +67,9 @@ class HeaderModel:
                                 Log Out
                             </a>
                         </li>
-                        <hr>
-                        <p>For Mentors Only</p>
+                        <li>
+                            <p>For Mentors Only</p>
+                        </li>
                         <li>
                             <a class="menu-links" href="/community/approved/donate">
                                 Donate Credits
@@ -79,8 +80,9 @@ class HeaderModel:
                                 Create A New Community
                             </a>
                         </li>
-                        <hr>
-                        <p>For Moderators Only</p>
+                        <li>
+                            <p>For Moderators Only</p>
+                        </li>
                         <li>
                             <a class="menu-links" href="/credit-generation">
                                 Generate New Credits

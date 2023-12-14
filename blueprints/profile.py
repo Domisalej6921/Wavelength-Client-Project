@@ -61,8 +61,8 @@ def profileDetails():
             "userID": account[0],
             "username": account[2],
             "tags": [],
-            "isMentor": account[6],
-            "awaitingApproval": account[7],
+            "isMentor": bool(account[6]),
+            "awaitingApproval": bool(account[7]),
             "profilePicture": None,
             "profileBanner": None,
             "isMyAccount": isMyAccount

@@ -48,11 +48,11 @@ class Profile {
             // Load the profile into the page
             document.getElementById('root').innerHTML += `
             <div class="d-flex flex-wrap bg-light">
-                <div class="d-flex flex-wrap" style="max-height: 15vh; max-width: 20%">
-                    <img src="${data.profilePicture.path}" class="img-fluid" style="width: 100%; max-height: 15vh" alt="${data.profilePicture.description}" />
+                <div class="d-flex flex-wrap" style="max-height: 20vh; max-width: 20%">
+                    <img src="${data.profilePicture.path}" class="img-fluid" style="width: 100%; height: 20vh" alt="${data.profilePicture.description}" />
                 </div>
-                <div class="d-flex flex-wrap" style="max-height: 15vh; max-width: 80%">
-                    <img src="${data.profileBanner.path}" class="img-fluid" style="width: 100%; max-height: 15vh" alt="${data.profileBanner.description}" />
+                <div class="d-flex flex-wrap" style="width: 80%; max-height: 20vh;">
+                    <img src="${data.profileBanner.path}" class="img-fluid w-100" style="height: 20vh" alt="${data.profileBanner.description}" />
                 </div>
             </div>
             `;
@@ -76,24 +76,26 @@ class Profile {
 
             // Load the profile into the page
             document.getElementById('root').innerHTML += `
-            <div class="profile-container align-content">
+            <div class="profile-container align-content" id="profileContent">
                 <h1 class="display-4">#${data.username}</h1>
                 <p class="h6">${data.description}</p>
             </div>
             `;
 
             // Load a button for a user to enquire about the profile being their mentor
-            if (!data.isMyAccount && data.isMentor) {
-                document.getElementById('root').innerHTML += `
-                <div class="profile-container align-content">
-                    <button class="btn btn-pastel" disabled>Enquire Mentorship</button>
-                </div>
+            if (!data.isMyAccount && data.isMentor && data.awaitingApproval) {
+                document.getElementById('profileContent').innerHTML += `
+                <button class="btn btn-pastel" disabled>Enquire Mentorship</button>
                 `;
             }
         }
         // If the response is due to a not found error, display an error alert
         else if (response.status === 404) {
-            document.getElementById('root').innerHTML = Alerts.warningAlert('The requested user does not exist..', 'Not Found!');
+            document.getElementById('root').innerHTML = `
+            <div class="profile-container align-content" id="profileContent">
+                ${Alerts.errorAlert('Profile not found. Please try again later...', 'Profile Not Found!')}
+            </div>
+            `;
         }
         // If the response is due to an unauthorized request, redirect to the login page
         else if (response.status === 401) {

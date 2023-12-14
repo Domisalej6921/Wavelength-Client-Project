@@ -36,14 +36,15 @@ def tagsSearch():
         # Loop through the tags
         for tag in tags:
             # Create a JSON object for the tag
-            tagData = {
-                "tagID": tag[0],
-                "name": tag[1],
-                "colour": tag[2]
-            }
+            if tag[0] is not None:
+                tagData = {
+                    "tagID": tag[0],
+                    "name": tag[1],
+                    "colour": tag[2]
+                }
 
-            # Add the tag to the return data
-            returnData.append(tagData)
+                # Add the tag to the return data
+                returnData.append(tagData)
 
         # Return the JSON object
         return json.dumps(returnData), 200

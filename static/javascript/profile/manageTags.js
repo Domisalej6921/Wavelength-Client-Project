@@ -40,7 +40,7 @@ class ManageTags {
         }
 
         // Send the form data to the server using the fetch API
-        const response = await fetch('/api/tags/search', {
+        const response = await fetch('/api/tags-search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -65,11 +65,11 @@ class ManageTags {
             }
 
             // Add the default option to the select element
-            document.getElementById("editTagsFormModalTags").innerHTML = `<option selected>Select a Tag</option>`;
+            document.getElementById("editTagsFormModalSelect").innerHTML = `<option selected>Select a Tag</option>`;
 
             // Loop through the tags and add them to the select element
             for (let i = 0; i < data.length; i++) {
-                document.getElementById("editTagsFormModalTags").innerHTML += `<option value="${data[i].tagID}">${data[i].name}</option>`;
+                document.getElementById("editTagsFormModalSelect").innerHTML += `<option value="${data[i].tagID}">${data[i].name}</option>`;
             }
         }
         // If the response is due to an unauthorised request, redirect to the login page

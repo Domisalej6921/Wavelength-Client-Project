@@ -33,11 +33,12 @@ class Modals {
     static editTags() {
         return `<div id="editTagsFormModalAlerts"></div>
         <form class="form-floating" id="editTagsModalForm">
-            <div class="mb-3">
-                <p class="h6"><b>Note: </b>Fields you do not wish to edit should be left empty.</p>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="editTagsFormModalSearch" placeholder="Tag" onchange="ManageTags.searchTags()">
+                <label class="text" >Tag Name</label>
             </div>
             <div class="form-floating mb-3">
-                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="editTagsFormModalSelect" onchange="ManageTags.searchTags()">
+                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="editTagsFormModalSelect">
                     <option selected>Select a Tag</option>
                 </select>
             </div>

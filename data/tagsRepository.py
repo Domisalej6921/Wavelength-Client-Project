@@ -28,7 +28,7 @@ class TagsRepository:
     def getWithSearch(self, search: str) -> Union[list[tuple], None]:
         """Gets all tags from the database with a search and order it by the amount of users assigned to it."""
         return self.db.selectWithParams(
-            """SELECT T.TagID, T.Name, T.Colour, T.Created
+            """SELECT T.TagID, T.Name, T.Colour, T.Created, COUNT(AT.TagID)
             FROM Tags T
             INNER JOIN AssignedTags AT on T.TagID = AT.TagID
             WHERE Name LIKE ? ORDER BY COUNT(AT.TagID) DESC""",

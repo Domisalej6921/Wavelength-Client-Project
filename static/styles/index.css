@@ -52,6 +52,20 @@ https://codepen.io/sosuke/pen/Pjoqqp*/
     filter: invert(77%) sepia(28%) saturate(368%) hue-rotate(170deg) brightness(94%) contrast(93%);
 }
 
+.profile-container {
+    background-color: #f1f1f1;
+    padding: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
+    border-radius: 10px;
+}
+
+.profile-divider {
+    border-top: 1px solid #dee2e6;
+}
+
 .left{
     align-content: flex-start;
 }

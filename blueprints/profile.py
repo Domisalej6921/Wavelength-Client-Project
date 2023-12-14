@@ -1,4 +1,5 @@
 from flask import Flask, Blueprint, render_template, request, redirect, session
+import json
 from datetime import datetime
 import os
 import json
@@ -6,6 +7,8 @@ from logic.uploads import Uploads
 from models.footerModel import FooterModel
 from models.headerModel import HeaderModel
 from data.accountRepository import AccountRepository
+from data.filesRepository import FilesRepository
+from data.tagsRepository import TagsRepository
 from logic.uploads import Uploads
 from data.sitePermissionsRepository import SitePermissionsRepository
 from logic.email import Email
@@ -18,6 +21,83 @@ def profilePage():
         return render_template("profile.html", footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
     else:
         return redirect("/login")
+
+@profile.route('/api/profile', methods=['POST'])
+def profileDetails():
+    if 'UserID' in session:
+        # Get the JSON payload from the request and inherit classes
+        data = request.get_json()
+
+        accountRepository = AccountRepository()
+        filesRepository = FilesRepository()
+        tagsRepository = TagsRepository()
+
+        # Check if the JSON exists
+        if data is None:
+            return "No JSON payload was uploaded with the request!", 400
+
+        # Check if the JSON has the required fields
+        if "userID" not in data:
+            return "The JSON payload is missing required fields!", 400
+
+        # Check if the JSON has the correct field types
+        if type(data["userID"]) is not int:
+            return "The JSON payload has incorrect field types!", 400
+
+        # If the ID is 0 then use the session ID
+        if data["userID"] == 0:
+            data["userID"] = int(session["UserID"])
+
+        # Get the account data from the database
+        account = accountRepository.getWithID(data["userID"])
+
+        # Check if the account exists
+        if account is None:
+            return "This account does not exist!", 404
+
+        # Check if the account is the same as the one requesting the data
+        isMyAccount = False
+        if account[0] == int(session["UserID"]):
+            isMyAccount = True
+
+        # Create a JSON object to return
+        returnData = {
+            "userID": account[0],
+            "username": account[2],
+            "description": account[12],
+            "tags": [],
+            "isMentor": bool(account[6]),
+            "awaitingApproval": bool(account[7]),
+            "profilePicture": None,
+            "profileBanner": None,
+            "isMyAccount": isMyAccount
+        }
+
+        # Get the tags from the database, then loop through and format them
+        tags = tagsRepository.getWithUserID(account[0])
+        for tag in tags:
+            returnData["tags"].append({
+                "tagID": tag[0],
+                "name": tag[1],
+                "colour": tag[2]
+            })
+
+        # Get the profile picture and profile banner from the database
+        imageFields = [("profilePicture", 8), ("profileBanner", 9)]
+        for image, i in imageFields:
+            picture = filesRepository.getWithID(account[i])
+
+            # Check if the profile picture exists
+            if picture is not None:
+                returnData[image] = {
+                    "path": "/static/uploads/" + picture[1] + "." + picture[2],
+                    "description": picture[3]
+                }
+
+        # Return the JSON object
+        return json.dumps(returnData), 200
+    else:
+        return "You need to be authenticated to preform this task.", 401
 
 @profile.route('/api/profile-edit', methods=['POST'])
 def profileEditApi():
@@ -36,11 +116,11 @@ def profileEditApi():
             return "No JSON payload was uploaded with the request!", 400
 
         # Check if there is at least one valid field in the JSON payload
-        if "username" not in data or "profilePicture" not in data or "profileBanner" not in data:
+        if "username" not in data or "description" not in data or "profilePicture" not in data or "profileBanner" not in data:
             return "The JSON payload is missing required fields!", 400
 
         # Check the types of the fields, if they exist
-        for item in [('username', str), ('profilePicture', str), ('profileBanner', str)]:
+        for item in [('username', str), ('description', str), ('profilePicture', str), ('profileBanner', str)]:
             if item[0] in data:
                 if not (type(data[item[0]]) == item[1] or data[item[0]] is None):
                     return "The JSON payload has invalid types!", 400
@@ -50,6 +130,7 @@ def profileEditApi():
         accountData = {
             "UserID": userID,
             "Username": account[2],
+            "Description": account[12],
             "ProfilePictureID": account[8],
             "BackgroundID": account[9]
         }
@@ -64,6 +145,14 @@ def profileEditApi():
                 return "The username is already taken!", 406
             # Otherwise override the username in the dictionary
             accountData["Username"] = data["username"]
+
+        # Check if the description is being changed
+        if data["description"] is not None:
+            # Check if the description is valid
+            if len(data["description"]) >= 2000:
+                return "The description is too long! It must be less than or equal to 2000 characters.", 406
+            # Otherwise override the description in the dictionary
+            accountData["Description"] = data["description"]
 
         # Check if the profile picture is being changed
         # imageFields = list of tuples: (JSON payload field name, database field name, max size in MB)

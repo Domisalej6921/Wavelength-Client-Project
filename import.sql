@@ -19,7 +19,8 @@ CREATE TABLE Users (
     ProfilePictureID text REFERENCES Files(FileID),
     BackgroundID text REFERENCES Files(FileID),
     LastLogin integer,
-    Created integer
+    Created integer,
+    Description text
   );
 
 CREATE TABLE Tags (

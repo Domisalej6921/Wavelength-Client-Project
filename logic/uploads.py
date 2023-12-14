@@ -72,7 +72,6 @@ class Uploads:
 
         # Get the image data from the database
         image = filesRepository.getWithID(imageID)
-
         try:
             # Delete the image from the uploads directory
             os.remove("static/uploads/" + imageID + "." + image[2])

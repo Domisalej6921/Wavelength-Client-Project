@@ -1,5 +1,7 @@
 from data.dataHelper import DataHelper
+
 from typing import Union
+
 class EntitiesRepository:
 
     def __init__(self):

@@ -25,19 +25,19 @@
 
         <p class="instructions">Fill in the form below and click submit to alter your account to be a mentor. Don't worry though, you can still take part in being a mentee.</p>
 
-        <form class="form-floating" id="mentorApplicationForm">
+        <form action="{{ url_for('mentors.become_mentor') }}" class="form-floating" id="mentorApplicationForm" method="post">
             <div class="form-floating mb-3">
-              <textarea type="text" class="form-control" id="description" placeholder="Description of your skill set" required></textarea>
+              <input type="text" class="form-control" id="username" placeholder="Username" name="Username" required>
+              <label for="username">Provide your Username</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea type="text" class="form-control" id="description" placeholder="Description of your skill set" name="desc" required></textarea>
               <label for="description">Description of your skill set</label>
             </div>
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="LinkedInLink" placeholder="LinkedIn" required>
-              <label for="LinkedInLink">Provide the hyperlink for your LinkedIn</label>
+            <div class="submit-button" id="applicationSubmit">
+                <button class="btn btn-primary" onclick="BecomeMentor.submitMentorshipForm()">Submit</button>
             </div>
         </form>
-        <div class="submitButton" id="applicationSubmit">
-            <button class="btn btn-primary" onclick="submitBecomeMentor()">Submit</button>
-        </div>
     </div>
 
     {{ footer | safe }}

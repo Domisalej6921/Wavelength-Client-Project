@@ -15,4 +15,24 @@ class Mentors {
             </div>
         `;
     }
+    static renderMentor(data) {
+        return `
+            <div id="mentor#${data.userID}" class="page-contents" style="width: 18rem;">
+                <div class="mentor-heading">
+                    <h1>${data.name}</h1>
+                </div>
+                <div class="tags-container">
+                    <p>Tags go here...........</p>
+                </div>
+                <div class="mentor-page-text">
+                    <div class="mentor-image">
+                        <img src="/static/uploads/${data.profilePicture.path}" alt="${data.profilePicture.alt}">
+                    </div>
+                    <div class="mentor-desc">
+                        <p>${data.description}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 }

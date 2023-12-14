@@ -72,3 +72,10 @@ class AccountRepository:
     def getUsernameViaID(self, userID: int):
         """Gets an accounts username with the user's ID."""
         return self.db.selectFirstWithParams("SELECT Username FROM Users WHERE UserID = ?", (userID,))
+
+    def updateMentee(self, username, desc):
+        """Updates a user's mentee account to become a mentor"""
+        self.db.execute(
+            "UPDATE Users SET isMentor = 1, awaitingApproval = 0, Description = ? WHERE Username = ?",
+            (desc, username)
+        )

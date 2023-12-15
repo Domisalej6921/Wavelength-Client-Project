@@ -1,6 +1,8 @@
-from flask import Flask, Blueprint, render_template, request, jsonify
+from flask import Flask, Blueprint, render_template, request, jsonify, session
 import datetime
 
+from models.footerModel import FooterModel
+from models.headerModel import HeaderModel
 from data.entitiesRepository import EntitiesRepository
 from data.tokensRepository import TokensRepository
 from data.transactionsRepository import TransactionsRepository
@@ -10,7 +12,7 @@ creditGeneration = Blueprint("creditGeneration", __name__)
 
 @creditGeneration.route("/credit-generation")
 def creditGenerationPage():
-    return render_template("credits/credit-generation.html")
+    return render_template("credits/credit-generation.html", footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
 
 def getTime():
     return int(datetime.datetime.now().timestamp())

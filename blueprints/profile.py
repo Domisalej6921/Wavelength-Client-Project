@@ -127,10 +127,11 @@ def profileEditApi():
 
         # Get the account data from the database and map it to the dictionary for updating
         account = accountRepository.getWithID(userID)
+        print(account)
         accountData = {
             "UserID": userID,
             "Username": account[2],
-            "Description": account[12],
+            "Description": account[6],
             "ProfilePictureID": account[8],
             "BackgroundID": account[9]
         }

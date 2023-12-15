@@ -10,15 +10,15 @@ mentors = Blueprint('mentors', __name__)
 
 @mentors.route('/account/dashboard')
 def mainPage():
-    return render_template('mainPage.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+    return render_template('mainPage.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
 
 @mentors.route('/account/mentor_apply')
 def mentor_apply():
-    return render_template('mentorApp.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+    return render_template('mentorApp.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
 
 @mentors.route('/account/become_mentor')
 def become_mentor():
-    return render_template('becomeMentor.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+    return render_template('becomeMentor.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
 
 @mentors.route('/api/mentors', methods=['POST'])
 def mentorSearch():

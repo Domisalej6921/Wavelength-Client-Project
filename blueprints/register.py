@@ -14,7 +14,7 @@ register = Blueprint('register', __name__)
 @register.route('/register')
 def registerPage():
     if not ("UserID" in session):
-        return render_template('auth/register.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+        return render_template('auth/register.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
     else:
         return redirect("/account/dashboard")
 

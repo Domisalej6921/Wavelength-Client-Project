@@ -30,7 +30,9 @@ def mentor_Donation():
         if isMentor is not None:
             if isMentor == 1:
                 # Renders page
-                return render_template('mentorTokenDonation.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+                return render_template('mentorTokenDonation.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
+            else:
+                return "You need to be a mentor to perform this action", 401
     else:
         # Return an error message if user is not logged in
         return "You need to be authenticated to preform this task.", 401

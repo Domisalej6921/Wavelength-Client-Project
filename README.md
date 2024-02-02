@@ -26,3 +26,59 @@ For the app to work successfully, the following must be done:
 - For SMTP credentials the related fields can be left blank the server will instead:
   - Print out the email to the console.
 - **Database** must be initialised by running the dbImport.py file in the root directory.
+
+
+\`\`\`plantuml
+
+Your PlantUML goes here
+
+\`\`\`
+
+To create a Use Case, put the name of the use case in parentheses.
+
+```plantuml
+(Order Book)
+
+```
+
+Alternatively, you can use the keyword 'usecase', but the name needs to be quoted.
+
+```plantuml
+(Order Book)
+usecase "Search for book"
+
+```
+
+To add an actor, surround a phrase with colons, or use the keyword 'actor' (again quoting the name of the actor)
+
+```plantuml
+:Customer:
+actor "Delivery Driver"
+
+```
+
+To link an actor to a use case, we place an arrow between the items as " --> "
+
+```plantuml
+(Order Book)
+usecase "Search for book"
+:Customer:
+actor "Delivery Driver"
+
+Customer --> (Order Book)
+
+```
+
+To make it easier to form the links, we can put short aliases on use-cases and actors using "as"
+
+```plantuml
+(Order Book) as order
+usecase "Search for book" as search
+:Customer:
+actor "Delivery Driver" as driver
+
+Customer --> order
+
+
+```
+

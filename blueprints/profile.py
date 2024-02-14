@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, render_template, request, redirect, session
 import json
-from datetime import datetime
+import datetime
 import os
 import json
 from logic.uploads import Uploads
@@ -61,13 +61,14 @@ def profileDetails():
             isMyAccount = True
 
         # Create a JSON object to return
+        print(account)
         returnData = {
             "userID": account[0],
             "username": account[2],
-            "description": account[12],
+            "description": account[6],
             "tags": [],
-            "isMentor": bool(account[6]),
-            "awaitingApproval": bool(account[7]),
+            "isMentor": bool(account[7]),
+            "awaitingApproval": bool(account[8]),
             "profilePicture": None,
             "profileBanner": None,
             "isMyAccount": isMyAccount
@@ -83,7 +84,7 @@ def profileDetails():
             })
 
         # Get the profile picture and profile banner from the database
-        imageFields = [("profilePicture", 8), ("profileBanner", 9)]
+        imageFields = [("profilePicture", 9), ("profileBanner", 10)]
         for image, i in imageFields:
             picture = filesRepository.getWithID(account[i])
 
@@ -130,9 +131,9 @@ def profileEditApi():
         accountData = {
             "UserID": userID,
             "Username": account[2],
-            "Description": account[12],
-            "ProfilePictureID": account[8],
-            "BackgroundID": account[9]
+            "Description": account[6],
+            "ProfilePictureID": account[9],
+            "BackgroundID": account[10]
         }
 
         # Check if the username is being changed
@@ -232,7 +233,7 @@ def get_not_approved_account():
                         returnData.append({
                             "userID": account[0],
                             "name": account[1],
-                            "created": dataDateTime.ctime()
+                            "created": int(datetime.datetime.now().timestamp())
                         })
                 # Returns the array as a JSON
                 return json.dumps(returnData)

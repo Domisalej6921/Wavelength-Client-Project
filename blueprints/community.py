@@ -16,7 +16,7 @@ community = Blueprint("community", __name__)
 
 @community.route('/community/create')
 def create_community():
-    return render_template('createCommunity.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+    return render_template('createCommunity.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
 
 
 # To help me write the following code, I read through one of my team members backend code for creating a POST API route

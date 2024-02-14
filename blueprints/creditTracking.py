@@ -1,5 +1,7 @@
-from flask import Flask, Blueprint, render_template, request, jsonify
+from flask import Flask, Blueprint, render_template, request, jsonify, session
 
+from models.footerModel import FooterModel
+from models.headerModel import HeaderModel
 from data.transactionsRepository import TransactionsRepository
 from data.tokensRepository import TokensRepository
 from data.entitiesRepository import EntitiesRepository
@@ -9,7 +11,7 @@ creditTracking = Blueprint("creditTracking", __name__)
 
 @creditTracking.route("/credit-tracking")
 def creditTrackingPage():
-    return render_template("credits/transaction-tracking.html")
+    return render_template("credits/transaction-tracking.html", footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
 
 @creditTracking.route("/getCredits", methods=["GET"])
 def getCredits():

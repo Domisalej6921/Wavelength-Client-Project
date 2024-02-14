@@ -58,18 +58,54 @@ class HeaderModel:
                   <div class="offcanvas-body">
                     <ul class="options-list">
                         <li>
-                            <a class="menu-links" href="/account">
+                            <a class="menu-links" href="/account/profile">
                                 Account
-                            </a>
-                        </li>
-                        <li>
-                            <a class="menu-links" href="/settings">
-                                Settings
                             </a>
                         </li>
                         <li>
                             <a class="menu-links" href="/logout">
                                 Log Out
+                            </a>
+                        </li>
+                        <li>
+                            <p>For Mentors Only</p>
+                        </li>
+                        <li>
+                            <a class="menu-links" href="/community/approved/donate">
+                                Donate Credits
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu-links" href="/community/create">
+                                Create A New Community
+                            </a>
+                        </li>
+                        <li>
+                            <p>For Moderators Only</p>
+                        </li>
+                        <li>
+                            <a class="menu-links" href="/credit-generation">
+                                Generate New Credits
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu-links" href="/credit-deletion">
+                                Delete Old Credits
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu-links" href="/credit-tracking">
+                                View Transactions
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu-links" href="/community/review">
+                                Review Communities
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu-links" href="/account/review">
+                                Review Accounts
                             </a>
                         </li>
                     </ul>

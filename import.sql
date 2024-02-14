@@ -19,8 +19,7 @@ CREATE TABLE Users (
     ProfilePictureID text REFERENCES Files(FileID),
     BackgroundID text REFERENCES Files(FileID),
     LastLogin integer,
-    Created integer,
-    Description text
+    Created integer
   );
 
 CREATE TABLE Tags (
@@ -97,7 +96,7 @@ CREATE TABLE Sessions (
     isComplete integer,
     Notes text,
     Created integer
-);.p
+);
 
 CREATE TABLE Reviews (
     ReviewID integer NOT NULL PRIMARY KEY AUTOINCREMENT,

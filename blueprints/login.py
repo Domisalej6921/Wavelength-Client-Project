@@ -14,7 +14,7 @@ login = Blueprint('login', __name__)
 @login.route('/login')
 def loginPage():
     if not ("UserID" in session):
-        return render_template('auth/login.html', footer=FooterModel.standardFooter(), header=HeaderModel.standardHeader())
+        return render_template('auth/login.html', footer=FooterModel.standardFooter(), header=HeaderModel.renderHeader(session))
     else:
         return redirect("/account/dashboard")
 
